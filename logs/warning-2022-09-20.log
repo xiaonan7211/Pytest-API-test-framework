@@ -1,0 +1,4 @@
+WARNING 2022-09-20 12:02:07,905D:\Project\pytest-auto-api2-master\logs\warning-2022-09-20.log:conftest.py:117 跳过用例数: 0
+WARNING 2022-09-20 16:51:20,129D:\Project\pytest-auto-api2-master\logs\warning-2022-09-20.log:conftest.py:117 跳过用例数: 2
+WARNING 2022-09-20 16:55:58,563D:\Project\pytest-auto-api2-master\logs\warning-2022-09-20.log:conftest.py:117 跳过用例数: 2
+WARNING 2022-09-20 16:57:40,382D:\Project\pytest-auto-api2-master\logs\warning-2022-09-20.log:conftest.py:117 跳过用例数: 2

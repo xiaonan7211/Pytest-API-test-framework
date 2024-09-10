@@ -1,0 +1,22 @@
+INFO    2022-12-16 10:41:52,522D:\Project\test-server\logs\info-2022-12-16.log:log_decorator.py:40 
+======================================================
+用例标题: 正常登录获取推荐计划
+请求路径: http://192.168.5.210:9000/s/v1/fitness/plantemplate/recommend
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJSUzUxMiJ9.eyJmaWQiOiI0OTUzNzQyZi0xNjhjLTQ1MTUtYjMzZC1iY2M3MzdmN2IyMTEiLCJzdWIiOiJneW1lciIsInJvbGVzIjoib3JkaW5hcnkiLCJleHAiOjE2NzExNjIxMTQsImFpZCI6ImI4MDkxMDM3LTc5MTEtNGQ3OC1iMTAyLTNlYzNmMTU4NDk3MyIsImRldmljZWlkIjpudWxsLCJpYXQiOjE2NzExNTg1MTQsImp0aSI6IlVTUjIyMDgxMjEyMTAyNzAwMDAxMDAyMkNDMDA0OSIsInVzZXJuYW1lIjoidGVzdCJ9.xlZe2G8uPBaQBXCxnJkWJKCbHs_1yMrFybFraYqMHtZgx6kHzKIlEb3v6hSy7B7qNjMk4AXvkyr-iZwbGM-6vbcnQSinf-ApAutTCb3D_6qigPVlfl4iKCjn697NeFOmu-qvJTwj5C1jJg9vlbR1LAOa9zl68uslCcgwbBDWi0b8L8BssxlC2HX1vaFdyK33L8ZbYxpL3CspTdnMnf34BJCqUNqbfQRae9EMH-MPQW0ydKiUuPp5mksECFj7oMrbo7jCb_tiTXMfWA9yvofXuqE-OT74lku8cIQgX-Q9QcF_BZXGedVAmtDlfKPYcfc5RG6MmoKbURYkEQhD6L16VQ', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: {"code":0,"message":"成功","value":[{"id":"PLT22112616290700001008D8C007E","name":"练出腹肌","gradeId":"01","avatarId":"MTA220708164306000010062E30028","lessons":3,"description":"练出腹肌"}]}
+接口响应时长: 12 ms
+Http状态码: 200
+=====================================================
+INFO    2022-12-16 10:41:52,538D:\Project\test-server\logs\info-2022-12-16.log:log_decorator.py:40 
+======================================================
+用例标题: 不登录获取推荐计划
+请求路径: http://192.168.5.210:9000/s/v1/fitness/plantemplate/recommend
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: {"code":-1,"message":null,"properties":{"type":"java.lang.NullPointerException"},"value":null}
+接口响应时长: 10 ms
+Http状态码: 200
+=====================================================

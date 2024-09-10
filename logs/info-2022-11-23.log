@@ -1,0 +1,312 @@
+INFO    2022-11-23 10:41:43,029D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 根据健身栏目获取动作
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/action-by-catalog?catalogId=/01/02
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"根据健身栏目获取动作成功","value":[]}
+接口响应时长: 6 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 10:41:43,185D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 错误的健身栏目ID
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/action-by-catalog?catalogId=/01/0222221
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"根据健身栏目获取动作成功","value":[]}
+接口响应时长: 6 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 10:41:43,267D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 健身栏目id + 错误的部位id 获取动作
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/action-by-catalog?catalogId=/01/01&bodyPartId=2321324
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"根据健身栏目获取动作成功","value":[]}
+接口响应时长: 9 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 10:41:43,278D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 错误的健身栏目id + 正确的部位id 获取动作
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/action-by-catalog?catalogId=222222&bodyPartId=/01/01
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"根据健身栏目获取动作成功","value":[]}
+接口响应时长: 6 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:24,889D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 根据健身栏目获取动作
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/action-by-catalog?catalogId=/01/01
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"根据健身栏目获取动作成功","value":[]}
+接口响应时长: 12 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:24,991D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 错误的健身栏目ID
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/action-by-catalog?catalogId=/01/0222221
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"根据健身栏目获取动作成功","value":[]}
+接口响应时长: 7 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:25,028D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 健身栏目id + 错误的部位id 获取动作
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/action-by-catalog?catalogId=/01/01&bodyPartId=2321324
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"根据健身栏目获取动作成功","value":[]}
+接口响应时长: 7 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:25,041D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 错误的健身栏目id + 正确的部位id 获取动作
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/action-by-catalog?catalogId=222222&bodyPartId=/01/01
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"根据健身栏目获取动作成功","value":[]}
+接口响应时长: 9 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:25,215D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 正确的的动作类型获取动作
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/action-by-type?actionTypeId=03
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"根据动作类型获取动作成功","value":[{"id":"ACT2211092158130003900BF550049","name":"站立屈肘上旋","avatarId":"MTA2211101347200000100BF5501F5","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/03/04","pid":"/03","name":"冈上下肌"}},{"id":"ACT2211092158130000700BF550049","name":"屈髋直腿后伸","avatarId":"MTA2211101629440000100CF0E08D4","bodyPart":{"id":"/07","pid":"0","name":"臀部"},"muscle":{"id":"/07/02","pid":"/07","name":"臀大肌"}},{"id":"ACT2211092158130001700BF550049","name":"站姿夹胸","avatarId":"MTA2211101340480000100BF5548D2","bodyPart":{"id":"/01","pid":"0","name":"胸部"},"muscle":{"id":"/01/01","pid":"/01","name":"胸大肌中束"}},{"id":"ACT2211092158130003100BF550049","name":"仰卧臂屈伸","avatarId":"MTA2211101634520000100CF0E0049","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/05","pid":"/02","name":"肘肌"}},{"id":"ACT2211092158130002400BF550049","name":"正握手环弯举","avatarId":"MTA2211101631250000100CF0E08A5","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/01","pid":"/02","name":"肱二头肌"}},{"id":"ACT2211092158130004500BF550049","name":"肩胛后引","avatarId":"MTA2211101625570000100CF0E004C","bodyPart":{"id":"/05","pid":"0","name":"背部"},"muscle":{"id":"/05/02","pid":"/05","name":"菱形肌"}},{"id":"ACT2211092158130003600BF550049","name":"坐姿划船","avatarId":"MTA2211101348030000100BF55004E","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/03/02","pid":"/03","name":" 大圆肌"}},{"id":"ACT2211092158130003300BF550049","name":"坐姿向上推","avatarId":"MTA2211101344430000100BF55004F","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/03/01","pid":"/03","name":"三角肌"}},{"id":"ACT2211092158130003500BF550049","name":"坐姿颈后下拉","avatarId":"MTA2211101345290000100BF55119E","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/03/02","pid":"/03","name":" 大圆肌"}},{"id":"ACT2211092158130002000BF550049","name":"站姿高位夹胸","avatarId":"MTA2211101343030000100BF55004B","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/01/03","pid":"/03","name":"胸大肌下束"}},{"id":"ACT2211092158130001200BF550049","name":"站姿对角线伐木","avatarId":"MTA2211101636060000100CF0E004B","bodyPart":{"id":"/09","pid":"0","name":"腹部"},"muscle":{"id":"/09/01","pid":"/09","name":"腹内外斜肌"}},{"id":"ACT2211092158130002900BF550049","name":"站姿臂屈伸","avatarId":"MTA2211101721340000100C02A004D","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/03","pid":"/02","name":"肱三头肌"}},{"id":"ACT2211092158130000100BF550049","name":"深蹲","avatarId":"MTA2211101627070000100CF0E004F","bodyPart":{"id":"/06","pid":"0","name":"大腿"},"muscle":{"id":"/06/01","pid":"/06","name":"股四头肌"}},{"id":"ACT2211092158130004600BF550049","name":"站姿下拉","avatarId":"MTA2211101626220000100CF0E0050","bodyPart":{"id":"/05","pid":"0","name":"背部"},"muscle":{"id":"/05/03","pid":"/05","name":"背阔肌"}},{"id":"ACT2211092158130003400BF550049","name":"侧平举","avatarId":"MTA2211101345000000100BF55004A","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/03/01","pid":"/03","name":"三角肌"}},{"id":"ACT2211092158130004200BF550049","name":"站姿划船","avatarId":"MTA2211101624130000100CF0E08A5","bodyPart":{"id":"/05","pid":"0","name":"背部"},"muscle":{"id":"/05/01","pid":"/05","name":"斜方肌中下束"}},{"id":"ACT2211092158130000800BF550049","name":"宽立深蹲","avatarId":"MTA2211101630040000100CF0E052B","bodyPart":{"id":"/07","pid":"0","name":"臀部"},"muscle":{"id":"/07/02","pid":"/07","name":"臀大肌"}},{"id":"ACT2211092158130003800BF550049","name":"屈臂外旋","avatarId":"MTA2211101502100000100CF0E052B","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/03/04","pid":"/03","name":"冈上下肌"}},{"id":"ACT2211092158130000400BF550049","name":"俯卧腿弯举","avatarId":"MTA2211101628150000100CF0E004D","bodyPart":{"id":"/06","pid":"0","name":"大腿"},"muscle":{"id":"/06/02","pid":"/06","name":"股二头肌"}},{"id":"ACT2211092158130000500BF550049","name":"站姿直腿外展","avatarId":"MTA2211101629020000100CF0E052B","bodyPart":{"id":"/07","pid":"0","name":"臀部"},"muscle":{"id":"/07/01","pid":"/07","name":"臀中小肌"}},{"id":"ACT2211092158130002100BF550049","name":"站姿前推","avatarId":"MTA2211101342320000100BF550050","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/01/03","pid":"/03","name":"胸大肌下束"}},{"id":"ACT2211092158130000900BF550049","name":"站姿握杆提踵","avatarId":"MTA2211101630320000100CF0E0051","bodyPart":{"id":"/08","pid":"0","name":"小腿"},"muscle":{"id":"/08/01","pid":"/08","name":"小腿浅层肌群"}},{"id":"ACT2211092158130001400BF550049","name":"单腿站姿拉臂","avatarId":"MTA2211101636500000100CF0E08A5","bodyPart":{"id":"/09","pid":"0","name":"腹部"},"muscle":{"id":"/09/02","pid":"/09","name":"腹横肌"}},{"id":"ACT2211092158130001500BF550049","name":"体侧屈","avatarId":"MTA2211101636500000100CF0E08A5","bodyPart":{"id":"/09","pid":"0","name":"腹部"},"muscle":{"id":"/09/03","pid":"/09","name":"腰方肌"}},{"id":"ACT2211092158130004700BF550049","name":"Y字型手环伸展","avatarId":"MTA2211101626430000100CF0E004C","bodyPart":{"id":"/05","pid":"0","name":"背部"},"muscle":{"id":"/05/03","pid":"/05","name":"背阔肌"}},{"id":"ACT2211092158130000300BF550049","name":"直腿硬拉","avatarId":"MTA2211101628000000100CF0E0050","bodyPart":{"id":"/06","pid":"0","name":"大腿"},"muscle":{"id":"/06/02","pid":"/06","name":"股二头肌"}},{"id":"ACT2211092158130002700BF550049","name":"站姿屈肘夹胸","avatarId":"MTA2211101632330000100CF0E004F","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/02","pid":"/02","name":"喙肱肌"}},{"id":"ACT2211092158130002800BF550049","name":"下压","avatarId":"MTA2211101632330000100CF0E004F","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/03","pid":"/02","name":"肱三头肌"}},{"id":"ACT2211092158130003200BF550049","name":"仰卧窄推","avatarId":"MTA2211101635220000100CF0E0048","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/05","pid":"/02","name":"肘肌"}},{"id":"ACT2211092158130001300BF550049","name":"单腿站姿推胸","avatarId":"MTA2211101636200000100CF0E02F8","bodyPart":{"id":"/09","pid":"0","name":"腹部"},"muscle":{"id":"/09/02","pid":"/09","name":"腹横肌"}},{"id":"ACT2211092158130003700BF550049","name":"仰卧下拉","avatarId":"MTA2211101346140000100BF55004B","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/03/03","pid":"/03","name":"小圆肌"}},{"id":"ACT2211092158130002500BF550049","name":"站姿反握二头弯举","avatarId":"MTA2211101631550000100CF0E08A5","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/01","pid":"/02","name":"肱二头肌"}},{"id":"ACT2211092158130004100BF550049","name":"早安式前屈","avatarId":"MTA2211101623340000100CF0E08D5","bodyPart":{"id":"/04","pid":"0","name":"腰部"},"muscle":{"id":"/04/02","pid":"/04","name":"腘绳肌"}},{"id":"ACT2211092158130003000BF550049","name":"坐姿屈肘弯举","avatarId":"MTA2211101633480000100CF0E0049","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/04","pid":"/02","name":"前臂前群肌"}},{"id":"ACT2211092158130000200BF550049","name":"弓步蹲","avatarId":"MTA2211101627270000100CF0E004F","bodyPart":{"id":"/06","pid":"0","name":"大腿"},"muscle":{"id":"/06/01","pid":"/06","name":"股四头肌"}},{"id":"ACT2211092158130001800BF550049","name":"站姿推胸","avatarId":"MTA2211101341230000100BF55119E","bodyPart":{"id":"/09","pid":"0","name":"腹部"},"muscle":{"id":"/09/02","pid":"/09","name":"腹横肌"}},{"id":"ACT2211092158130000600BF550049","name":"屈髋屈膝外展","avatarId":"MTA2211101629220000100CF0E004E","bodyPart":{"id":"/07","pid":"0","name":"臀部"},"muscle":{"id":"/07/01","pid":"/07","name":"臀中小肌"}},{"id":"ACT2211092158130002200BF550049","name":"站姿双手直臂下压","avatarId":"MTA2211101343380000100BF5501F5","bodyPart":{"id":"/04","pid":"0","name":"腰部"},"muscle":{"id":"/01/04","pid":"/04","name":"前锯肌"}},{"id":"ACT2211092158130001000BF550049","name":"坐姿握杆提踵","avatarId":"MTA2211101630520000100CF0E0051","bodyPart":{"id":"/08","pid":"0","name":"小腿"},"muscle":{"id":"/08/02","pid":"/08","name":"小腿深层肌群"}},{"id":"ACT2211092158130002600BF550049","name":"前平举","avatarId":"MTA2211101632160000100CF0E004E","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/02","pid":"/02","name":"喙肱肌"}},{"id":"ACT2211092158130004300BF550049","name":"站姿宽握划船","avatarId":"MTA2211101624480000100CF0E004D","bodyPart":{"id":"/05","pid":"0","name":"背部"},"muscle":{"id":"/05/01","pid":"/05","name":"斜方肌中下束"}},{"id":"ACT2211092158130001900BF550049","name":"站姿低位夹胸","avatarId":"MTA2211101341570000100BF554631","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/01/02","pid":"/02","name":"胸大肌上束"}},{"id":"ACT2211092158130002300BF550049","name":"单臂下拉","avatarId":"MTA2211101344020000100BF5501F5","bodyPart":{"id":"/04","pid":"0","name":"腰部"},"muscle":{"id":"/01/04","pid":"/04","name":"前锯肌"}},{"id":"ACT2211092158130001100BF550049","name":"坐姿俄罗斯转体 ","avatarId":"MTA2211101635470000100CF0E004D","bodyPart":{"id":"/09","pid":"0","name":"腹部"},"muscle":{"id":"/09/01","pid":"/09","name":"腹内外斜肌"}},{"id":"ACT2211092158130004400BF550049","name":"背飞鸟","avatarId":"MTA2211101625360000100CF0E08A5","bodyPart":{"id":"/05","pid":"0","name":"背部"},"muscle":{"id":"/05/02","pid":"/05","name":"菱形肌"}},{"id":"ACT2211092158130001600BF550049","name":"坐姿下拉侧屈","avatarId":"MTA2211101637290000100CF0E0050","bodyPart":{"id":"/09","pid":"0","name":"腹部"},"muscle":{"id":"/09/03","pid":"/09","name":"腰方肌"}},{"id":"ACT2211092158130004000BF550049","name":"俯身下拉","avatarId":"MTA2211101622500000100CF0E0051","bodyPart":{"id":"/04","pid":"0","name":"腰部"},"muscle":{"id":"/04/01","pid":"/04","name":"竖脊肌"}}]}
+接口响应时长: 151 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:25,258D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 不存在的动作类型
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/action-by-type?actionTypeId=32345
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"根据动作类型获取动作成功","value":[]}
+接口响应时长: 7 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:25,469D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 动作类型为空获取全部
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/action-by-type?actionTypeId
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"根据动作类型获取动作成功","value":[{"id":"ACT2211092158130003900BF550049","name":"站立屈肘上旋","avatarId":"MTA2211101347200000100BF5501F5","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/03/04","pid":"/03","name":"冈上下肌"}},{"id":"ACT2211092158130000700BF550049","name":"屈髋直腿后伸","avatarId":"MTA2211101629440000100CF0E08D4","bodyPart":{"id":"/07","pid":"0","name":"臀部"},"muscle":{"id":"/07/02","pid":"/07","name":"臀大肌"}},{"id":"ACT2211092158130001700BF550049","name":"站姿夹胸","avatarId":"MTA2211101340480000100BF5548D2","bodyPart":{"id":"/01","pid":"0","name":"胸部"},"muscle":{"id":"/01/01","pid":"/01","name":"胸大肌中束"}},{"id":"ACT2211092158130003100BF550049","name":"仰卧臂屈伸","avatarId":"MTA2211101634520000100CF0E0049","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/05","pid":"/02","name":"肘肌"}},{"id":"ACT2211092158130002400BF550049","name":"正握手环弯举","avatarId":"MTA2211101631250000100CF0E08A5","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/01","pid":"/02","name":"肱二头肌"}},{"id":"ACT2211092158130004500BF550049","name":"肩胛后引","avatarId":"MTA2211101625570000100CF0E004C","bodyPart":{"id":"/05","pid":"0","name":"背部"},"muscle":{"id":"/05/02","pid":"/05","name":"菱形肌"}},{"id":"ACT2211092158130003600BF550049","name":"坐姿划船","avatarId":"MTA2211101348030000100BF55004E","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/03/02","pid":"/03","name":" 大圆肌"}},{"id":"ACT2211092158130003300BF550049","name":"坐姿向上推","avatarId":"MTA2211101344430000100BF55004F","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/03/01","pid":"/03","name":"三角肌"}},{"id":"ACT2211092158130003500BF550049","name":"坐姿颈后下拉","avatarId":"MTA2211101345290000100BF55119E","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/03/02","pid":"/03","name":" 大圆肌"}},{"id":"ACT2211092158130002000BF550049","name":"站姿高位夹胸","avatarId":"MTA2211101343030000100BF55004B","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/01/03","pid":"/03","name":"胸大肌下束"}},{"id":"ACT2211092158130001200BF550049","name":"站姿对角线伐木","avatarId":"MTA2211101636060000100CF0E004B","bodyPart":{"id":"/09","pid":"0","name":"腹部"},"muscle":{"id":"/09/01","pid":"/09","name":"腹内外斜肌"}},{"id":"ACT2211092158130002900BF550049","name":"站姿臂屈伸","avatarId":"MTA2211101721340000100C02A004D","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/03","pid":"/02","name":"肱三头肌"}},{"id":"ACT2211092158130000100BF550049","name":"深蹲","avatarId":"MTA2211101627070000100CF0E004F","bodyPart":{"id":"/06","pid":"0","name":"大腿"},"muscle":{"id":"/06/01","pid":"/06","name":"股四头肌"}},{"id":"ACT2211092158130004600BF550049","name":"站姿下拉","avatarId":"MTA2211101626220000100CF0E0050","bodyPart":{"id":"/05","pid":"0","name":"背部"},"muscle":{"id":"/05/03","pid":"/05","name":"背阔肌"}},{"id":"ACT2211092158130003400BF550049","name":"侧平举","avatarId":"MTA2211101345000000100BF55004A","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/03/01","pid":"/03","name":"三角肌"}},{"id":"ACT2211092158130004200BF550049","name":"站姿划船","avatarId":"MTA2211101624130000100CF0E08A5","bodyPart":{"id":"/05","pid":"0","name":"背部"},"muscle":{"id":"/05/01","pid":"/05","name":"斜方肌中下束"}},{"id":"ACT2211092158130000800BF550049","name":"宽立深蹲","avatarId":"MTA2211101630040000100CF0E052B","bodyPart":{"id":"/07","pid":"0","name":"臀部"},"muscle":{"id":"/07/02","pid":"/07","name":"臀大肌"}},{"id":"ACT2211092158130003800BF550049","name":"屈臂外旋","avatarId":"MTA2211101502100000100CF0E052B","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/03/04","pid":"/03","name":"冈上下肌"}},{"id":"ACT2211092158130000400BF550049","name":"俯卧腿弯举","avatarId":"MTA2211101628150000100CF0E004D","bodyPart":{"id":"/06","pid":"0","name":"大腿"},"muscle":{"id":"/06/02","pid":"/06","name":"股二头肌"}},{"id":"ACT2211092158130000500BF550049","name":"站姿直腿外展","avatarId":"MTA2211101629020000100CF0E052B","bodyPart":{"id":"/07","pid":"0","name":"臀部"},"muscle":{"id":"/07/01","pid":"/07","name":"臀中小肌"}},{"id":"ACT2211092158130002100BF550049","name":"站姿前推","avatarId":"MTA2211101342320000100BF550050","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/01/03","pid":"/03","name":"胸大肌下束"}},{"id":"ACT2211092158130000900BF550049","name":"站姿握杆提踵","avatarId":"MTA2211101630320000100CF0E0051","bodyPart":{"id":"/08","pid":"0","name":"小腿"},"muscle":{"id":"/08/01","pid":"/08","name":"小腿浅层肌群"}},{"id":"ACT2211092158130001400BF550049","name":"单腿站姿拉臂","avatarId":"MTA2211101636500000100CF0E08A5","bodyPart":{"id":"/09","pid":"0","name":"腹部"},"muscle":{"id":"/09/02","pid":"/09","name":"腹横肌"}},{"id":"ACT2211092158130001500BF550049","name":"体侧屈","avatarId":"MTA2211101636500000100CF0E08A5","bodyPart":{"id":"/09","pid":"0","name":"腹部"},"muscle":{"id":"/09/03","pid":"/09","name":"腰方肌"}},{"id":"ACT2211092158130004700BF550049","name":"Y字型手环伸展","avatarId":"MTA2211101626430000100CF0E004C","bodyPart":{"id":"/05","pid":"0","name":"背部"},"muscle":{"id":"/05/03","pid":"/05","name":"背阔肌"}},{"id":"ACT2211092158130000300BF550049","name":"直腿硬拉","avatarId":"MTA2211101628000000100CF0E0050","bodyPart":{"id":"/06","pid":"0","name":"大腿"},"muscle":{"id":"/06/02","pid":"/06","name":"股二头肌"}},{"id":"ACT2211092158130002700BF550049","name":"站姿屈肘夹胸","avatarId":"MTA2211101632330000100CF0E004F","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/02","pid":"/02","name":"喙肱肌"}},{"id":"ACT2211092158130002800BF550049","name":"下压","avatarId":"MTA2211101632330000100CF0E004F","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/03","pid":"/02","name":"肱三头肌"}},{"id":"ACT2211092158130003200BF550049","name":"仰卧窄推","avatarId":"MTA2211101635220000100CF0E0048","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/05","pid":"/02","name":"肘肌"}},{"id":"ACT2211092158130001300BF550049","name":"单腿站姿推胸","avatarId":"MTA2211101636200000100CF0E02F8","bodyPart":{"id":"/09","pid":"0","name":"腹部"},"muscle":{"id":"/09/02","pid":"/09","name":"腹横肌"}},{"id":"ACT2211101200260000700BF551082","name":"热身动作","avatarId":"MTA2211102110020000100C02A0051"},{"id":"ACT2211092158130003700BF550049","name":"仰卧下拉","avatarId":"MTA2211101346140000100BF55004B","bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/03/03","pid":"/03","name":"小圆肌"}},{"id":"ACT2211092158130002500BF550049","name":"站姿反握二头弯举","avatarId":"MTA2211101631550000100CF0E08A5","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/01","pid":"/02","name":"肱二头肌"}},{"id":"ACT2211092158130004100BF550049","name":"早安式前屈","avatarId":"MTA2211101623340000100CF0E08D5","bodyPart":{"id":"/04","pid":"0","name":"腰部"},"muscle":{"id":"/04/02","pid":"/04","name":"腘绳肌"}},{"id":"ACT2211092158130003000BF550049","name":"坐姿屈肘弯举","avatarId":"MTA2211101633480000100CF0E0049","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/04","pid":"/02","name":"前臂前群肌"}},{"id":"ACT2211092158130000200BF550049","name":"弓步蹲","avatarId":"MTA2211101627270000100CF0E004F","bodyPart":{"id":"/06","pid":"0","name":"大腿"},"muscle":{"id":"/06/01","pid":"/06","name":"股四头肌"}},{"id":"ACT2211092158130001800BF550049","name":"站姿推胸","avatarId":"MTA2211101341230000100BF55119E","bodyPart":{"id":"/09","pid":"0","name":"腹部"},"muscle":{"id":"/09/02","pid":"/09","name":"腹横肌"}},{"id":"ACT2211092158130000600BF550049","name":"屈髋屈膝外展","avatarId":"MTA2211101629220000100CF0E004E","bodyPart":{"id":"/07","pid":"0","name":"臀部"},"muscle":{"id":"/07/01","pid":"/07","name":"臀中小肌"}},{"id":"ACT2211092158130002200BF550049","name":"站姿双手直臂下压","avatarId":"MTA2211101343380000100BF5501F5","bodyPart":{"id":"/04","pid":"0","name":"腰部"},"muscle":{"id":"/01/04","pid":"/04","name":"前锯肌"}},{"id":"ACT2211092158130001000BF550049","name":"坐姿握杆提踵","avatarId":"MTA2211101630520000100CF0E0051","bodyPart":{"id":"/08","pid":"0","name":"小腿"},"muscle":{"id":"/08/02","pid":"/08","name":"小腿深层肌群"}},{"id":"ACT2211092158130002600BF550049","name":"前平举","avatarId":"MTA2211101632160000100CF0E004E","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/02/02","pid":"/02","name":"喙肱肌"}},{"id":"ACT2211092158130004300BF550049","name":"站姿宽握划船","avatarId":"MTA2211101624480000100CF0E004D","bodyPart":{"id":"/05","pid":"0","name":"背部"},"muscle":{"id":"/05/01","pid":"/05","name":"斜方肌中下束"}},{"id":"ACT2211092158130001900BF550049","name":"站姿低位夹胸","avatarId":"MTA2211101341570000100BF554631","bodyPart":{"id":"/02","pid":"0","name":"上肢"},"muscle":{"id":"/01/02","pid":"/02","name":"胸大肌上束"}},{"id":"ACT2211092158130002300BF550049","name":"单臂下拉","avatarId":"MTA2211101344020000100BF5501F5","bodyPart":{"id":"/04","pid":"0","name":"腰部"},"muscle":{"id":"/01/04","pid":"/04","name":"前锯肌"}},{"id":"ACT2211092158130001100BF550049","name":"坐姿俄罗斯转体 ","avatarId":"MTA2211101635470000100CF0E004D","bodyPart":{"id":"/09","pid":"0","name":"腹部"},"muscle":{"id":"/09/01","pid":"/09","name":"腹内外斜肌"}},{"id":"ACT2211092158130004400BF550049","name":"背飞鸟","avatarId":"MTA2211101625360000100CF0E08A5","bodyPart":{"id":"/05","pid":"0","name":"背部"},"muscle":{"id":"/05/02","pid":"/05","name":"菱形肌"}},{"id":"ACT2211092158130001600BF550049","name":"坐姿下拉侧屈","avatarId":"MTA2211101637290000100CF0E0050","bodyPart":{"id":"/09","pid":"0","name":"腹部"},"muscle":{"id":"/09/03","pid":"/09","name":"腰方肌"}},{"id":"ACT2211101200260000200BF551082","name":"拉伸动作","avatarId":"MTA2211101626430000100CF0E004C"},{"id":"ACT2211092158130004000BF550049","name":"俯身下拉","avatarId":"MTA2211101622500000100CF0E0051","bodyPart":{"id":"/04","pid":"0","name":"腰部"},"muscle":{"id":"/04/01","pid":"/04","name":"竖脊肌"}}]}
+接口响应时长: 196 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:25,531D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 获取动作详情
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/action-details//ACT2211092158130003900BF550049
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"获取动作详情成功","value":{"id":"ACT2211092158130003900BF550049","name":"站立屈肘上旋","intro":"面对机器站立，大小臂屈臂90度，握住手环平行地面，呼气时大臂上旋，小臂垂直地面，吸气时还原起始位","avatarId":"MTA2211101347200000100BF5501F5","description":"<p>面对机器站立，大小臂屈臂90度，握住手环平行地面，呼气时大臂上旋，小臂垂直地面，吸气时还原起始位</p>","likeAmount":0,"useNumber":87,"bodyPart":{"id":"/03","pid":"0","name":"肩部"},"muscle":{"id":"/03/04","pid":"/03","name":"冈上下肌"},"isMachine":true,"batch":5,"span":15,"times":8,"leftForce":5,"rightForce":5,"leftAssist":false,"rightAssist":false,"leftForceMode":1,"rightForceMode":1,"actionVideos":[{"id":"ACV2208091708460004700F1E80063","actionId":"ACT2211092158130003900BF550049","formatId":"04","classifyId":"01","modelId":"TMD220704120050000010025BC00BD","videoId":"MTA2211101227200000100BF55004B","rsrcId":"acv_ACV2208091708460004700F1E80063"},{"id":"ACV2208091708460004800F1E80063","actionId":"ACT2211092158130003900BF550049","formatId":"04","classifyId":"02","modelId":"TMD220704120050000010025BC00BD","videoId":"MTA2211101227420000100BF55004B","rsrcId":"acv_ACV2208091708460004800F1E80063"},{"id":"ACV2208091708460004900F1E80063","actionId":"ACT2211092158130003900BF550049","formatId":"04","classifyId":"03","modelId":"TMD220704120050000010025BC00BD","videoId":"MTA2211101513310000100CF0E004C","rsrcId":"acv_ACV2208091708460004900F1E80063"}]}}
+接口响应时长: 17 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:25,544D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 获取动作详情为空
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/action-details/231324456adwada465
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":-1,"message":"动作详情不存在"}
+接口响应时长: 7 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:25,591D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 传入状态被删除的动作详情
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/action-details/ACT221121115359000010068030049
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":-1,"message":"动作详情不存在"}
+接口响应时长: 7 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:25,645D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 根据部位ID获取动作列表
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/actions-by-body-part
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '10'}
+请求内容: {'ignore_list': '/05/02'}
+接口响应内容: {"code":0,"message":"根据部位获取动作列表成功","value":[{"id":"ACT2211092158130004500BF550049","name":"肩胛后引","avatarId":"MTA2211101625570000100CF0E004C"},{"id":"ACT2211092158130004400BF550049","name":"背飞鸟","avatarId":"MTA2211101625360000100CF0E08A5"}]}
+接口响应时长: 8 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:25,657D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 不存在的部位ID获取动作
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/actions-by-body-part
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '18'}
+请求内容: {'ignore_list': '/02/2222222203'}
+接口响应内容: {"code":0,"message":"根据部位获取动作列表成功","value":[]}
+接口响应时长: 7 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:25,679D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 关键词为空获取全部动作
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/all-actions
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"获取所有动作列表成功","value":[{"id":"ACT2211101200260000700BF551082","name":"热身动作","avatarId":"MTA2211102110020000100C02A0051"},{"id":"ACT2211101200260000200BF551082","name":"拉伸动作","avatarId":"MTA2211101626430000100CF0E004C"},{"id":"ACT2211092158130000100BF550049","name":"深蹲","avatarId":"MTA2211101627070000100CF0E004F"},{"id":"ACT2211092158130000200BF550049","name":"弓步蹲","avatarId":"MTA2211101627270000100CF0E004F"},{"id":"ACT2211092158130000300BF550049","name":"直腿硬拉","avatarId":"MTA2211101628000000100CF0E0050"},{"id":"ACT2211092158130000400BF550049","name":"俯卧腿弯举","avatarId":"MTA2211101628150000100CF0E004D"},{"id":"ACT2211092158130000500BF550049","name":"站姿直腿外展","avatarId":"MTA2211101629020000100CF0E052B"},{"id":"ACT2211092158130000600BF550049","name":"屈髋屈膝外展","avatarId":"MTA2211101629220000100CF0E004E"},{"id":"ACT2211092158130000700BF550049","name":"屈髋直腿后伸","avatarId":"MTA2211101629440000100CF0E08D4"},{"id":"ACT2211092158130000800BF550049","name":"宽立深蹲","avatarId":"MTA2211101630040000100CF0E052B"},{"id":"ACT2211092158130000900BF550049","name":"站姿握杆提踵","avatarId":"MTA2211101630320000100CF0E0051"},{"id":"ACT2211092158130001000BF550049","name":"坐姿握杆提踵","avatarId":"MTA2211101630520000100CF0E0051"},{"id":"ACT2211092158130001100BF550049","name":"坐姿俄罗斯转体 ","avatarId":"MTA2211101635470000100CF0E004D"},{"id":"ACT2211092158130001200BF550049","name":"站姿对角线伐木","avatarId":"MTA2211101636060000100CF0E004B"},{"id":"ACT2211092158130001300BF550049","name":"单腿站姿推胸","avatarId":"MTA2211101636200000100CF0E02F8"},{"id":"ACT2211092158130001400BF550049","name":"单腿站姿拉臂","avatarId":"MTA2211101636500000100CF0E08A5"},{"id":"ACT2211092158130001500BF550049","name":"体侧屈","avatarId":"MTA2211101636500000100CF0E08A5"},{"id":"ACT2211092158130001600BF550049","name":"坐姿下拉侧屈","avatarId":"MTA2211101637290000100CF0E0050"},{"id":"ACT2211092158130001700BF550049","name":"站姿夹胸","avatarId":"MTA2211101340480000100BF5548D2"},{"id":"ACT2211092158130001800BF550049","name":"站姿推胸","avatarId":"MTA2211101341230000100BF55119E"},{"id":"ACT2211092158130001900BF550049","name":"站姿低位夹胸","avatarId":"MTA2211101341570000100BF554631"},{"id":"ACT2211092158130002000BF550049","name":"站姿高位夹胸","avatarId":"MTA2211101343030000100BF55004B"},{"id":"ACT2211092158130002100BF550049","name":"站姿前推","avatarId":"MTA2211101342320000100BF550050"},{"id":"ACT2211092158130002200BF550049","name":"站姿双手直臂下压","avatarId":"MTA2211101343380000100BF5501F5"},{"id":"ACT2211092158130002300BF550049","name":"单臂下拉","avatarId":"MTA2211101344020000100BF5501F5"},{"id":"ACT2211092158130002400BF550049","name":"正握手环弯举","avatarId":"MTA2211101631250000100CF0E08A5"},{"id":"ACT2211092158130002500BF550049","name":"站姿反握二头弯举","avatarId":"MTA2211101631550000100CF0E08A5"},{"id":"ACT2211092158130002600BF550049","name":"前平举","avatarId":"MTA2211101632160000100CF0E004E"},{"id":"ACT2211092158130002700BF550049","name":"站姿屈肘夹胸","avatarId":"MTA2211101632330000100CF0E004F"},{"id":"ACT2211092158130002800BF550049","name":"下压","avatarId":"MTA2211101632330000100CF0E004F"},{"id":"ACT2211092158130002900BF550049","name":"站姿臂屈伸","avatarId":"MTA2211101721340000100C02A004D"},{"id":"ACT2211092158130003000BF550049","name":"坐姿屈肘弯举","avatarId":"MTA2211101633480000100CF0E0049"},{"id":"ACT2211092158130003100BF550049","name":"仰卧臂屈伸","avatarId":"MTA2211101634520000100CF0E0049"},{"id":"ACT2211092158130003200BF550049","name":"仰卧窄推","avatarId":"MTA2211101635220000100CF0E0048"},{"id":"ACT2211092158130003300BF550049","name":"坐姿向上推","avatarId":"MTA2211101344430000100BF55004F"},{"id":"ACT2211092158130003400BF550049","name":"侧平举","avatarId":"MTA2211101345000000100BF55004A"},{"id":"ACT2211092158130003500BF550049","name":"坐姿颈后下拉","avatarId":"MTA2211101345290000100BF55119E"},{"id":"ACT2211092158130003600BF550049","name":"坐姿划船","avatarId":"MTA2211101348030000100BF55004E"},{"id":"ACT2211092158130003700BF550049","name":"仰卧下拉","avatarId":"MTA2211101346140000100BF55004B"},{"id":"ACT2211092158130003800BF550049","name":"屈臂外旋","avatarId":"MTA2211101502100000100CF0E052B"},{"id":"ACT2211092158130003900BF550049","name":"站立屈肘上旋","avatarId":"MTA2211101347200000100BF5501F5"},{"id":"ACT2211092158130004000BF550049","name":"俯身下拉","avatarId":"MTA2211101622500000100CF0E0051"},{"id":"ACT2211092158130004100BF550049","name":"早安式前屈","avatarId":"MTA2211101623340000100CF0E08D5"},{"id":"ACT2211092158130004200BF550049","name":"站姿划船","avatarId":"MTA2211101624130000100CF0E08A5"},{"id":"ACT2211092158130004300BF550049","name":"站姿宽握划船","avatarId":"MTA2211101624480000100CF0E004D"},{"id":"ACT2211092158130004400BF550049","name":"背飞鸟","avatarId":"MTA2211101625360000100CF0E08A5"},{"id":"ACT2211092158130004500BF550049","name":"肩胛后引","avatarId":"MTA2211101625570000100CF0E004C"},{"id":"ACT2211092158130004600BF550049","name":"站姿下拉","avatarId":"MTA2211101626220000100CF0E0050"},{"id":"ACT2211092158130004700BF550049","name":"Y字型手环伸展","avatarId":"MTA2211101626430000100CF0E004C"}]}
+接口响应时长: 10 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:25,691D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 不存在的关键词获取空列表
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/all-actions?keyword=%E5%8F%AF%E5%9E%83%E5%9C%BE%E5%95%8A%E5%BC%80%E4%BA%86%E6%88%BF%E9%97%B4%E9%A5%BF%E5%95%8A%E7%AB%8B%E5%88%BB%E8%A7%A3%E6%94%BE%E4%BA%86%E5%92%96%E5%95%A1
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"获取所有动作列表成功","value":[]}
+接口响应时长: 7 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:25,708D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 输入关键词获取动作列表
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/all-actions?keyword=%E7%AB%99%E5%A7%BF%E5%A4%B9%E8%83%B8
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"获取所有动作列表成功","value":[{"id":"ACT2211092158130001700BF550049","name":"站姿夹胸","avatarId":"MTA2211101340480000100BF5548D2"}]}
+接口响应时长: 5 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:25,725D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 关键词为已删除的动作名称查询
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/all-actions?keyword=%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE1669002825.197974
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"获取所有动作列表成功","value":[]}
+接口响应时长: 7 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:25,733D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 删除不存在的动作，期望删除失败
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/delete
+请求方式: DELETE
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '14'}
+请求内容: {'ignore': 54243543521232}
+接口响应内容: {"code":-1,"message":"数据为空"}
+接口响应时长: 4 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:26,091D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 正常删除动作需要依赖该用例新增一个动作---默认不执行
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/insert
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '1063'}
+请求内容: {'name': '接口测试创建数据1669172485.8046427', 'intro': '面对机器，坐姿，单手屈肘掌心朝下，支撑在腿上，呼气时屈曲手腕，掌背靠近手臂，吸气时还原起始位', 'actionType': '03', 'avatarId': 'MTA2211101633480000100CF0E0049', 'description': '<p>面对机器，坐姿，单手屈肘掌心朝下，支撑在腿上，呼气时屈曲手腕，掌背靠近手臂，吸气时还原起始位</p>', 'batch': '8', 'span': '6', 'times': '7', 'leftForce': '7', 'rightForce': '6', 'leftForceMode': '2', 'rightForceMode': '1', 'bodyPartId': '/08/01', 'useMachine': '1', 'videoAddReqs': [{'formatId': '04', 'classifyId': '03', 'modelId': 'TMD220704120050000010025BC00BD', 'viewId': '', 'videoId': 'MTA2211101556270000100CF0E004D'}]}
+接口响应内容: {"code":0,"message":"新增动作成功"}
+接口响应时长: 60 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:26,137D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 正常删除存在的动作
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/delete
+请求方式: DELETE
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '30'}
+请求内容: {'ignore': 'ACT22112311013100001006803004C'}
+接口响应内容: {"code":0,"message":"删除动作成功"}
+接口响应时长: 11 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:26,245D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 正常写入动作
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/insert
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '1424'}
+请求内容: {'name': '接口测试创建数据1669172477.1143281', 'intro': '面对机器站立，双脚自然分开与肩同宽，膝盖微曲，双手外旋掌心朝上并拢握手环，略微弓背含胸，呼气时屈肘夹背后拉，手臂内旋掌心相对，沉肩挺胸，吸气时还原起始位', 'actionType': '03', 'avatarId': 'MTA2211101624130000100CF0E08A5', 'description': '<p>面对机器站立，双脚自然分开与肩同宽，膝盖微曲，双手外旋掌心朝上并拢握手环，略微弓背含胸，呼气时屈肘夹背后拉，手臂内旋掌心相对，沉肩挺胸，吸气时还原起始位</p>', 'batch': '6', 'span': '8', 'times': '10', 'leftForce': '6', 'rightForce': '5', 'leftForceMode': '1', 'rightForceMode': '2', 'bodyPartId': '/08/02', 'useMachine': '1', 'videoAddReqs': [{'formatId': '04', 'classifyId': '03', 'modelId': 'TMD220704120050000010025BC00BD', 'viewId': '', 'videoId': 'MTA2211101519220000100CF0E0051'}]}
+接口响应内容: {"code":0,"message":"新增动作成功"}
+接口响应时长: 66 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:26,293D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 新增成功后，依赖该用例删除数据--默认跳过不执行
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/delete
+请求方式: DELETE
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '30'}
+请求内容: {'ignore': 'ACT22112311013100001006803004F'}
+接口响应内容: {"code":0,"message":"删除动作成功"}
+接口响应时长: 11 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:26,352D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 参数错误写入动作，期望写入失败
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/insert
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '429'}
+请求内容: {'name': '接口测试创建数据1669172477.3673992', 'intro': 'awadwad', 'actionType': '1adwafgwaf', 'avatarId': '', 'description': None, 'batch': None, 'span': None, 'times': None, 'leftForce': None, 'rightForce': None, 'leftForceMode': None, 'rightForceMode': None, 'bodyPartId': '', 'useMachine': None, 'videoAddReqs': [{'formatId': '', 'classifyId': '', 'modelId': '', 'viewId': '', 'videoId': ''}]}
+接口响应内容: {"code":0,"message":"新增动作成功"}
+接口响应时长: 20 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:26,401D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 新增成功后，依赖该用例删除数据--默认跳过不执行
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/delete
+请求方式: DELETE
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '30'}
+请求内容: {'ignore': 'ACT221123110131000010068030049'}
+接口响应内容: {"code":0,"message":"删除动作成功"}
+接口响应时长: 12 ms
+Http状态码: 200
+=====================================================
+INFO    2022-11-23 11:01:26,438D:\Project\test-server\logs\info-2022-11-23.log:log_decorator.py:40 
+======================================================
+用例标题: 正常获取推荐动作
+请求路径: http://192.168.5.140:9000/s/v1/fitness/action/recommend-actions
+请求方式: GET
+请求头:   {'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'}
+请求内容: None
+接口响应内容: {"code":0,"message":"获取推荐动作列表成功","value":[{"id":"ACT2211092158130003900BF550049","name":"站立屈肘上旋","avatarId":"MTA2211101347200000100BF5501F5"},{"id":"ACT2211092158130000700BF550049","name":"屈髋直腿后伸","avatarId":"MTA2211101629440000100CF0E08D4"},{"id":"ACT2211092158130003100BF550049","name":"仰卧臂屈伸","avatarId":"MTA2211101634520000100CF0E0049"},{"id":"ACT2211092158130001700BF550049","name":"站姿夹胸","avatarId":"MTA2211101340480000100BF5548D2"},{"id":"ACT2211092158130002400BF550049","name":"正握手环弯举","avatarId":"MTA2211101631250000100CF0E08A5"},{"id":"ACT2211092158130004500BF550049","name":"肩胛后引","avatarId":"MTA2211101625570000100CF0E004C"},{"id":"ACT2211092158130003600BF550049","name":"坐姿划船","avatarId":"MTA2211101348030000100BF55004E"},{"id":"ACT2211092158130002000BF550049","name":"站姿高位夹胸","avatarId":"MTA2211101343030000100BF55004B"},{"id":"ACT2211092158130003500BF550049","name":"坐姿颈后下拉","avatarId":"MTA2211101345290000100BF55119E"},{"id":"ACT2211092158130003300BF550049","name":"坐姿向上推","avatarId":"MTA2211101344430000100BF55004F"},{"id":"ACT2211092158130001200BF550049","name":"站姿对角线伐木","avatarId":"MTA2211101636060000100CF0E004B"},{"id":"ACT2211092158130000100BF550049","name":"深蹲","avatarId":"MTA2211101627070000100CF0E004F"},{"id":"ACT2211092158130004600BF550049","name":"站姿下拉","avatarId":"MTA2211101626220000100CF0E0050"},{"id":"ACT2211092158130002900BF550049","name":"站姿臂屈伸","avatarId":"MTA2211101721340000100C02A004D"},{"id":"ACT2211092158130004200BF550049","name":"站姿划船","avatarId":"MTA2211101624130000100CF0E08A5"},{"id":"ACT2211092158130000800BF550049","name":"宽立深蹲","avatarId":"MTA2211101630040000100CF0E052B"},{"id":"ACT2211092158130003400BF550049","name":"侧平举","avatarId":"MTA2211101345000000100BF55004A"},{"id":"ACT2211092158130003800BF550049","name":"屈臂外旋","avatarId":"MTA2211101502100000100CF0E052B"},{"id":"ACT2211092158130000400BF550049","name":"俯卧腿弯举","avatarId":"MTA2211101628150000100CF0E004D"},{"id":"ACT2211092158130000500BF550049","name":"站姿直腿外展","avatarId":"MTA2211101629020000100CF0E052B"},{"id":"ACT2211092158130000300BF550049","name":"直腿硬拉","avatarId":"MTA2211101628000000100CF0E0050"},{"id":"ACT2211092158130001400BF550049","name":"单腿站姿拉臂","avatarId":"MTA2211101636500000100CF0E08A5"},{"id":"ACT2211092158130002700BF550049","name":"站姿屈肘夹胸","avatarId":"MTA2211101632330000100CF0E004F"},{"id":"ACT2211092158130002100BF550049","name":"站姿前推","avatarId":"MTA2211101342320000100BF550050"},{"id":"ACT2211092158130003200BF550049","name":"仰卧窄推","avatarId":"MTA2211101635220000100CF0E0048"},{"id":"ACT2211092158130001500BF550049","name":"体侧屈","avatarId":"MTA2211101636500000100CF0E08A5"},{"id":"ACT2211092158130004700BF550049","name":"Y字型手环伸展","avatarId":"MTA2211101626430000100CF0E004C"},{"id":"ACT2211092158130002800BF550049","name":"下压","avatarId":"MTA2211101632330000100CF0E004F"},{"id":"ACT2211092158130000900BF550049","name":"站姿握杆提踵","avatarId":"MTA2211101630320000100CF0E0051"},{"id":"ACT2211092158130003700BF550049","name":"仰卧下拉","avatarId":"MTA2211101346140000100BF55004B"},{"id":"ACT2211092158130001800BF550049","name":"站姿推胸","avatarId":"MTA2211101341230000100BF55119E"},{"id":"ACT2211092158130001600BF550049","name":"坐姿下拉侧屈","avatarId":"MTA2211101637290000100CF0E0050"},{"id":"ACT2211101200260000200BF551082","name":"拉伸动作","avatarId":"MTA2211101626430000100CF0E004C"},{"id":"ACT2211092158130004400BF550049","name":"背飞鸟","avatarId":"MTA2211101625360000100CF0E08A5"},{"id":"ACT2211092158130001000BF550049","name":"坐姿握杆提踵","avatarId":"MTA2211101630520000100CF0E0051"},{"id":"ACT2211092158130002500BF550049","name":"站姿反握二头弯举","avatarId":"MTA2211101631550000100CF0E08A5"},{"id":"ACT2211092158130004000BF550049","name":"俯身下拉","avatarId":"MTA2211101622500000100CF0E0051"},{"id":"ACT2211092158130002300BF550049","name":"单臂下拉","avatarId":"MTA2211101344020000100BF5501F5"},{"id":"ACT2211092158130000600BF550049","name":"屈髋屈膝外展","avatarId":"MTA2211101629220000100CF0E004E"},{"id":"ACT2211092158130001900BF550049","name":"站姿低位夹胸","avatarId":"MTA2211101341570000100BF554631"},{"id":"ACT2211092158130000200BF550049","name":"弓步蹲","avatarId":"MTA2211101627270000100CF0E004F"},{"id":"ACT2211101200260000700BF551082","name":"热身动作","avatarId":"MTA2211102110020000100C02A0051"},{"id":"ACT2211092158130003000BF550049","name":"坐姿屈肘弯举","avatarId":"MTA2211101633480000100CF0E0049"},{"id":"ACT2211092158130001300BF550049","name":"单腿站姿推胸","avatarId":"MTA2211101636200000100CF0E02F8"},{"id":"ACT2211092158130001100BF550049","name":"坐姿俄罗斯转体 ","avatarId":"MTA2211101635470000100CF0E004D"},{"id":"ACT2211092158130004300BF550049","name":"站姿宽握划船","avatarId":"MTA2211101624480000100CF0E004D"},{"id":"ACT2211092158130002600BF550049","name":"前平举","avatarId":"MTA2211101632160000100CF0E004E"},{"id":"ACT2211092158130004100BF550049","name":"早安式前屈","avatarId":"MTA2211101623340000100CF0E08D5"},{"id":"ACT2211092158130002200BF550049","name":"站姿双手直臂下压","avatarId":"MTA2211101343380000100BF5501F5"}]}
+接口响应时长: 8 ms
+Http状态码: 200
+=====================================================
+ERROR   2022-11-23 11:01:26,567D:\Project\test-server\logs\info-2022-11-23.log:conftest.py:127 用例总数: 201
+ERROR   2022-11-23 11:01:26,568D:\Project\test-server\logs\info-2022-11-23.log:conftest.py:128 异常用例数: 0
+INFO    2022-11-23 11:01:26,568D:\Project\test-server\logs\info-2022-11-23.log:conftest.py:131 用例执行时长: 10.25 s
+INFO    2022-11-23 11:01:26,569D:\Project\test-server\logs\info-2022-11-23.log:conftest.py:135 用例成功率: 6.97 %
