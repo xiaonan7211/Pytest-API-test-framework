@@ -1,0 +1,805 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","42","test_case.Course","test_course_by_catalog","TestCourseByCatalog","","","test_course_by_catalog[正确通过二级栏目获取课程]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:09 CST 2022","Mon Nov 21 11:54:10 CST 2022","57","test_case.ActionTrain","test_train_starting","TestTrainStarting","","","test_train_starting[正常的动作id开始训练]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:53:55 CST 2022","Mon Nov 21 11:54:00 CST 2022","5840","test_case.ActionTrain","test_action_train_ending","TestActionTrainEnding","","","test_action_train_ending[正常的训练ID获取]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","62","test_case.Classroom","test_classroom_date","TestClassroomDate","","","test_classroom_date[正常的开始与结束时间获取课堂详情]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","31","test_case.Course","test_course_collect","TestCourseCollect","","","test_course_collect[未登录状态下收藏课程]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","12","test_case.Plan","test_plan_details","TestPlanDetails","","","test_plan_details[错误的计划ID查询计划详情]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","14","test_case.Plan","test_plan_lessons","TestPlanLessons","","","test_plan_lessons[缺少字段查询]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:12 CST 2022","Mon Nov 21 11:54:12 CST 2022","14","test_case.Course","test_favorite_course","TestFavoriteCourse","","","test_favorite_course[正常获取喜好课程]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","6","test_case.Plan","test_plan_details","TestPlanDetails","","","test_plan_details[未登录的情况下计划ID查询计划详情]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:28 CST 2022","Mon Nov 21 11:54:28 CST 2022","44","test_case.SoftWare","test_software_by_type","TestSoftwareByType","","","test_software_by_type[正常的软件类型参数获取]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:24 CST 2022","Mon Nov 21 11:54:24 CST 2022","8","test_case.Freedom","test_freedom_train_process","TestFreedomTrainProcess","","","test_freedom_train_process[正确的参数提交自由训练过程1]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:18 CST 2022","Mon Nov 21 11:54:18 CST 2022","10","test_case.CourseTrain","test_course_train_process","TestCourseTrainProcess","","","test_course_train_process[字段缺少]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","82","test_case.Classroom","test_cancel_reserve","TestCancelReserve","","","test_cancel_reserve[正确的ID取消课堂预约]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","13","test_case.Classroom","test_create_room","TestCreateRoom","","","test_create_room[正常的课堂ID创建房间]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","10","test_case.Course","test_course_details","TestCourseDetails","","","test_course_details[不存在的课程id获取课程详情]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","16","test_case.Plan","test_plan_finished","TestPlanFinished","","","test_plan_finished[正常查询已执行完的计划]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","34","test_case.BodyPart","test_body_part_action_type","TestBodyPartActionType","","","test_body_part_action_type[正常的动作类型id获取部位]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:53:54 CST 2022","Mon Nov 21 11:53:54 CST 2022","12","test_case.Action","test_actions_by_body_part","TestActionsByBodyPart","","","test_actions_by_body_part[不存在的部位ID获取动作]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","7","test_case.Plan","test_plan_diet","TestPlanDiet","","","test_plan_diet[不登录情况下查询推荐饮食]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:12 CST 2022","Mon Nov 21 11:54:12 CST 2022","32","test_case.Course","test_delete_course_favorite","TestDeleteCourseFavorite","","","test_delete_course_favorite[删除收藏课程]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","64","test_case.PlanTrain","test_process_plantrain","TestProcessPlantrain","","","test_process_plantrain[正常的参数开始计划训练过程]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:53:54 CST 2022","Mon Nov 21 11:53:54 CST 2022","16","test_case.Action","test_action_details","TestActionDetails","","","test_action_details[获取动作详情为空]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","4","test_case.Plan","test_plan_lessons","TestPlanLessons","","","test_plan_lessons[不登陆情况下查询计划]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","70","test_case.Catalog","test_catalog_children","TestCatalogChildren","","","test_catalog_children[正确的一级栏目获取子级]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:53:54 CST 2022","Mon Nov 21 11:53:54 CST 2022","4","test_case.Action","test_action_details","TestActionDetails","","","test_action_details[传入状态被删除的动作详情]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","9","test_case.BodyPart","test_body_part_action_type","TestBodyPartActionType","","","test_body_part_action_type[缺少字段]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","14","test_case.Plan","test_plan_underway","TestPlanUnderway","","","test_plan_underway[错误的健身栏目ID查询加护]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","4","test_case.Plan","test_plan_lessons","TestPlanLessons","","","test_plan_lessons[指定日期参数正常，查询计划]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:16 CST 2022","Mon Nov 21 11:54:16 CST 2022","9","test_case.CourseTrain","test_course_train_ending","TestCourseTrainEnding","","","test_course_train_ending[字段缺少提交参数]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:13 CST 2022","Mon Nov 21 11:54:13 CST 2022","46","test_case.CourseTrain","test_course_recently_train","TestCourseRecentlyTrain","","","test_course_recently_train[未登录后获取最近联系课程列表]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","4","test_case.Plan","test_delete_plan","TestDeletePlan","","","test_delete_plan[正常删除计划]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","14","test_case.Plan","test_delete_plan","TestDeletePlan","","","test_delete_plan[删除不存在的计划，期望删除失败]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:28 CST 2022","Mon Nov 21 11:54:28 CST 2022","29","test_case.SearchHistory","test_hot_search_history","TestHotSearchHistory","","","test_hot_search_history[正常获取热门搜索数据]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:18 CST 2022","Mon Nov 21 11:54:18 CST 2022","42","test_case.CourseTrain","test_course_train_starting","TestCourseTrainStarting","","","test_course_train_starting[错误的课程id开始训练]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:26 CST 2022","10","test_case.Plan","test_modify_schedule","TestModifySchedule","","","test_modify_schedule[课时id为空，期望修改失败]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","134","test_case.Classroom","test_cancel_reserve","TestCancelReserve","","","test_cancel_reserve[不登录时取消课堂预约]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","15","test_case.PlanTemplate","test_plantemplate_all","TestPlantemplateAll","","","test_plantemplate_all[参数错误查询计划模板--status]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","9","test_case.Plan","test_plan_details","TestPlanDetails","","","test_plan_details[字段为空查询计划详情]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:53:54 CST 2022","Mon Nov 21 11:53:54 CST 2022","14","test_case.Action","test_all_actions","TestAllActions","","","test_all_actions[不存在的关键词获取空列表]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:00 CST 2022","Mon Nov 21 11:54:00 CST 2022","12","test_case.ActionTrain","test_action_train_ending","TestActionTrainEnding","","","test_action_train_ending[错误的ID获取]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:19 CST 2022","Mon Nov 21 11:54:19 CST 2022","10","test_case.Favorites","test_gymer_course_favorites","TestGymerCourseFavorites","","","test_gymer_course_favorites[未登录获取收藏课程]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:28 CST 2022","Mon Nov 21 11:54:28 CST 2022","14","test_case.SoftWare","test_software_by_type","TestSoftwareByType","","","test_software_by_type[错误的软件类型参数获取]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","9","test_case.Classroom","test_classroom_reserve","TestClassroomReserve","","","test_classroom_reserve[错误的课堂ID预约课堂]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:53:55 CST 2022","Mon Nov 21 11:53:55 CST 2022","43","test_case.Action","test_recommend_action","TestRecommendAction","","","test_recommend_action[正常获取推荐动作]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:24 CST 2022","Mon Nov 21 11:54:24 CST 2022","29","test_case.Freedom","test_freedom_train_starting","TestFreedomTrainStarting","","","test_freedom_train_starting[登录后开始自由训练]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:53:54 CST 2022","Mon Nov 21 11:53:54 CST 2022","154","test_case.Action","test_insert_action","TestInsertAction","","","test_insert_action[正常写入动作]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","14","test_case.PlanTrain","test_process_plantrain","TestProcessPlantrain","","","test_process_plantrain[错误的训练ID 开始计划训练过程]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:24 CST 2022","Mon Nov 21 11:54:24 CST 2022","8","test_case.Freedom","test_freedom_train_process","TestFreedomTrainProcess","","","test_freedom_train_process[缺少字段提交]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","14","test_case.BodyPart","test_top_body_parts","TestTopBodyParts","","","test_top_body_parts[获取顶级部位]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","3","test_case.Plan","test_plan_delay","TestPlanDelay","","","test_plan_delay[未登录状态下延期计划]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:53:54 CST 2022","Mon Nov 21 11:53:55 CST 2022","131","test_case.Action","test_insert_action","TestInsertAction","","","test_insert_action[参数错误写入动作，期望写入失败]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:28 CST 2022","Mon Nov 21 11:54:28 CST 2022","6","test_case.PlanTrain","test_start_plantrain","TestStartPlantrain","","","test_start_plantrain[缺少参数情况下开始计划训练]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","7","test_case.BodyPart","test_body_part_catalog","TestBodyPartCatalog","","","test_body_part_catalog[错误的健身栏目id获取1]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","8","test_case.Plan","test_plan_diet","TestPlanDiet","","","test_plan_diet[参数为空查询计划推荐饮食]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","13","test_case.Plan","test_plan_delay","TestPlanDelay","","","test_plan_delay[计划ID错误，验证返回参数]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","115","test_case.Course","test_course_details","TestCourseDetails","","","test_course_details[根据课程id获取课程详情]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:00 CST 2022","Mon Nov 21 11:54:01 CST 2022","39","test_case.ActionTrain","test_recently_train_actions","TestRecentlyTrainActions","","","test_recently_train_actions[正常登录状态获取用户最近训练动作列表]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:12 CST 2022","Mon Nov 21 11:54:12 CST 2022","33","test_case.Course","test_delete_course_favorite","TestDeleteCourseFavorite","","","test_delete_course_favorite[未登录状态下删除收藏课程]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:24 CST 2022","Mon Nov 21 11:54:24 CST 2022","5","test_case.GymerFitnessData","test_get_health_data","TestGetHealthData","","","test_get_health_data[未登录查询健康数据]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","11","test_case.PlanTemplate","test_plantemplate_details","TestPlantemplateDetails","","","test_plantemplate_details[错误的ID查询推荐计划详情]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:11 CST 2022","42","test_case.Classroom","test_classroom_enter","TestClassroomEnter","","","test_classroom_enter[正常的课堂ID进入课堂房间]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:28 CST 2022","Mon Nov 21 11:54:28 CST 2022","9","test_case.SoftWare","test_software_by_type","TestSoftwareByType","","","test_software_by_type[缺少字段查询软件版本]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:53:53 CST 2022","Mon Nov 21 11:53:53 CST 2022","9","test_case.Action","test_action_by_catalog","TestActionByCatalog","","","test_action_by_catalog[错误的健身栏目ID]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","34","test_case.PlanTemplate","test_plantemplate_all","TestPlantemplateAll","","","test_plantemplate_all[查询分页 size 3大小 的计划模板]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:53:53 CST 2022","Mon Nov 21 11:53:54 CST 2022","82","test_case.Action","test_action_details","TestActionDetails","","","test_action_details[获取动作详情]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","121","test_case.PlanTemplate","test_plantemplate_all","TestPlantemplateAll","","","test_plantemplate_all[所有条件为空，正常查询计划模板列表]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","3","test_case.Plan","test_generate_plan","TestGeneratePlan","","","test_generate_plan[正常生成计划]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","32","test_case.Course","test_course_all","TestCourseAll","","","test_course_all[关键词为空获取全部课程]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","20","test_case.Catalog","test_use_machine","TestUseMachine","","","test_use_machine[正确的健身栏目ID]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","12","test_case.Catalog","test_catalog_children","TestCatalogChildren","","","test_catalog_children[错误的一级健身栏目获取子级]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:28 CST 2022","Mon Nov 21 11:54:28 CST 2022","4","test_case.SoftWare","test_generate_ids","TestGenerateIds","","","test_generate_ids[key为空生成id]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:16 CST 2022","Mon Nov 21 11:54:18 CST 2022","1934","test_case.CourseTrain","test_course_train_process","TestCourseTrainProcess","","","test_course_train_process[正常的参数提交课程训练过程]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","101","test_case.Plan","test_plan_diet","TestPlanDiet","","","test_plan_diet[正常的计划ID查询]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","8","test_case.PlanTemplate","test_plantemplate_details","TestPlantemplateDetails","","","test_plantemplate_details[缺少ID字段查询]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","4","test_case.Plan","test_plan_review","TestPlanReview","","","test_plan_review[正确的ID查询计划评测结果]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","22","test_case.Plan","test_lesson_details","TestLessonDetails","","","test_lesson_details[正确的ID查询课时详情]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","11","test_case.Plan","test_lesson_details","TestLessonDetails","","","test_lesson_details[参数为空查询课时详情]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:22 CST 2022","Mon Nov 21 11:54:24 CST 2022","1891","test_case.Freedom","test_freedom_train_process","TestFreedomTrainProcess","","","test_freedom_train_process[正确的参数提交自由训练过程0]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","4","test_case.Plan","test_generate_plan","TestGeneratePlan","","","test_generate_plan[不登陆添加计划，期望验证是否登录]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:01 CST 2022","Mon Nov 21 11:54:01 CST 2022","24","test_case.ActionTrain","test_recently_train_actions","TestRecentlyTrainActions","","","test_recently_train_actions[未登录状态获取用户最近训练动作列表]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","5","test_case.Course","test_course_collect","TestCourseCollect","","","test_course_collect[正常收藏课程]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","34","test_case.Course","test_course_all","TestCourseAll","","","test_course_all[输入已删除的课程关键字获取]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","19","test_case.BodyPart","test_body_part_children","TestBodyPartChildren","","","test_body_part_children[正常的部位ID获取子级部位]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:18 CST 2022","Mon Nov 21 11:54:19 CST 2022","646","test_case.CourseTrain","test_getcourse_tarin_ending","TestGetcourseTarinEnding","","","test_getcourse_tarin_ending[正常的训练ID获取]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","14","test_case.Plan","test_generate_plan","TestGeneratePlan","","","test_generate_plan[计划参数错误，验证能否添加成功，期望失败]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:53:53 CST 2022","Mon Nov 21 11:53:53 CST 2022","52","test_case.Action","test_action_by_catalog","TestActionByCatalog","","","test_action_by_catalog[根据健身栏目获取动作]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:19 CST 2022","Mon Nov 21 11:54:19 CST 2022","8","test_case.CourseTrain","test_getcourse_tarin_ending","TestGetcourseTarinEnding","","","test_getcourse_tarin_ending[错误的训练ID获取]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:53:53 CST 2022","Mon Nov 21 11:53:53 CST 2022","13","test_case.Action","test_action_by_type","TestActionByType","","","test_action_by_type[不存在的动作类型]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:09 CST 2022","Mon Nov 21 11:54:09 CST 2022","7","test_case.ActionTrain","test_train_process","TestTrainProcess","","","test_train_process[缺少字段提交]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","6","test_case.Plan","test_plan_details","TestPlanDetails","","","test_plan_details[参数为空查询计划详情]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:28 CST 2022","Mon Nov 21 11:54:28 CST 2022","51","test_case.PlanTrain","test_start_plantrain","TestStartPlantrain","","","test_start_plantrain[不登录情况下正常课时ID开始计划训练]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:12 CST 2022","Mon Nov 21 11:54:13 CST 2022","32","test_case.Course","test_insert_course","TestInsertCourse","","","test_insert_course[课程名称为空创建，期望失败]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:06 CST 2022","Mon Nov 21 11:54:06 CST 2022","10","test_case.ActionTrain","test_train_ending","TestTrainEnding","","","test_train_ending[错误的ID提交结束训练]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","34","test_case.PlanTemplate","test_plantemplate_all","TestPlantemplateAll","","","test_plantemplate_all[查询 gradeId为 01的计划模板]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","4","test_case.Plan","test_plan_details","TestPlanDetails","","","test_plan_details[正常的计划ID查询计划详情]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","10","test_case.Plan","test_lesson_details","TestLessonDetails","","","test_lesson_details[不登录时查询课时详情]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","8","test_case.Course","test_delete_course","TestDeleteCourse","","","test_delete_course[删除不存在的课程]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:18 CST 2022","Mon Nov 21 11:54:18 CST 2022","20","test_case.CourseTrain","test_course_train_starting","TestCourseTrainStarting","","","test_course_train_starting[未登录时开始课程训练]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:13 CST 2022","Mon Nov 21 11:54:13 CST 2022","28","test_case.Course","test_recommend_course","TestRecommendCourse","","","test_recommend_course[获取所有推荐课程]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","29","test_case.Plan","test_plan_delay","TestPlanDelay","","","test_plan_delay[正常的计划ID延期计划]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:28 CST 2022","Mon Nov 21 11:54:28 CST 2022","14","test_case.PlanTrain","test_start_plantrain","TestStartPlantrain","","","test_start_plantrain[参数错误情况下开始计划训练]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","10","test_case.PlanTrain","test_process_plantrain","TestProcessPlantrain","","","test_process_plantrain[缺少字段提交训练中的计划]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:53:53 CST 2022","Mon Nov 21 11:53:53 CST 2022","229","test_case.Action","test_action_by_type","TestActionByType","","","test_action_by_type[正确的的动作类型获取动作]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","124","test_case.ActionTrain","test_train_starting","TestTrainStarting","","","test_train_starting[未登录状态开始动作训练]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","251","test_case.Plan","test_plan_delay","TestPlanDelay","","","test_plan_delay[传入已删除的计划ID，验证返回参数]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:19 CST 2022","Mon Nov 21 11:54:22 CST 2022","2835","test_case.Freedom","test_freedom_train_ending","TestFreedomTrainEnding","","","test_freedom_train_ending[正常的参数结束自由训练]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","34","test_case.Classroom","test_classroom_detail","TestClassroomDetail","","","test_classroom_detail[未登录时获取课堂详情]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:53:54 CST 2022","Mon Nov 21 11:53:54 CST 2022","56","test_case.Action","test_all_actions","TestAllActions","","","test_all_actions[输入关键词获取动作列表]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","9","test_case.PlanTrain","test_process_plantrain","TestProcessPlantrain","","","test_process_plantrain[不登录情况下，提交训练中的数据]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:53:53 CST 2022","Mon Nov 21 11:53:53 CST 2022","11","test_case.Action","test_action_by_catalog","TestActionByCatalog","","","test_action_by_catalog[错误的健身栏目id + 正确的部位id 获取动作]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","15","test_case.BodyPart","test_body_part_children","TestBodyPartChildren","","","test_body_part_children[错误的ID获取子级部位]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:06 CST 2022","Mon Nov 21 11:54:09 CST 2022","3816","test_case.ActionTrain","test_train_process","TestTrainProcess","","","test_train_process[正常的参数开始动作训练过程--训练5次]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","16","test_case.Plan","test_modify_schedule","TestModifySchedule","","","test_modify_schedule[正常参数修改训练日]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","26","test_case.PlanTemplate","test_plantemplate_all","TestPlantemplateAll","","","test_plantemplate_all[查询 catalogId 计划模板]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","9","test_case.PlanTemplate","test_plantemplate_diet","TestPlantemplateDiet","","","test_plantemplate_diet[缺少id字段查询饮食]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","12","test_case.Course","test_course_by_catalog_top","TestCourseByCatalogTop","","","test_course_by_catalog_top[错误的一级健身栏目]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","35","test_case.Course","test_course_all","TestCourseAll","","","test_course_all[输入关键词获取课程列表]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","4","test_case.Plan","test_plan_underway","TestPlanUnderway","","","test_plan_underway[正确的健身栏目ID查询]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:28 CST 2022","Mon Nov 21 11:54:28 CST 2022","11","test_case.Register","test_password_encrypt","TestPasswordEncrypt","","","test_password_encrypt[密码正常加密返回]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:15 CST 2022","Mon Nov 21 11:54:16 CST 2022","165","test_case.CourseTrain","test_course_train_ending","TestCourseTrainEnding","","","test_course_train_ending[错误的参数提交结束课程训练--id]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","87","test_case.Classroom","test_classroom_reserve","TestClassroomReserve","","","test_classroom_reserve[正确的课堂ID预约课堂]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","38","test_case.PlanTemplate","test_plantemplate_details","TestPlantemplateDetails","","","test_plantemplate_details[正常ID查询推荐计划详情]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","9","test_case.Plan","test_plan_diet","TestPlanDiet","","","test_plan_diet[字段为空查询计划推荐饮食]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","13","test_case.Plan","test_plan_lessons","TestPlanLessons","","","test_plan_lessons[日期参数错误查询计划，期望失败]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:13 CST 2022","Mon Nov 21 11:54:13 CST 2022","45","test_case.CourseTrain","test_course_recently_train","TestCourseRecentlyTrain","","","test_course_recently_train[登录后获取最近联系课程列表]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","38","test_case.PlanTemplate","test_recommend","TestRecommend","","","test_recommend[正常登录获取推荐计划]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","20","test_case.PlanTemplate","test_plantemplate_all","TestPlantemplateAll","","","test_plantemplate_all[参数错误查询计划模板--catalogId]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","47","test_case.Classroom","test_classroom_date","TestClassroomDate","","","test_classroom_date[跨日期查询获取课堂列表数据]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:28 CST 2022","Mon Nov 21 11:54:28 CST 2022","38","test_case.SearchHistory","test_put_search_history","TestPutSearchHistory","","","test_put_search_history[正常写入搜索历史]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","11","test_case.Classroom","test_classroom_date","TestClassroomDate","","","test_classroom_date[日期参数错误查询课堂列表]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","8","test_case.Plan","test_modify_schedule","TestModifySchedule","","","test_modify_schedule[日期参数为空，期望修改失败]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","24","test_case.PlanTemplate","test_plantemplate_details","TestPlantemplateDetails","","","test_plantemplate_details[不登录情况正常ID查询推荐计划详情]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","15","test_case.Plan","test_lesson_details","TestLessonDetails","","","test_lesson_details[错误的ID查询课时详情]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:53:54 CST 2022","Mon Nov 21 11:53:54 CST 2022","29","test_case.Action","test_all_actions","TestAllActions","","","test_all_actions[关键词为空获取全部动作]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","30","test_case.Classroom","test_classroom_detail","TestClassroomDetail","","","test_classroom_detail[正常的课堂ID获取详情]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:24 CST 2022","Mon Nov 21 11:54:24 CST 2022","12","test_case.Freedom","test_freedom_train_starting","TestFreedomTrainStarting","","","test_freedom_train_starting[不登录--开始自由训练]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","11","test_case.Plan","test_plan_review","TestPlanReview","","","test_plan_review[必传参数为空]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","14","test_case.Plan","test_plan_review","TestPlanReview","","","test_plan_review[错误的ID查询计划评测结果]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","32","test_case.PlanTemplate","test_plantemplate_all","TestPlantemplateAll","","","test_plantemplate_all[组合查询计划模板]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","14","test_case.PlanTemplate","test_plantemplate_all","TestPlantemplateAll","","","test_plantemplate_all[参数错误查询计划模板--name]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:09 CST 2022","Mon Nov 21 11:54:09 CST 2022","20","test_case.ActionTrain","test_train_process","TestTrainProcess","","","test_train_process[错误的参数提交训练过程数据]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","36","test_case.BodyPart","test_body_part_catalog","TestBodyPartCatalog","","","test_body_part_catalog[正常的健身栏目id获取]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","9","test_case.PlanTemplate","test_plantemplate_diet","TestPlantemplateDiet","","","test_plantemplate_diet[错误的计划ID查询饮食]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:28 CST 2022","Mon Nov 21 11:54:28 CST 2022","6","test_case.SoftWare","test_generate_ids","TestGenerateIds","","","test_generate_ids[缺少字段生成ids]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:13 CST 2022","Mon Nov 21 11:54:15 CST 2022","2837","test_case.CourseTrain","test_course_train_ending","TestCourseTrainEnding","","","test_course_train_ending[正常的参数提交结束课程训练]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:53:53 CST 2022","Mon Nov 21 11:53:53 CST 2022","214","test_case.Action","test_action_by_type","TestActionByType","","","test_action_by_type[动作类型为空获取全部]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","7","test_case.Plan","test_delete_plan","TestDeletePlan","","","test_delete_plan[不登陆情况下删除计划，期望校验登录]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","8","test_case.GymerFitnessData","test_put_health_data","TestPutHealthData","","","test_put_health_data[缺少参数提交设置健康数据]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","53","test_case.PlanTemplate","test_plantemplate_all","TestPlantemplateAll","","","test_plantemplate_all[根据name查询 计划模板]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","36","test_case.Classroom","test_classroom_user","TestClassroomUser","","","test_classroom_user[正常获取课堂列表]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","13","test_case.Course","test_course_all","TestCourseAll","","","test_course_all[不存在的关键词获取空列表]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","22","test_case.Catalog","test_catalog_list","TestCatalogList","","","test_catalog_list[获取一级健身栏目合集]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","8","test_case.GymerFitnessData","test_put_health_data","TestPutHealthData","","","test_put_health_data[未登录情况下正常参数设置健康数据]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:01 CST 2022","Mon Nov 21 11:54:06 CST 2022","4980","test_case.ActionTrain","test_train_ending","TestTrainEnding","","","test_train_ending[正常ID结束动作训练]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","9","test_case.Plan","test_plan_lessons","TestPlanLessons","","","test_plan_lessons[日期参数为空查询计划]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","4","test_case.Plan","test_plan_underway","TestPlanUnderway","","","test_plan_underway[未登录时根据健身栏目查询计划]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:53:54 CST 2022","Mon Nov 21 11:53:54 CST 2022","5","test_case.Action","test_all_actions","TestAllActions","","","test_all_actions[关键词为已删除的动作名称查询]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:12 CST 2022","Mon Nov 21 11:54:12 CST 2022","19","test_case.Course","test_delete_course_favorite","TestDeleteCourseFavorite","","","test_delete_course_favorite[删除不存在的课程收藏]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:24 CST 2022","Mon Nov 21 11:54:25 CST 2022","405","test_case.GymerFitnessData","test_put_health_data","TestPutHealthData","","","test_put_health_data[正常参数设置健康数据]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","10","test_case.BodyPart","test_body_part_action_type","TestBodyPartActionType","","","test_body_part_action_type[错误的动作类型id获取部位]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","369","test_case.GymerFitnessData","test_put_health_data","TestPutHealthData","","","test_put_health_data[参数为空提交数据]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:28 CST 2022","Mon Nov 21 11:54:28 CST 2022","12","test_case.SoftWare","test_generate_ids","TestGenerateIds","","","test_generate_ids[正常的key生成id]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","29","test_case.PlanTemplate","test_plantemplate_all","TestPlantemplateAll","","","test_plantemplate_all[查询状态为正常 1 的计划模板]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:00 CST 2022","Mon Nov 21 11:54:00 CST 2022","8","test_case.ActionTrain","test_action_train_ending","TestActionTrainEnding","","","test_action_train_ending[id字段不存在获取]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","28","test_case.Course","test_course_by_catalog_top","TestCourseByCatalogTop","","","test_course_by_catalog_top[正确的一级栏目获取课程]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:18 CST 2022","Mon Nov 21 11:54:18 CST 2022","170","test_case.CourseTrain","test_course_train_process","TestCourseTrainProcess","","","test_course_train_process[错误的参数提交训练过程]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:12 CST 2022","642","test_case.Course","test_delete_course","TestDeleteCourse","","","test_delete_course[删除存在的课程]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","37","test_case.PlanTemplate","test_plantemplate_add","TestPlantemplateAdd","","","test_plantemplate_add[正常的参数新增计划模板]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:53:53 CST 2022","Mon Nov 21 11:53:53 CST 2022","13","test_case.Action","test_action_by_catalog","TestActionByCatalog","","","test_action_by_catalog[健身栏目id + 错误的部位id 获取动作]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:06 CST 2022","Mon Nov 21 11:54:06 CST 2022","13","test_case.ActionTrain","test_train_ending","TestTrainEnding","","","test_train_ending[缺少字段提交]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","14","test_case.Course","test_course_collect","TestCourseCollect","","","test_course_collect[收藏不存在的课程]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:12 CST 2022","Mon Nov 21 11:54:12 CST 2022","237","test_case.Course","test_insert_course","TestInsertCourse","","","test_insert_course[正常写入课程]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","21","test_case.Course","test_course_collect","TestCourseCollect","","","test_course_collect[收藏已经存在的课程]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","14","test_case.Plan","test_plan_diet","TestPlanDiet","","","test_plan_diet[错误的计划ID查询推荐饮食]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","6","test_case.Plan","test_plan_review","TestPlanReview","","","test_plan_review[未登录时查询]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","9","test_case.ActionTrain","test_train_starting","TestTrainStarting","","","test_train_starting[参数为空开始动作训练]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","13","test_case.Classroom","test_cancel_reserve","TestCancelReserve","","","test_cancel_reserve[错误的课堂ID取消预约]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","9","test_case.Classroom","test_classroom_detail","TestClassroomDetail","","","test_classroom_detail[课堂ID错误获取课堂详情]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","35","test_case.PlanTrain","test_start_plantrain","TestStartPlantrain","","","test_start_plantrain[正常的课时ID开始计划训练]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:53:54 CST 2022","Mon Nov 21 11:53:54 CST 2022","14","test_case.Action","test_delete_action","TestDeleteAction","","","test_delete_action[删除不存在的动作，期望删除失败]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","12","test_case.BodyPart","test_body_part_catalog","TestBodyPartCatalog","","","test_body_part_catalog[错误的健身栏目id获取0]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:10 CST 2022","Mon Nov 21 11:54:10 CST 2022","28","test_case.Advertising","test_advertisings","TestAdvertisings","","","test_advertisings[正常获取广告列表]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","112","test_case.Classroom","test_classroom_reserve","TestClassroomReserve","","","test_classroom_reserve[重复预约课堂]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:19 CST 2022","Mon Nov 21 11:54:19 CST 2022","46","test_case.Favorites","test_gymer_course_favorites","TestGymerCourseFavorites","","","test_gymer_course_favorites[正常获取用户收藏的课程]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","7","test_case.Plan","test_modify_schedule","TestModifySchedule","","","test_modify_schedule[不登录修改，期望修改失败]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:53:54 CST 2022","Mon Nov 21 11:53:54 CST 2022","453","test_case.Action","test_delete_action","TestDeleteAction","","","test_delete_action[正常删除存在的动作]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:25 CST 2022","Mon Nov 21 11:54:25 CST 2022","7","test_case.Plan","test_modify_schedule","TestModifySchedule","","","test_modify_schedule[参数错误修改训练日期, 期望校验日期格式]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:53:53 CST 2022","Mon Nov 21 11:53:53 CST 2022","4","test_case.Action","test_action_by_catalog","TestActionByCatalog","","","test_action_by_catalog[健身栏目id + 部位id 获取动作]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:24 CST 2022","Mon Nov 21 11:54:24 CST 2022","217","test_case.GymerFitnessData","test_add_force_measurement","TestAddForceMeasurement","","","test_add_force_measurement[无场景情况提交 右手 测评数据]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:28 CST 2022","Mon Nov 21 11:54:28 CST 2022","11","test_case.SearchHistory","test_put_search_history","TestPutSearchHistory","","","test_put_search_history[正常写入搜索历史_不登录情况]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:18 CST 2022","Mon Nov 21 11:54:18 CST 2022","47","test_case.CourseTrain","test_course_train_starting","TestCourseTrainStarting","","","test_course_train_starting[正常的课程id开始训练]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:18 CST 2022","Mon Nov 21 11:54:18 CST 2022","222","test_case.CourseTrain","test_course_train_process","TestCourseTrainProcess","","","test_course_train_process[错误的参数提交训练过程，没有id]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:53:54 CST 2022","Mon Nov 21 11:53:54 CST 2022","62","test_case.Action","test_actions_by_body_part","TestActionsByBodyPart","","","test_actions_by_body_part[根据部位ID获取动作列表]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","18","test_case.PlanTemplate","test_recommend","TestRecommend","","","test_recommend[不登录获取推荐计划]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","41","test_case.PlanTemplate","test_plantemplate_diet","TestPlantemplateDiet","","","test_plantemplate_diet[正常的计划模板id查询饮食]","
+        :param :
+        :return:
+        "
+"failed","Mon Nov 21 11:54:12 CST 2022","Mon Nov 21 11:54:12 CST 2022","24","test_case.Course","test_insert_course","TestInsertCourse","","","test_insert_course[不传seq 创建课程,期望创建失败]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:24 CST 2022","Mon Nov 21 11:54:24 CST 2022","384","test_case.GymerFitnessData","test_get_health_data","TestGetHealthData","","","test_get_health_data[正常登录查询健康数据]","
+        :param :
+        :return:
+        "
+"broken","Mon Nov 21 11:54:26 CST 2022","Mon Nov 21 11:54:26 CST 2022","8","test_case.Plan","test_modify_schedule","TestModifySchedule","","","test_modify_schedule[缺少字段修改，预期400]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:27 CST 2022","Mon Nov 21 11:54:27 CST 2022","23","test_case.PlanTemplate","test_plantemplate_all","TestPlantemplateAll","","","test_plantemplate_all[参数错误查询计划模板--gradeId]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","13","test_case.Course","test_course_by_catalog","TestCourseByCatalog","","","test_course_by_catalog[不存在的二级栏目获取课程]","
+        :param :
+        :return:
+        "
+"passed","Mon Nov 21 11:54:11 CST 2022","Mon Nov 21 11:54:11 CST 2022","48","test_case.Classroom","test_classroom_reserve","TestClassroomReserve","","","test_classroom_reserve[不登录时预约课堂]","
+        :param :
+        :return:
+        "
