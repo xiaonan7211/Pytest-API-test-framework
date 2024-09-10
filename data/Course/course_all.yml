@@ -1,0 +1,233 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 课程服务
+  allureStory: 获取所有课程
+  mark: Course
+
+get_course_all:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-all
+    method: GET
+    detail: 关键词为空获取全部课程
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert: &assert
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言"
+
+      name:
+        jsonpath: $.value[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      id:
+        jsonpath: $.value[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "id 断言"
+
+      avatarId:
+        jsonpath: $.value[*].avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatarId 断言"
+
+      grade:
+        jsonpath: $.value[*].grade
+        type: ==
+        value: $.sql_data[*].grade_id
+        AssertType: SQL
+        message: "grade 断言"
+
+      participationPeopleNumber:
+        jsonpath: $.value[*].participationPeopleNumber
+        type: ==
+        value: $.sql_data[*].participation_people_number
+        AssertType: SQL
+        message: "participationPeopleNumber 断言"
+
+    sql:
+      - SELECT * from t_course as c LEFT JOIN t_course_statistics as s
+        on c.id=s.course_id WHERE
+        c.`status`="1"
+
+get_course_all_null:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-all
+    method: GET
+    detail: 不存在的关键词获取空列表
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      keyword: 可垃圾啊开了房间饿啊立刻解放了咖啡
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert: &assert_error
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+#        message: "errorCode 断言为 0"
+      name:
+        jsonpath: $.value
+        type: ==
+        value: []
+        AssertType:
+    sql:
+
+get_course_all_keyword:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-all
+    method: GET
+    detail: 输入关键词获取课程列表
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      keyword:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data: &case_data
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.name
+            replace_key: $.data.keyword
+    assert:
+      <<: *assert
+
+      gymeraAvatarIds:
+        jsonpath: $.value[*].gymeraAvatarIds[*]
+        type: ==
+        value: $.sql_data[*].gymera_avatarID
+        AssertType: SQL
+        message: "      gymeraAvatarIds 断言"
+
+    sql:
+      - SELECT * from t_course as c, t_course_statistics as s WHERE
+        c.id=s.course_id and c.`status`="1" and c.name="$cache{get_course_allKeyword}"
+
+      - SELECT g.avatar_id as gymera_avatarID FROM t_course as cc, t_course_train as ct,
+        t_gymer as g WHERE cc.id=ct.course_id and ct.gymer_id=g.id
+        and cc.name="$cache{get_course_allKeyword}" and cc.`status`="1"
+        ORDER BY ct.start_time desc LIMIT 3;
+
+    setup_sql:
+      - SELECT name FROM t_course WHERE `status`="1" and `name` not LIKE "%接口测试%"
+        and name != "" and video_id is NOT NULL and model_id is NOT NULL
+        and intro is NOT NULL and grade_id is NOT NULL and avatar_id is NOT NULL
+        ORDER BY RAND() LIMIT 1
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.keyword
+        # 自定义的缓存名称
+        name: get_course_allKeyword
+
+
+get_course_all_del:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-all
+    method: GET
+    detail: 输入已删除的课程关键字获取
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      keyword: 可垃圾啊开了房间饿啊立刻解放了咖啡
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      *case_data
+    assert:
+      *assert_error
+
+    sql:
+    setup_sql:
+      - SELECT `name` FROM t_course WHERE `status`="-1"
+        and name != "" order by rand() limit 1
+
+
+get_course_all_keyword_delete:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-all
+    method: GET
+    detail: 输入关键词获取课程列表_删除接口依赖该用例
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+      keyword: 接口测试创建课程
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: get_course_all
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.value[-1:].name
+            replace_key: $.data.keyword
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+#        message: "errorCode 断言为 0"
+    sql:

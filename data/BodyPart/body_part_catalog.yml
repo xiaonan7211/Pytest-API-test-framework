@@ -1,0 +1,154 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 部位服务
+  allureStory: 根据健身栏目获取部位接口
+  mark: BodyPart
+
+get_body_part_catalog:
+    host: ${{host()}}
+    url: /s/v1/fitness/body-part/catalog
+    method: GET
+    detail: 正常的健身栏目id获取
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      catalogId:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.fitness_catalog_id
+            replace_key: $.data.catalogId
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      ids:
+        jsonpath: $.value[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "      ids 断言"
+
+      pids:
+        jsonpath: $.value[*].pid
+        type: ==
+        value: $.sql_data[*].pid
+        AssertType: SQL
+        message: "  pids 断言"
+
+      names:
+        jsonpath: $.value[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "  name 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 通过健身栏目获取部位成功
+        AssertType:
+        message: "  message 断言"
+
+    sql:
+      - SELECT bp.* from t_fitness_catalog_body_part as cbp, t_body_part as bp
+        WHERE cbp.body_part_id=bp.id
+        and cbp.fitness_catalog_id="$cache{get_body_part_catalog_id}"
+
+    setup_sql:
+      - SELECT * from t_fitness_catalog_body_part WHERE body_part_id in 
+        (SELECT id from t_body_part) order by rand() LIMIT 1;
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.catalogId
+        # 自定义的缓存名称
+        name: get_body_part_catalog_id
+
+
+get_body_part_catalog_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/body-part/catalog
+    method: GET
+    detail: 错误的健身栏目id获取
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      catalogId: 2234234324324
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: []
+        AssertType:
+        message: "      value 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 通过健身栏目获取部位成功
+        AssertType:
+        message: "      message 断言"
+
+    sql:
+
+
+get_body_part_catalog_field_null:
+    host: ${{host()}}
+    url: /s/v1/fitness/body-part/catalog
+    method: GET
+    detail: 错误的健身栏目id获取
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      status_code: 400
+    sql:

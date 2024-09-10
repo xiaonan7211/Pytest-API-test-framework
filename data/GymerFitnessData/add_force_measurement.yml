@@ -1,0 +1,110 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 用户数据服务
+  allureStory: 添加健客力量测试数据接口
+  mark: GymerFitnessData
+
+put_force_measurement:
+    host: ${{host()}}
+    url: /s/v1/fitness/gymer-fitness-data/force-measurement
+    method: PUT
+    detail: 无场景情况提交 右手 测评数据
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "actionId": "动作id",
+        "actionName": "动作名称",
+        "data": {
+          "id": "",
+          "gymerId": "",
+          "metricId": "right.force",
+          "metricValue": "${{random_int(15, 30)}}",
+          "businessId": ,
+          "businessType": "${{get_name_time()}}",
+          "createTime": ""
+        }
+      }
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.a_id
+            replace_key: $.data.actionId
+
+          - dependent_type: sqlData
+            jsonpath: $.a_name
+            replace_key: $.data.actionName
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 成功
+        AssertType:
+        message: "message 断言"
+
+      not_jsonpath:
+        jsonpath: $cache{put_force_measurement_metricId}
+        type: ==
+        value: $.sql_data[*].metric_id
+        AssertType: SQL
+        message: "metric_id 断言"
+
+      not_jsonpath1:
+        jsonpath: $cache{put_force_measurement_metricValue}
+        type: ==
+        value: $.sql_data[*].metric_value
+        AssertType: SQL
+        message: "metricValue 断言"
+
+      not_jsonpath2:
+        jsonpath: $cache{gymera}
+        type: ==
+        value: $.sql_data[*].gymer_id
+        AssertType: SQL
+        message: "gymer_id 断言"
+
+      not_jsonpath3:
+        jsonpath:
+        type: not_eq
+        value: $.sql_data[*].create_time
+        AssertType: SQL
+        message: "create_time 断言"
+
+    sql:
+      - select * from t_gymer_fitness_data where business_type="$cache{put_force_measurement_name}"
+    setup_sql:
+      - SELECT id as a_id, name as a_name  FROM t_action WHERE name not LIKE "%接口测试%"
+        and name!=""  and use_machine=2 and `status`="1" ORDER BY RAND() LIMIT 1
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.data.metricId
+        # 自定义的缓存名称
+        name: put_force_measurement_metricId
+
+      - type: request
+        jsonpath: $.data.data.metricValue
+        # 自定义的缓存名称
+        name: put_force_measurement_metricValue

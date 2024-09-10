@@ -1,0 +1,244 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 计划服务
+  allureStory: 查询指定计划训练日期接口
+  mark: Plan
+
+get_plan_lessons:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/lessons
+    method: POST
+    detail: 指定日期参数正常，查询计划
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "tranTime": ""
+      }
+    dependence_case: true
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.times
+            replace_key: $.data.tranTime
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+      id:
+        jsonpath: $.value[*].plan.id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "plan_id 断言"
+      pl_id:
+        jsonpath: $.value[*].lesson.lesson.id
+        type: ==
+        value: $.sql_data[*].pl_id
+        AssertType: SQL
+        message: "pl_lesson_id 断言"
+      plan_train_times:
+        jsonpath: $.value[*].lesson.lesson.planTrainTime
+        type: ==
+        value: $.sql_data[*].plan_train_time
+        AssertType: SQL
+        message: "plan_train_times 断言"
+    sql:
+      - SELECT p.id, p.gymer_id, pl.id as pl_id, pl.plan_id, pl.plan_train_time FROM t_plan_lessons as pl, t_plan as p WHERE p.id=pl.plan_id
+        and pl.plan_train_time="$cache{plan_lessons_time}"
+        and p.gymer_id="$cache{gymera}"
+        and p.`status`=1
+    setup_sql:
+      - SELECT pl.plan_train_time as times from t_plan as l, t_plan_lessons as pl
+        WHERE l.id=pl.plan_id
+        and l.gymer_id="$cache{gymera}"
+        and l.status=1
+        GROUP BY pl.plan_train_time desc LIMIT 1
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.tranTime
+        # 自定义的缓存名称
+        name: plan_lessons_time
+
+
+get_plan_lessons_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/lessons
+    method: POST
+    detail: 日期参数错误查询计划，期望失败
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "tranTime": "2022-09-32"
+      }
+    dependence_case: false
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      value:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+        message: "value 断言"
+    sql:
+
+
+get_plan_lessons_null:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/lessons
+    method: POST
+    detail: 日期参数为空查询计划
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "tranTime": ""
+      }
+    dependence_case: false
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 数据为空
+        AssertType:
+        message: "message 断言"
+      value:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+        message: "value 断言"
+    sql:
+
+
+get_plan_lessons_not_login:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/lessons
+    method: POST
+    detail: 不登陆情况下查询计划
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "tranTime": ""
+      }
+    dependence_case: true
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.times
+            replace_key: $.data.tranTime
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 数据为空
+        AssertType:
+        message: "message 断言"
+      value:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+        message: "value 断言"
+    sql:
+    setup_sql:
+      - SELECT pl.plan_train_time as times from t_plan as l, t_plan_lessons as pl
+        WHERE l.id=pl.plan_id
+        and l.gymer_id="$cache{gymera}"
+        and l.status=1
+        GROUP BY pl.plan_train_time desc LIMIT 1
+
+
+get_plan_lessons_field_null:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/lessons
+    method: POST
+    detail: 缺少字段查询
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+
+    dependence_case: false
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      status_code: 400
+
+    sql:

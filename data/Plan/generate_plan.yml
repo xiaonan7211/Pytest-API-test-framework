@@ -1,0 +1,155 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 计划服务
+  allureStory: 生成计划接口
+  mark: Plan
+
+insert_plan:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/generate
+    method: POST
+    detail: 正常生成计划
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data: &data
+      ignore_list: {
+        "height": 65000,
+        "weight": 180,
+        "age": 18,
+        "gender": 1,
+        "catalogId": "/01/02",
+        "weeklyTrainingDays": [
+          0, 1, 2, 3, 4, 5, 6
+        ]
+      }
+    dependence_case: true
+    # 依赖同一个接口多个数据
+    dependence_case_data: &dependence_case_data
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.fitness_catalog_id
+            replace_key: $.data.catalogId
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+#        message: "errorCode 断言为 0"
+      # 断言接口状态码
+      message:
+        jsonpath: $.message
+        type: ==
+        value: "成功"
+        AssertType:
+#        message: "errorCode 断言为 0"
+    sql:
+    setup_sql: &setup_sql
+      - SELECT fca.action_id, fca.fitness_catalog_id, a.name FROM t_fitness_catalog_action as fca, t_action as a
+        WHERE fca.action_id=a.id
+        and a.status="1" ORDER BY RAND() LIMIT 1
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: response
+        jsonpath: $.value
+        # 自定义的缓存名称
+        name: insert_plan_ID
+
+insert_plan_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/generate
+    method: POST
+    detail: 计划参数错误，验证能否添加成功，期望失败
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore_list: {
+        "height": 65000,
+        "weight": 180,
+        "age": 18,
+        "gender": 1,
+        "catalogId": "2324324324",
+        "weeklyTrainingDays": [
+        ]
+      }
+    dependence_case: false
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      # 断言接口状态码
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 数据为空
+        AssertType:
+        message: "message 断言"
+    sql:
+
+
+insert_plan_not_login:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/generate
+    method: POST
+    detail: 不登陆添加计划，期望验证是否登录
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      <<: *data
+
+    dependence_case: true
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+      *dependence_case_data
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+#        message: "errorCode 断言为 0"
+      # 断言接口状态码
+      message:
+        jsonpath: $.message
+        type: ==
+        value: "用户不存在"
+        AssertType:
+#        message: "errorCode 断言为 0"
+    sql:
+    setup_sql:
+      *setup_sql

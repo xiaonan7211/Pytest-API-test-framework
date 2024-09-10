@@ -1,0 +1,312 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 课堂服务
+  allureStory: 获取课堂详情接口
+  mark: Classroom
+
+get_classroom_detail:
+    host: ${{host()}}
+    url: /s/v1/fitness/classroom/detail
+    method: GET
+    detail: 正常的课堂ID获取详情
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      roomId:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data: &case_data
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.roomId
+    assert: &assert
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言"
+
+      id:
+        jsonpath: $.value.id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "id 断言"
+
+      name:
+        jsonpath: $.value.name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      intro:
+        jsonpath: $.value.intro
+        type: ==
+        value: $.sql_data[*].intro
+        AssertType: SQL
+        message: "intro 断言"
+
+      description:
+        jsonpath: $.value.description
+        type: ==
+        value: $.sql_data[*].description
+        AssertType: SQL
+        message: "description 断言"
+
+      avatarId:
+        jsonpath: $.value.avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatarId 断言"
+
+      videoId:
+        jsonpath: $.value.videoId
+        type: ==
+        value: $.sql_data[*].video_id
+        AssertType: SQL
+        message: "videoId 断言"
+
+      gradeId:
+        jsonpath: $.value.gradeId
+        type: ==
+        value: $.sql_data[*].grade_id
+        AssertType: SQL
+        message: "gradeId 断言"
+
+      isOpenVideo:
+        jsonpath: $.value.isOpenVideo
+        type: bool_eq
+        value: $.sql_data[*].is_open_video
+        AssertType: SQL
+        message: "isOpenVideo 断言"
+
+      duration:
+        jsonpath: $.value.duration
+        type: ==
+        value: $.sql_data[*].duration
+        AssertType: SQL
+        message: "duration 断言"
+
+      limitNumber:
+        jsonpath: $.value.limitNumber
+        type: ==
+        value: $.sql_data[*].limit_number
+        AssertType: SQL
+        message: "limitNumber 断言"
+
+      patternId:
+        jsonpath: $.value.patternId
+        type: ==
+        value: $.sql_data[*].pattern_id
+        AssertType: SQL
+        message: "patternId 断言"
+
+#      machineId:
+#        jsonpath: $.value.machineId
+#        type: ==
+#        value: $.sql_data[*].machine_id
+#        AssertType: SQL
+#        message: "machineId 断言"
+
+#      calorie:
+#        jsonpath: $.value.calorie
+#        type: ==
+#        value: $.sql_data[*].calorie
+#        AssertType: SQL
+#        message: "calorie 断言"
+
+      status:
+        jsonpath: $.value.status
+        type: ==
+        value: $.sql_data[*].cr_status
+        AssertType: SQL
+        message: "status 断言"
+
+      gymerId:
+        jsonpath: $.value.coach.gymerId
+        type: ==
+        value: $.sql_data[*].gymer_id
+        AssertType: SQL
+        message: "gymerId 断言"
+
+      coach_name:
+        jsonpath: $.value.coach.name
+        type: ==
+        value: $.sql_data[*].c_name
+        AssertType: SQL
+        message: "coach_name 断言"
+
+      coach_avatarId:
+        jsonpath: $.value.coach.avatarId
+        type: ==
+        value: $.sql_data[*].c_avatarID
+        AssertType: SQL
+        message: "coach_avatarId 断言"
+
+      coach_intro:
+        jsonpath: $.value.coach.intro
+        type: ==
+        value: $.sql_data[*].c_intro
+        AssertType: SQL
+        message: "coach_intro 断言"
+
+      coach_description:
+        jsonpath: $.value.coach.description
+        type: ==
+        value: $.sql_data[*].c_description
+        AssertType: SQL
+        message: "coach_description 断言"
+
+      coachFitnessCatalog:
+        jsonpath: $.value.coachFitnessCatalog[*]
+        type: ==
+        value: $.sql_data[*].fc_name
+        AssertType: SQL
+        message: "coachFitnessCatalog 断言"
+
+      openVideo:
+        jsonpath: $.value.openVideo
+        type: bool_eq
+        value: $.sql_data[*].is_open_video
+        AssertType: SQL
+        message: "openVideo 断言"
+
+      classRoomUser:
+        jsonpath: $.value.classRoomUser[*].classRoomUser
+        type: ==
+        value: $.sql_data[*].g_id
+        AssertType: SQL
+        message: "classRoomUser 断言"
+
+      coachAvatarId:
+        jsonpath: $.value.classRoomUser[*].coachAvatarId
+        type: ==
+        value: $.sql_data[*].g_avatarID
+        AssertType: SQL
+        message: "coachAvatarId 断言"
+
+    sql:
+      - SELECT cr.*, IF(cr.is_open_video=1, 6, cr.`status`) cr_status, 
+        c.gymer_id, c.name c_name, c.avatar_id c_avatarID,
+        c.intro c_intro, c.description c_description
+        FROM `t_class_room` cr LEFT JOIN t_coach c
+        ON cr.coach_id=c.gymer_id
+        WHERE cr.id="$cache{get_classroom_detail_ID}";
+
+      # 健身栏目
+      - SELECT fc.`name` fc_name FROM `t_class_room` cr LEFT JOIN t_fitness_catalog_coach fcc
+        ON cr.coach_id=fcc.coach_id LEFT JOIN t_fitness_catalog fc
+        ON fcc.catalog_id=fc.id
+        WHERE cr.id="$cache{get_classroom_detail_ID}";
+
+      # 预约过课堂的用户
+      - SELECT g.id g_id, g.avatar_id g_avatarID FROM t_class_room_reserve crr INNER JOIN t_gymer g
+        ON crr.gymer_id=g.id
+        WHERE crr.room_id="$cache{get_classroom_detail_ID}"
+
+    setup_sql: &setup_sql
+      - SELECT cr.id FROM `t_class_room` cr LEFT JOIN t_class_room_reserve crr
+        ON crr.room_id=cr.id
+        WHERE crr.room_id is NOT NULL and cr.coach_id is not NULL
+        ORDER BY RAND() LIMIT 1;
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.roomId
+        # 自定义的缓存名称
+        name: get_classroom_detail_ID
+
+
+get_classroom_detail_notLogin:
+    host: ${{host()}}
+    url: /s/v1/fitness/classroom/detail
+    method: GET
+    detail: 未登录时获取课堂详情
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      roomId:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      *case_data
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 用户不存在
+        AssertType:
+        message: "message 断言"
+    sql:
+    setup_sql:
+      *setup_sql
+
+
+get_classroom_detail_paramError:
+    host: ${{host()}}
+    url: /s/v1/fitness/classroom/detail
+    method: GET
+    detail: 课堂ID错误获取课堂详情
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      roomId: 1223223233434
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: class-room-detail.isnull
+        AssertType:
+        message: "message 断言"
+    sql:
+

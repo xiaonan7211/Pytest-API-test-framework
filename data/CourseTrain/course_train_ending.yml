@@ -1,0 +1,154 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 课程训练服务
+  allureStory: 结束课程训练接口
+  mark: CourseTrain
+
+course_train_ending_01:
+    host: ${{host()}}
+    url: /s/v1/fitness/course-train/course-train-ending
+    method: POST
+    detail: 正常的参数提交结束课程训练
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "id": "$cache{course_train_starting_02_______trainDd}",
+        "trainTime": "${{random_int(1000, 2000)}}",
+      }
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: course_train_process_01
+        dependent_data:
+          - dependent_type: request
+            jsonpath: false
+            replace_key: false
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+#      not_jsonpath_1:
+#        jsonpath: $cache{course_trainID}
+#        type: ==
+#        value: $.sql_data[0].business_id
+#        AssertType: SQL
+#        message: "business_id 断言为 "
+#
+#      not_jsonpath_2:
+#        jsonpath: [1000, 30, 16, 3, 35, 600]
+#        type: ==
+#        value: $.sql_data[*].metric_value
+#        AssertType: SQL
+#        message: "metric_value 断言"
+#
+#      not_jsonpath_3:
+#        jsonpath: ["train.time", "train.calorie", "max.pull", "average.pull", "action.frequency", "train.score"]
+#        type: ==
+#        value: $.sql_data[*].metric_id
+#        AssertType: SQL
+#        message: "metric_value 断言"
+#
+#      not_jsonpath_4:
+#        jsonpath: $cache{gymera}
+#        type: ==
+#        value: $.sql_data[0].gymer_id
+#        AssertType: SQL
+#        message: "gymer_id 断言"
+
+    sql:
+      - SELECT * FROM t_gymer_fitness_data WHERE business_id="$cache{course_train_starting_02_______trainDd}"
+        and business_type="course-train.end"
+
+
+course_train_ending_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/course-train/course-train-ending
+    method: POST
+    detail: 错误的参数提交结束课程训练--id
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "id": "2334654423435436",
+        "trainTime": "${{random_int(1000, 2000)}}",
+      }
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 此课程训练记录不存在
+        AssertType:
+        message: "message 断言"
+
+      not_jsonpath:
+        jsonpath: 0
+        type: ==
+        value: $.sql_data[*].count_n
+        AssertType: SQL
+        message: "count_n 断言"
+
+    sql:
+      - SELECT count(*) as count_n FROM t_gymer_fitness_data WHERE business_id="222222222222222"
+        and business_type="course-train.end"
+
+
+course_train_ending_field_null:
+    host: ${{host()}}
+    url: /s/v1/fitness/course-train/course-train-ending
+    method: POST
+    detail: 字段缺少提交参数
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      status_code: 400
+    sql:
+
+

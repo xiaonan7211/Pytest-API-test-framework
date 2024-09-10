@@ -1,0 +1,113 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 计划训练服务
+  allureStory: 结束计划训练接口
+  mark: PlanTrain
+
+end_plantarin_01:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantrain/end
+    method: POST
+    detail: 正常的训练记录ID结束计划训练
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+      {
+        "id": "$cache{start_plantrain_01ID}",
+        "trainTime": 1200,
+        "assessmentLevelId": "03",
+        "calorie": "${{random_int(400, 800)}}",
+        "maxPull": "${{random_int(10, 20)}}",
+        "averagePull": "${{random_int(10, 15)}}",
+        "actionFrequency": "${{random_int(4, 7)}}",
+        "score": "${{random_int(30, 50)}}"
+      }
+    dependence_case: true
+
+    dependence_case_data:
+      # 先创建一个计划，把计划ID存到缓存
+      - case_id: process_plantrain_01
+        dependent_data:
+          - dependent_type: request
+            jsonpath: false
+            replace_key: false
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: "成功"
+        AssertType:
+        message: "message 断言"
+#
+#      value:
+#        jsonpath: $.value
+#        type: ==
+#        value: $.sql_data[*].id
+#        AssertType: SQL
+#        message: "value 断言"
+#
+#      not_jsonpath:
+#        jsonpath: $cache{start_plantrain_01ignore}
+#        type: ==
+#        value: $.sql_data[*].lesson_id
+#        AssertType: SQL
+#        message: "lesson_id 断言"
+#
+#      not_jsonpath1:
+#        jsonpath: $cache{gymera}
+#        type: ==
+#        value: $.sql_data[*].gymer_id
+#        AssertType: SQL
+#        message: "gymer_id 断言"
+#
+#      not_jsonpath2:
+#        jsonpath:
+#        type: not_eq
+#        value: $.sql_data[*].start_time
+#        AssertType: SQL
+#        message: "start_time 断言"
+#
+#      not_jsonpath3:
+#        jsonpath:
+#        type: ==
+#        value: $.sql_data[*].end_time
+#        AssertType: SQL
+#        message: "end_time 断言"
+
+    sql:
+#      - select * from t_plan_train where id="$cache{start_plantrain_01ID}"
+#
+#    setup_sql:
+#      - SELECT pl.id FROM t_plan p, t_plan_group pg, t_plan_lessons pl
+#        WHERE p.id=pg.plan_id and pg.id=pl.plan_group_id
+#        and p.id="$cache{insert_plan_ID}" ORDER BY RAND() LIMIT 1;
+#
+#    current_request_set_cache:
+#      # 1、response 从响应中提取内容  2、request从请求中提取内容
+#      - type: response
+#        jsonpath: $.value
+#        # 自定义的缓存名称
+#        name: start_plantrain_01ID
+#
+#      - type: request
+#        jsonpath: $.data.ignore
+#        # 自定义的缓存名称
+#        name: start_plantrain_01ignore

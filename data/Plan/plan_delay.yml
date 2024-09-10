@@ -1,0 +1,197 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 计划服务
+  allureStory: 延期计划接口
+  mark: Plan
+
+plan_delay_01:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/delay
+    method: POST
+    detail: 正常的计划ID延期计划
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore: ""
+    dependence_case: true
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.p_id
+            replace_key: $.data.ignore
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+#        message: "errorCode 断言为 0"
+#      not_jsonpath:
+#        jsonpath: -2
+#        type: ==
+#        value: $.status
+#        AssertType: SQL
+#        message: "errorCode 断言为 0"
+    sql:
+#      - select status from t_plan where id="$cache{delete_plan_id}"
+    setup_sql:
+      - SELECT pl.plan_id as p_id  from t_plan as l, t_plan_lessons as pl
+        WHERE l.id=pl.plan_id
+        and l.gymer_id="$cache{gymera}"
+        and l.status=1
+        GROUP BY pl.plan_train_time desc LIMIT 1
+#    current_request_set_cache:
+#      # 1、response 从响应中提取内容  2、request从请求中提取内容
+#      - type: request
+#        jsonpath: $.data.ignore
+#        # 自定义的缓存名称
+#        name: delete_plan_id
+
+
+plan_delay_not_login:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/delay
+    method: POST
+    detail: 未登录状态下延期计划
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore: ""
+    dependence_case: true
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.p_id
+            replace_key: $.data.ignore
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 数据为空
+        AssertType:
+    sql:
+#      - select status from t_plan where id="$cache{delete_plan_id}"
+    setup_sql:
+      - SELECT pl.plan_id as p_id  from t_plan as l, t_plan_lessons as pl
+        WHERE l.id=pl.plan_id
+        and l.gymer_id="$cache{gymera}"
+        and l.status=1
+        GROUP BY pl.plan_train_time desc LIMIT 1
+#    current_request_set_cache:
+#      # 1、response 从响应中提取内容  2、request从请求中提取内容
+#      - type: request
+#        jsonpath: $.data.ignore
+#        # 自定义的缓存名称
+#        name: delete_plan_id
+
+
+plan_delay_not_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/delay
+    method: POST
+    detail: 计划ID错误，验证返回参数
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore: "22222222222222222222222"
+    dependence_case: false
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 计划不存在
+        AssertType:
+    sql:
+
+
+plan_delay_not_error_01:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/delay
+    method: POST
+    detail: 传入已删除的计划ID，验证返回参数
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore: "22222222222222222222222"
+    dependence_case: true
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.p_id
+            replace_key: $.data.ignore
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 失败
+        AssertType:
+    sql:
+    setup_sql:
+      - SELECT pl.plan_id as p_id  from t_plan as l, t_plan_lessons as pl
+        WHERE l.id=pl.plan_id
+        and l.gymer_id="$cache{gymera}"
+        and l.status=-2
+        GROUP BY pl.plan_train_time desc LIMIT 1

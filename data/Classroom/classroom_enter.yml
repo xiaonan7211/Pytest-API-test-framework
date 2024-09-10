@@ -1,0 +1,54 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 课堂服务
+  allureStory: 进入课堂房间接口
+  mark: Classroom
+
+classroom_enter:
+    host: ${{host()}}
+    url: /s/v1/fitness/classroom/enter
+    method: PUT
+    detail: 正常的课堂ID进入课堂房间
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      roomId:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data: &case_data
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.roomId
+
+    assert:
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 课堂取消预约成功
+        AssertType:
+        message: "message 断言"
+
+    sql:
+      - SELECT count(*) as g_count FROM t_class_room_reserve WHERE gymer_id="$cache{gymera}"
+    setup_sql:
+      - SELECT id FROM `t_class_room`
+        WHERE coach_id is not NULL
+        ORDER BY RAND() LIMIT 1;

@@ -1,0 +1,297 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 课堂服务
+  allureStory: 预约课堂接口
+  mark: Classroom
+
+classroom_reserve:
+    host: ${{host()}}
+    url: /s/v1/fitness/classroom/reserve
+    method: POST
+    detail: 正确的课堂ID预约课堂
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      roomId:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data: &case_data
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.roomId
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.g_count
+            set_cache: classroom_reserve_count
+
+    assert:
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 预约课堂成功
+        AssertType:
+        message: "message 断言"
+
+      not_jsonpath:
+        jsonpath: "$cache{classroom_reserve_count} + 1"
+        type: cl_eq
+        value: $.sql_data[*].g_count
+        AssertType: SQL
+        message: "errorCode 断言"
+
+      not_jsonpath1:
+        jsonpath: null
+        type: ==
+        value: $.sql_data[*].entrance_time
+        AssertType: SQL
+        message: "entrance_time 断言"
+
+      not_jsonpath2:
+        jsonpath: null
+        type: ==
+        value: $.sql_data[*].leave_time
+        AssertType: SQL
+        message: "leave_time 断言"
+
+      not_jsonpath3:
+        jsonpath: "$cache{classroom_reserveID}"
+        type: ==
+        value: $.sql_data[*].room_id
+        AssertType: SQL
+        message: "room_id 断言"
+
+    sql:
+      - SELECT count(*) as g_count FROM t_class_room_reserve WHERE gymer_id="$cache{gymera}"
+      - SELECT * FROM t_class_room_reserve WHERE gymer_id="$cache{gymera}" ORDER BY reserve_time DESC LIMIT 1
+    setup_sql: &setup_sql
+      - SELECT id FROM `t_class_room`
+        WHERE coach_id is not NULL and id not in
+        (SELECT room_id FROM t_class_room_reserve WHERE gymer_id="USR22082018194900001003CB70029")
+        ORDER BY RAND() LIMIT 1;
+
+      - SELECT count(*) as g_count FROM t_class_room_reserve WHERE gymer_id="$cache{gymera}"
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.roomId
+        # 自定义的缓存名称
+        name: classroom_reserveID
+
+    teardown:
+      # 删除
+      - case_id: classroom_cancel_reserve_copy
+        # 删除的话，我们是直接发送请求的，因此我们这里写 send_request
+        send_request:
+          # 直接拿缓存的数据
+          - dependent_type: cache
+            # 这个是缓存的key
+            cache_data: "classroom_reserveID"
+            # 通过relace_key 去替换 classroom_cancel_reserve_copy 中的 room
+            replace_key: $.data.roomId
+
+
+classroom_reserve_paramError:
+    host: ${{host()}}
+    url: /s/v1/fitness/classroom/reserve
+    method: POST
+    detail: 错误的课堂ID预约课堂
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      roomId: 32432432524
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: class-room-detail.isnull
+        AssertType:
+        message: "message 断言"
+    sql:
+
+
+classroom_reserve_notLogin:
+    host: ${{host()}}
+    url: /s/v1/fitness/classroom/reserve
+    method: POST
+    detail: 不登录时预约课堂
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      roomId:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      *case_data
+    assert:
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 用户不存在
+        AssertType:
+        message: "message 断言"
+
+      not_jsonpath:
+        jsonpath: "$cache{classroom_reserve_count}"
+        type: ==
+        value: $.sql_data[*].g_count
+        AssertType: SQL
+        message: "g_count 断言"
+
+    sql:
+      - SELECT count(*) as g_count FROM t_class_room_reserve WHERE gymer_id="$cache{gymera}"
+    setup_sql:
+      *setup_sql
+
+
+classroom_reserve_repetition:
+    host: ${{host()}}
+    url: /s/v1/fitness/classroom/reserve
+    method: POST
+    detail: 重复预约课堂
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      roomId: "$cache{classroom_reserve_copyID}"
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      # 先预约
+      - case_id: classroom_reserve_copy
+        dependent_data:
+          - dependent_type: request
+            jsonpath: false
+            replace_key: false
+    assert:
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: class-room-repetition-reserve.fail
+        AssertType:
+        message: "message 断言"
+
+    sql:
+    teardown:
+      # 删除
+      - case_id: classroom_cancel_reserve_copy
+        # 删除的话，我们是直接发送请求的，因此我们这里写 send_request
+        send_request:
+          # 直接拿缓存的数据
+          - dependent_type: cache
+            # 这个是缓存的key
+            cache_data: "classroom_reserve_copyID"
+            # 通过relace_key 去替换 classroom_cancel_reserve_copy 中的 room
+            replace_key: $.data.roomId
+
+
+
+classroom_reserve_copy:
+    host: ${{host()}}
+    url: /s/v1/fitness/classroom/reserve
+    method: POST
+    detail: 默认不执行的用例，创建预约课堂数据用
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+      roomId:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.roomId
+
+    assert:
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言"
+
+    sql:
+    setup_sql:
+      *setup_sql
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.roomId
+        # 自定义的缓存名称
+        name: classroom_reserve_copyID

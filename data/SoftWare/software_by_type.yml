@@ -1,0 +1,159 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 软件版本服务
+  allureStory: 根据软件类型获取软件版本信息接口
+  mark: SoftWare
+
+get_software_by_type:
+    host: ${{host()}}
+    url: /s/v1/fitness/software/software-by-type
+    method: GET
+    detail: 正常的软件类型参数获取
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里cookie的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      type:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.type
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 根据软件类型获取软件版本信息成功
+        AssertType:
+        message: "message 断言"
+
+      type:
+        jsonpath: $.value.type
+        type: ==
+        value: $.sql_data[*].type
+        AssertType: SQL
+        message: "type 断言"
+
+      fileId:
+        jsonpath: $.value.fileId
+        type: ==
+        value: $.sql_data[*].file_id
+        AssertType: SQL
+        message: "fileId 断言"
+
+      version:
+        jsonpath: $.value.version
+        type: ==
+        value: $.sql_data[*].version
+        AssertType: SQL
+        message: "version 断言"
+
+      contentId:
+        jsonpath: $.value.contentId
+        type: ==
+        value: $.sql_data[*].content_id
+        AssertType: SQL
+        message: "contentId 断言"
+
+    sql:
+      - SELECT * FROM t_software WHERE type="$cache{get_software_by_type_id}"
+    setup_sql:
+      - SELECT id FROM t_software_type WHERE name="大屏APP";
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.type
+        # 自定义的缓存名称
+        name: get_software_by_type_id
+
+
+get_software_by_type_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/software/software-by-type
+    method: GET
+    detail: 错误的软件类型参数获取
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里cookie的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      type: 243543
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 根据软件类型获取软件版本信息成功
+        AssertType:
+        message: "message 断言"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+        message: "value 断言"
+    sql:
+
+
+get_software_by_type_null_field:
+    host: ${{host()}}
+    url: /s/v1/fitness/software/software-by-type
+    method: GET
+    detail: 缺少字段查询软件版本
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里cookie的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      status_code: 400
+    sql:
+
+

@@ -1,0 +1,149 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 课程服务
+  allureStory: 删除课程接口
+  mark: Course
+
+delete_course_01:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/delete
+    method: DELETE
+    detail: 删除不存在的课程
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    # data传参 时，定义了 ignore 代表忽略字段（ data = "str"）
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore: "22222"
+
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "code 断言为 -1"
+
+      messages:
+        jsonpath: $.message
+        type: ==
+        value: 数据为空
+        AssertType:
+        message: "message 断言数据为空"
+    sql:
+
+
+delete_course_02:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/delete
+    method: DELETE
+    detail: 删除存在的课程
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    # data传参 时，定义了 ignore 代表忽略字段（ data = "str"）
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore:
+
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: insert_course_02
+        dependent_data:
+          - dependent_type: request
+            jsonpath: false
+            replace_key: false
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.ignore
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "code 断言为 0"
+
+      messages:
+        jsonpath: $.message
+        type: ==
+        value: 删除课程成功
+        AssertType:
+        message: "message 断言"
+
+      not_jsonpath:
+        jsonpath: -1
+        type: ==
+        value: $.sql_data[*].status
+        AssertType: SQL
+        message: "status 断言为 0"
+
+    sql:
+      - SELECT status from t_course WHERE name="$cache{insert_course_02_name}"
+      # 前置请求依赖sql
+    setup_sql:
+      - SELECT id from t_course WHERE name="$cache{insert_course_02_name}"
+
+
+delete_course_03:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/delete
+    method: DELETE
+    detail: 新增课程成功后依赖该用例删除新增的课程，默认不执行
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    # data传参 时，定义了 ignore 代表忽略字段（ data = "str"）
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+      ignore:
+
+    dependence_case: true
+    # 依赖的数据, 通过数据库查询入参
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.ignore
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+#        message: "code 断言为 0"
+    sql:
+      - select status from t_course WHERE name="$cache{insert_course_01_name}"
+    setup_sql:
+      - SELECT id from t_course WHERE name="$cache{insert_course_01_name}"

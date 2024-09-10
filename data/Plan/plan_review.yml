@@ -1,0 +1,197 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 计划服务
+  allureStory: 查询计划评测结果接口
+  mark: Plan
+
+plan_review_get:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/review
+    method: GET
+    detail: 正确的ID查询计划评测结果
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "id": ""
+      }
+    dependence_case: true
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.id
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+#      ids:
+#        jsonpath: $.value[*].id
+#        type: ==
+#        value: $.sql_data[*].id
+#        AssertType: SQL
+#        message: "errorCode 断言为 0"
+    sql:
+#      - SELECT id FROM t_plan WHERE gymer_id="USR22082018194900001003CB70029" and status=1
+#        and catalog_id="$cache{underway_catalog}"
+    setup_sql:
+      - SELECT id FROM t_plan WHERE gymer_id="$cache{gymera}" and status=1
+        ORDER BY create_time ASC LIMIT 1
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: plan_review_get_id
+
+
+plan_review_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/review
+    method: GET
+    detail: 错误的ID查询计划评测结果
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "id": "22222222"
+      }
+    dependence_case: false
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 计划不存在
+        AssertType:
+      values:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+    sql:
+
+
+plan_review_null:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/review
+    method: GET
+    detail: 必传参数为空
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "id": ""
+      }
+    dependence_case: false
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 数据为空
+        AssertType:
+      values:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+    sql:
+
+
+plan_review_not_login:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/review
+    method: GET
+    detail: 未登录时查询
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "id": ""
+      }
+    dependence_case: true
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.id
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 数据为空
+        AssertType:
+      values:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+    sql:
+    setup_sql:
+      - SELECT id FROM t_plan WHERE gymer_id="$cache{gymera}" and status=1
+        ORDER BY create_time ASC LIMIT 1

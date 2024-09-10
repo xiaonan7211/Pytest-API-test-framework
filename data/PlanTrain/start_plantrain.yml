@@ -1,0 +1,243 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 计划训练服务
+  allureStory: 开始计划训练接口
+  mark: PlanTrain
+
+start_plantrain_01:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantrain/start
+    method: POST
+    detail: 正常的课时ID开始计划训练
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore:
+    dependence_case: true
+
+    dependence_case_data:
+      # 先创建一个计划，把计划ID存到缓存
+      - case_id: insert_plan
+        dependent_data:
+          - dependent_type: request
+            jsonpath: false
+            replace_key: false
+
+      # 通过计划ID 查询到 课时ID
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.ignore
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: "成功"
+        AssertType:
+        message: "message 断言"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "value 断言"
+
+      not_jsonpath:
+        jsonpath: $cache{start_plantrain_01ignore}
+        type: ==
+        value: $.sql_data[*].lesson_id
+        AssertType: SQL
+        message: "lesson_id 断言"
+
+      not_jsonpath1:
+        jsonpath: $cache{gymera}
+        type: ==
+        value: $.sql_data[*].gymer_id
+        AssertType: SQL
+        message: "gymer_id 断言"
+
+      not_jsonpath2:
+        jsonpath:
+        type: not_eq
+        value: $.sql_data[*].start_time
+        AssertType: SQL
+        message: "start_time 断言"
+
+      not_jsonpath3:
+        jsonpath:
+        type: ==
+        value: $.sql_data[*].end_time
+        AssertType: SQL
+        message: "end_time 断言"
+
+    sql:
+      - select * from t_plan_train where id="$cache{start_plantrain_01ID}"
+
+    setup_sql:
+      - SELECT pl.id FROM t_plan p, t_plan_group pg, t_plan_lessons pl
+        WHERE p.id=pg.plan_id and pg.id=pl.plan_group_id
+        and p.id="$cache{insert_plan_ID}" ORDER BY RAND() LIMIT 1;
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: response
+        jsonpath: $.value
+        # 自定义的缓存名称
+        name: start_plantrain_01ID
+
+      - type: request
+        jsonpath: $.data.ignore
+        # 自定义的缓存名称
+        name: start_plantrain_01ignore
+
+
+start_plantrain_not_login:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantrain/start
+    method: POST
+    detail: 不登录情况下正常课时ID开始计划训练
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore:
+    dependence_case: true
+
+    dependence_case_data:
+      # 先创建一个计划，把计划ID存到缓存
+      - case_id: insert_plan
+        dependent_data:
+          - dependent_type: request
+            jsonpath: false
+            replace_key: false
+
+      # 通过计划ID 查询到 课时ID
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.ignore
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 数据为空
+        AssertType:
+        message: "message 断言"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+        message: "value 断言"
+
+    sql:
+    setup_sql:
+      - SELECT pl.id FROM t_plan p, t_plan_group pg, t_plan_lessons pl
+        WHERE p.id=pg.plan_id and pg.id=pl.plan_group_id
+        and p.id="$cache{insert_plan_ID}" ORDER BY RAND() LIMIT 1;
+
+
+start_plantrain_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantrain/start
+    method: POST
+    detail: 参数错误情况下开始计划训练
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore: 564543545645
+    dependence_case: false
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 计划课时不存在
+        AssertType:
+        message: "message 断言"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+        message: "value 断言"
+    sql:
+
+
+start_plantrain_null_field:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantrain/start
+    method: POST
+    detail: 缺少参数情况下开始计划训练
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+    dependence_case: false
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      status_code: 400
+    sql:

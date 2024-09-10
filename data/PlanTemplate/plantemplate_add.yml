@@ -1,0 +1,112 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 计划模板服务
+  allureStory: 新增计划模板接口
+  mark: PlanTemplate
+
+plan_template_add:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/add
+    method: POST
+    detail: 正常的参数新增计划模板
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "plan": {
+          "name": "${{get_name_time()}}",
+          "catalogId": "健身需求id",
+          "gradeId": "等级",
+          "createBy": "$cache{gymera}",
+          "updateBy": "",
+          "avatarId": "",
+          "useMachine": 1,
+          "bgm": "",
+          "lessons": 3,
+          "groups": 3,
+          "title": "测试数据",
+          "description": "测试数据001",
+          "status": 1,
+          "createTime": "${{get_time_now()}}",
+          "updateTime": ""
+        },
+        "groups": [
+          {
+            "group": {
+              "lessons": 3,
+              "totalDuration": 3000,
+              "seq": 2
+            },
+            "actions": [
+              {
+                "action": {
+                  "actionId": "动作id",
+                  "type": "02",
+                  "power": 6000,
+                  "times": 5
+                },
+                "delta": {
+                  "timesDelta": 5,
+                  "powerDelta": 1000,
+                  "span": 10,
+                  "seq": 2
+                }
+              }
+            ]
+          }
+        ]
+      }
+    dependence_case: true
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.c_id
+            replace_key: $.data.plan.catalogId
+
+          - dependent_type: sqlData
+            jsonpath: $.g_id
+            replace_key: $.data.plan.gradeId
+
+          - dependent_type: sqlData
+            jsonpath: $.avatar_id
+            replace_key: $.data.plan.avatarId
+
+          - dependent_type: sqlData
+            jsonpath: $.a_id
+            replace_key: $.data.groups[0].actions[0].action.actionId
+
+          - dependent_type: sqlData
+            jsonpath: $.t_id
+            replace_key: $.data.groups[0].actions[0].action.type
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+    sql:
+#      - SELECT * FROM t_body_part WHERE id in (
+#        (SELECT bp.pid FROM t_action_type as t, t_action_body_part as abp, t_body_part as bp, t_action as a
+#        WHERE t.id=a.action_type and a.id =abp.action_id and abp.body_part_id=bp.id
+#        and t.id="$cache{get_body_part_actionType_id}")
+#        )
+    setup_sql:
+      - SELECT id as c_id from t_fitness_catalog WHERE pid != "0" and `status`=1  LIMIT 1;
+      - SELECT id as g_id FROM t_grade  LIMIT 1;
+      - SELECT avatar_id FROM t_action WHERE `status`=1 LIMIT 1;
+      - SELECT id as a_id from t_action WHERE `status`=1  LIMIT 1;
+      - SELECT id as t_id from t_course_group_type  LIMIT 1;

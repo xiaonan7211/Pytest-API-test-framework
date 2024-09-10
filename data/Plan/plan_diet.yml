@@ -1,0 +1,193 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 计划服务
+  allureStory: 查询饮食推荐接口
+  mark: Plan
+
+get_diet:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/diet
+    method: GET
+    detail: 正常的计划ID查询
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      id:
+    dependence_case: true
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.id
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+#        message: "errorCode 断言为 0"
+#      not_jsonpath:
+#        jsonpath: -2
+#        type: ==
+#        value: $.status
+#        AssertType: SQL
+#        message: "errorCode 断言为 0"
+    sql:
+    setup_sql:
+      - SELECT id FROM t_plan WHERE gymer_id="$cache{gymera}" and status=1
+        ORDER BY create_time ASC LIMIT 1;
+
+
+get_diet_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/diet
+    method: GET
+    detail: 错误的计划ID查询推荐饮食
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      id: "234324234234324"
+    dependence_case: false
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 -1"
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 计划不存在
+        AssertType:
+        message: "message断言"
+    sql:
+
+
+get_diet_not_login:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/diet
+    method: GET
+    detail: 不登录情况下查询推荐饮食
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      id:
+    dependence_case: true
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.id
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 失败
+        AssertType:
+        message: "message断言"
+    sql:
+    setup_sql:
+      - SELECT id FROM t_plan WHERE gymer_id="$cache{gymera}" and status=1
+        ORDER BY create_time ASC LIMIT 1;
+
+
+get_diet_null:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/diet
+    method: GET
+    detail: 字段为空查询计划推荐饮食
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+    dependence_case: false
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+    assert:
+      status_code: 400
+    sql:
+
+
+get_diet_param_null:
+    host: ${{host()}}
+    url: /s/v1/fitness/plan/diet
+    method: GET
+    detail: 参数为空查询计划推荐饮食
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      id: ""
+    dependence_case: false
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 失败
+        AssertType:
+        message: "message断言"
+    sql:

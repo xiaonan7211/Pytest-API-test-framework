@@ -1,0 +1,47 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 登录模块
+  allureStory: 邮箱或电话号码登录
+  mark: Login
+
+login_is_user_01:
+    host: ${{host()}}
+    url: /s/v1/iam/login-with-gymer
+    method: POST
+    detail: 正常登录
+    headers:
+      Content-Type: application/json
+      Cache-Control: no-cache
+#      Postman-Token: 59df8893-d3f9-4f7d-bc5a-5aa829397bcd
+      Content-Length:
+
+      # 这里cookie的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+#      {
+#        "username": "498357324@qq.com",
+#        "password": "009398ecb4431ed6f02b56772a5b8240a3875b22734f57037063e394f62ff6f8"
+#      }
+      {
+        "username": "18600000000@163.com",
+        "password": "cc7b54ca81698152"
+      }
+
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+#        message: "errorCode 断言为 0"
+    sql:
+

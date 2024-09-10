@@ -1,0 +1,119 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 动作服务
+  allureStory: 根据部位获取动作
+  mark: Action
+
+get_by_body_part_01:
+    host: ${{host()}}
+    url: /s/v1/fitness/action/actions-by-body-part
+    method: GET
+    detail: 根据部位ID获取动作列表
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore_list:
+
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.body_part_id
+            replace_key: $.data.ignore_list
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "code 断言为 0"
+
+      # 断言返回的动作ID数量是否正确
+      actionsID:
+        jsonpath: $.value[*].id
+        type: ==
+        value: $.sql_data[*].action_id
+        AssertType: SQL
+        message: "actionsID 断言"
+
+      actionName:
+        jsonpath: $.value[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "actionName 断言"
+
+      avatar_id:
+        jsonpath: $.value[*].avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatar_id 断言"
+
+    sql:
+      - SELECT abp.action_id, a.`name`, a.avatar_id FROM t_action_body_part as abp, t_action as a
+        WHERE abp.action_id=a.id and abp.body_part_id="$cache{get_by_body_part_01_bodyPartId}"
+        and a.`status`="1"
+
+    setup_sql:
+      - SELECT abp.body_part_id FROM t_action as a RIGHT JOIN t_action_body_part as abp ON a.id=abp.action_id
+        and a.`status`="1" and abp.body_part_id is not NULL and abp.body_part_id!="" GROUP BY a.id
+        ORDER BY RAND() LIMIT 1
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.ignore_list
+        # 自定义的缓存名称
+        name: get_by_body_part_01_bodyPartId
+
+get_by_body_part_null_01:
+    host: ${{host()}}
+    url: /s/v1/fitness/action/actions-by-body-part
+    method: GET
+    detail: 不存在的部位ID获取动作
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore_list: "/02/2222222203"
+
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "code 断言为 0"
+      # 断言返回的动作ID数量是否正确
+      len_id:
+        jsonpath: $.value
+        type: ==
+        value: []
+        AssertType:
+#        message: "code 断言为 0"
+    sql:

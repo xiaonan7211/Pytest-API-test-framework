@@ -1,0 +1,130 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 课程服务
+  allureStory: 根据一级栏目获取课程接口
+  mark: Course
+
+get_catalog_course_top:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-by-catalog-top
+    method: GET
+    detail: 正确的一级栏目获取课程
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      catalogId:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.pid
+            replace_key: $.data.catalogId
+    assert: &assert
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言"
+
+      name:
+        jsonpath: $.value[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      id:
+        jsonpath: $.value[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "id 断言"
+
+      avatarId:
+        jsonpath: $.value[*].avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatarId 断言"
+
+      grade:
+        jsonpath: $.value[*].grade
+        type: ==
+        value: $.sql_data[*].grade_id
+        AssertType: SQL
+        message: "grade 断言"
+
+      participationPeopleNumber:
+        jsonpath: $.value[*].participationPeopleNumber
+        type: ==
+        value: $.sql_data[*].participation_people_number
+        AssertType: SQL
+        message: "participationPeopleNumber 断言"
+
+    sql:
+      - SELECT c.*, s.participation_people_number FROM t_fitness_catalog as fc, t_fitness_catalog_course as cc,
+        t_course as c, t_course_statistics as s WHERE fc.id=cc.fitness_catalog_id
+        and cc.course_id=c.id and cc.course_id=s.course_id
+        and fc.pid="$cache{get_catalog_course_topID}" and c.`status`="1"
+
+    setup_sql:
+      - SELECT fc.pid FROM t_fitness_catalog_course as cc LEFT JOIN t_course as c
+        ON cc.course_id=c.id LEFT JOIN t_fitness_catalog as fc
+        ON cc.fitness_catalog_id=fc.id GROUP BY fc.pid
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.catalogId
+        # 自定义的缓存名称
+        name: get_catalog_course_topID
+
+get_catalog_course_top_null:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-by-catalog-top
+    method: GET
+    detail: 错误的一级健身栏目
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      catalogId: 23141213
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+#        message: "errorCode 断言为 0"
+      # 如果sql查询的是多条数据，jsonpath取值时， sql数据默认加上 sql_data
+      # sql -- > [{key: value}, {key: value}] ----> {sql_data: [{key: value}, {key: value}]}
+      value:
+        jsonpath: $.value
+        type: ==
+        value: []
+        AssertType:
+    sql:

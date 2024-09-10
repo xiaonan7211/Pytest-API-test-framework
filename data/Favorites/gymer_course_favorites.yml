@@ -1,0 +1,81 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 收藏服务
+  allureStory: 获取用户收藏的课程列表
+  mark: Favorites
+
+get_gymer_course_favorites:
+    host: ${{host()}}
+    url: /s/v1/fitness/gymer-favorites-data/gymer-course-favorites
+    method: GET
+    detail: 正常获取用户收藏的课程
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+      count_nums:
+        jsonpath: $.value
+        type: len_eq
+        value: $.sql_data[*].count_num
+        AssertType: SQL
+    sql:
+      # sql 也可以使用缓存替换
+      - SELECT count(*) as count_num from t_gymer_favorites_data WHERE gymer_id="$cache{gymera}"
+
+
+get_gymer_course_favorites_not_login:
+    host: ${{host()}}
+    url: /s/v1/fitness/gymer-favorites-data/gymer-course-favorites
+    method: GET
+    detail: 未登录获取收藏课程
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+      count_nums:
+        jsonpath: $.value
+        type: ==
+        value: []
+        AssertType:
+    sql:
+      # sql 也可以使用缓存替换
+#      - SELECT count(*) as count_num from t_gymer_favorites_data WHERE gymer_id = (select gymer_id from t_gymer_login where login_id="$cache{username}")

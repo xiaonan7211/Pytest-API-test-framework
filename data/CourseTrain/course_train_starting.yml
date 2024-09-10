@@ -1,0 +1,214 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 课程训练服务
+  allureStory: 开始课程训练接口
+  mark: CourseTrain
+
+course_train_starting_01:
+    host: ${{host()}}
+    url: /s/v1/fitness/course-train/course-train-starting
+    method: POST
+    detail: 正常的课程id开始训练
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data: &case_data
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.ignore
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+      id:
+        jsonpath: $.value
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "id 断言为 "
+      not_jsonpath_2:
+        jsonpath: $cache{gymera}
+        type: ==
+        value: $.sql_data[*].gymer_id
+        AssertType: SQL
+        message: "gymer 断言"
+      not_jsonpath:
+        jsonpath: $cache{train_stating_courseID}
+        type: contained_by
+        value: $.sql_data[*].course_id
+        AssertType: SQL
+        message: "action_id 断言"
+      not_jsonpath_1:
+        jsonpath: null
+        type: not_eq
+        value: $.sql_data[*].start_time
+        AssertType: SQL
+        message: "start_time 断言"
+
+    sql:
+      - select * from t_course_train where id="$json($.value)$"
+    setup_sql: &setupSql
+      - SELECT * FROM t_course WHERE `status`="1" and `name` not LIKE "%接口测试%"
+        and name != "" and video_id is NOT NULL and model_id is NOT NULL
+        and intro is NOT NULL and grade_id is NOT NULL and avatar_id is NOT NULL
+        ORDER BY RAND() LIMIT 1
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.ignore
+        # 自定义的缓存名称
+        name: train_stating_courseID
+
+
+course_train_starting_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/course-train/course-train-starting
+    method: POST
+    detail: 错误的课程id开始训练
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore:  22222222222222222222222
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      not_jsonpath:
+        jsonpath: 0
+        type: ==
+        value: $.sql_data[*].count_n
+        AssertType:
+        message: "count_n 断言"
+    sql:
+      - select count(*) as count_n from t_course_train where course_id="$cache{train_stating_error_courseID}"
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.ignore
+        # 自定义的缓存名称
+        name: train_stating_error_courseID
+
+
+course_train_starting_not_login:
+    host: ${{host()}}
+    url: /s/v1/fitness/course-train/course-train-starting
+    method: POST
+    detail: 未登录时开始课程训练
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      *case_data
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 开始课程训练失败
+        AssertType:
+        message: "message 断言为 "
+      value:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+        message: "value 断言"
+
+    sql:
+    setup_sql:
+      *setupSql
+
+
+course_train_starting_02:
+    host: ${{host()}}
+    url: /s/v1/fitness/course-train/course-train-starting
+    method: POST
+    detail: 训练过程需要依赖该用例创建一个
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+      ignore:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      *case_data
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+    sql:
+    setup_sql:
+      *setupSql
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: response
+        jsonpath: $.value
+        # 自定义的缓存名称
+        name: course_train_starting_02_______trainDd
+
+      - type: request
+        jsonpath: $.data.ignore
+        # 自定义的缓存名称
+        name: course_train_starting_02_courseID

@@ -1,0 +1,42 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 课程服务
+  allureStory: 获取喜好课程接口
+  mark: Course
+
+get_favorite_course:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/favorite-course
+    method: GET
+    detail: 正常获取喜好课程
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+#        message: "errorCode 断言为 0"
+      name:
+        jsonpath: $.value[*].id
+        type: len_eq
+        value: $.sql_data[*].count_course
+        AssertType: SQL
+    sql:
+      - SELECT count(*) as count_course  from t_course as cou WHERE status=1;

@@ -1,0 +1,46 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 注册模块
+  allureStory: 注册账号接口
+  mark: Register
+
+register_user_01:
+    host: ${{host()}}
+    url: /s/v1/fitness/register/add-personal-info
+    method: POST
+    detail: 正常注册
+    headers:
+      Content-Type: application/json
+      Cache-Control: no-cache
+      Content-Length:
+      # 这里cookie的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+      {
+        "password": "cc7b54ca81698152",
+        "email": "498357324@qq.com",
+        "gender": "1",
+        "birthdate": "1994-04-05",
+        "weight": 60000,
+        "height": 175,
+        "avatarId": "MTA2208152132140000100D4BC002F",
+        "favorites": [ "/01/01" ]
+      }
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+#        message: "errorCode 断言为 0"
+    sql:
+

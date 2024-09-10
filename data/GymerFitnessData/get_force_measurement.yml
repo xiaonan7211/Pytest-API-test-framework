@@ -1,0 +1,69 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 用户数据服务
+  allureStory: 查询健客力量测试数据接口
+  mark: GymerFitnessData
+
+get_force_measurement_01:
+    host: ${{host()}}
+    url: /s/v1/fitness/gymer-fitness-data/force-measurement
+    method: POST
+    detail: 没有任何场景的情况下提交测量数据
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+      {
+        "actionId": "动作id",
+        "actionName": "动作名称",
+        "data": {
+          "id": "",
+          "gymerId": "",
+          "metricId": "leftForce",
+          "metricValue": "${{random_int(15, 30)}}",
+          "businessId": "",
+          "businessType": "",
+          "createTime": ""
+        }
+      }
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.a_id
+            replace_key: $.data.actionId
+
+          - dependent_type: sqlData
+            jsonpath: $.a_name
+            replace_key: $.data.actionName
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 成功
+        AssertType:
+        message: "message 断言"
+
+    sql:
+    setup_sql:
+      - SELECT id as a_id, name as a_name  FROM t_action WHERE name not LIKE "%接口测试%"
+        and name!=""  and use_machine=1 and `status`="1" ORDER BY RAND() LIMIT 1

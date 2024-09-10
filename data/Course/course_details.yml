@@ -1,0 +1,326 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 课程服务
+  allureStory: 获取课程详情接口
+  mark: Course
+
+get_course_details:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-details
+    method: GET
+    detail: 根据课程id获取课程详情
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    # data 传参 时，定义了 ignore 代表忽略字段（ data = "str"）
+    # params传参时，定义了 ignore 代表url不做 ? 拼接 --> /apipath/params
+    data:
+      ignore:
+
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.ignore
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 获取课程详情成功
+        AssertType:
+        message: "message 断言"
+
+      course_id:
+        jsonpath: $.value.first.id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "message 断言"
+
+      course_name:
+        jsonpath: $.value.first.name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      course_intro:
+        jsonpath: $.value.first.intro
+        type: ==
+        value: $.sql_data[*].intro
+        AssertType: SQL
+        message: "intro 断言"
+
+      course_avatarId:
+        jsonpath: $.value.first.avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatarId 断言"
+
+      course_grade:
+        jsonpath: $.value.first.grade
+        type: ==
+        value: $.sql_data[*].grade_id
+        AssertType: SQL
+        message: "grade 断言"
+
+      course_useMachine:
+        jsonpath: $.value.first.useMachine
+        type: bool_eq
+        value: $.sql_data[*].use_machine
+        AssertType: SQL
+        message: "useMachine 断言"
+
+      course_totalDuration:
+        jsonpath: $.value.first.totalDuration
+        type: ==
+        value: $.sql_data[*].total_duration
+        AssertType: SQL
+        message: "totalDuration 断言"
+
+      course_videoId:
+        jsonpath: $.value.first.videoId
+        type: ==
+        value: $.sql_data[*].video_id
+        AssertType: SQL
+        message: "videoId 断言"
+
+      course_modelId:
+        jsonpath: $.value.first.modelId
+        type: ==
+        value: $.sql_data[*].model_id
+        AssertType: SQL
+        message: "modelId 断言"
+
+      group_id:
+        jsonpath: $.value.first.groups[*].id
+        type: ==
+        value: $.sql_data[*].g_id
+        AssertType: SQL
+        message: "group_id 断言"
+
+      group_name:
+        jsonpath: $.value.first.groups[*].name
+        type: ==
+        value: $.sql_data[*].g_name
+        AssertType: SQL
+        message: "group_name 断言"
+
+      group_type_id:
+        jsonpath: $.value.first.groups[*].type
+        type: ==
+        value: $.sql_data[*].type_id
+        AssertType: SQL
+        message: "group_type 断言"
+
+      action_id:
+        jsonpath: $.value.first.groups[*].actions[*].id
+        type: ==
+        value: $.sql_data[*].action_id
+        AssertType: SQL
+        message: "action_id 断言"
+
+      action_name:
+        jsonpath: $.value.first.groups[*].actions[*].name
+        type: ==
+        value: $.sql_data[*].action_name
+        AssertType: SQL
+        message: "action_name 断言"
+
+      actionAvatarId:
+        jsonpath: $.value.first.groups[*].actions[*].avatarId
+        type: ==
+        value: $.sql_data[*].actionAvatarId
+        AssertType: SQL
+        message: "actionAvatarId 断言"
+
+      action_times:
+        jsonpath: $.value.first.groups[*].actions[*].times
+        type: ==
+        value: $.sql_data[*].times
+        AssertType: SQL
+        message: "action_times 断言"
+
+      action_batch:
+        jsonpath: $.value.first.groups[*].actions[*].batch
+        type: ==
+        value: $.sql_data[*].batch
+        AssertType: SQL
+        message: "action_batch 断言"
+
+      action_span:
+        jsonpath: $.value.first.groups[*].actions[*].span
+        type: ==
+        value: $.sql_data[*].span
+        AssertType: SQL
+        message: "action_span 断言"
+
+      action_leftForce:
+        jsonpath: $.value.first.groups[*].actions[*].leftForce
+        type: ==
+        value: $.sql_data[*].left_force
+        AssertType: SQL
+        message: "action_leftForce 断言"
+
+      action_rightForce:
+        jsonpath: $.value.first.groups[*].actions[*].rightForce
+        type: ==
+        value: $.sql_data[*].right_force
+        AssertType: SQL
+        message: "action_rightForce 断言"
+
+      action_leftForceMode:
+        jsonpath: $.value.first.groups[*].actions[*].leftForceMode
+        type: ==
+        value: $.sql_data[*].left_force_mode
+        AssertType: SQL
+        message: "action_leftForceMode 断言"
+
+      action_rightForceMode:
+        jsonpath: $.value.first.groups[*].actions[*].rightForceMode
+        type: ==
+        value: $.sql_data[*].right_force_mode
+        AssertType: SQL
+        message: "action_rightForceMode 断言"
+
+      actionVideo_id:
+        jsonpath: $.value.first.groups[*].actions[*].actionVideos[*].id
+        type: ==
+        value: $.sql_data[*].actionVideo_id
+        AssertType: SQL
+        message: " actionVideo_id 断言"
+
+      actionVideo_actionID:
+        jsonpath: $.value.first.groups[*].actions[*].actionVideos[*].actionId
+        type: ==
+        value: $.sql_data[*].av_actionID
+        AssertType: SQL
+        message: "       actionVideo_actionID 断言"
+
+      actionVideo_formatId:
+        jsonpath: $.value.first.groups[*].actions[*].actionVideos[*].formatId
+        type: ==
+        value: $.sql_data[*].format_id
+        AssertType: SQL
+        message: "       actionVideo_formatId 断言"
+
+      actionVideo_classifyId:
+        jsonpath: $.value.first.groups[*].actions[*].actionVideos[*].classifyId
+        type: ==
+        value: $.sql_data[*].classify_id
+        AssertType: SQL
+        message: "       actionVideo_classifyId 断言"
+
+      actionVideo_modelId:
+        jsonpath: $.value.first.groups[*].actions[*].actionVideos[*].modelId
+        type: ==
+        value: $.sql_data[*].actionModel
+        AssertType: SQL
+        message: "       actionVideo_modelId 断言"
+
+      actionVideo_videoId:
+        jsonpath: $.value.first.groups[*].actions[*].actionVideos[*].videoId
+        type: ==
+        value: $.sql_data[*].actionVideo
+        AssertType: SQL
+        message: "       actionVideo_videoId 断言"
+
+      actionVideo_viewId:
+        jsonpath: $.value.first.groups[*].actions[*].actionVideos[*].viewId
+        type: ==
+        value: $.sql_data[*].actionView
+        AssertType: SQL
+        message: "       actionVideo_viewId 断言"
+
+    sql:
+      - SELECT * FROM t_course WHERE id="$cache{get_course_details_id}";
+
+      # 课程分组数据查询
+      - SELECT cg.id as g_id, cg.name as g_name, cg.type_id FROM
+        t_course_group as cg WHERE cg.course_id="$cache{get_course_details_id}"
+
+      # 课程分组--动作详情数据查询
+      - SELECT cgi.action_id, a.name `action_name`, a.avatar_id `actionAvatarId`,
+        cgi.times, cgi.span, cgi.batch, cgi.left_force, cgi.right_force,
+        cgi.left_force_mode, cgi.right_force_mode
+        from t_course_group `cg`, t_course_group_item `cgi`,
+        t_action `a` WHERE `cg`.id=`cgi`.course_group_id and cgi.action_id=a.id
+        and `cg`.course_id="$cache{get_course_details_id}"
+
+      # 查询动作对应的 video 数据
+      - SELECT av.id `actionVideo_id`, av.action_id `av_actionID`, av.format_id,
+        av.classify_id, av.model_id `actionModel`, av.video_id `actionVideo`,
+        av.view_id `actionView`
+        from t_course_group `cg`, t_course_group_item `cgi`,
+        t_action `a`, t_action_video `av`
+        WHERE `cg`.id=`cgi`.course_group_id
+        and cgi.action_id=a.id
+        and cgi.action_id=av.action_id
+        and `cg`.course_id="$cache{get_course_details_id}";
+    setup_sql:
+      - SELECT id FROM t_course WHERE `status`="1" and `name` not LIKE "%接口测试%"
+        and name != "" and video_id is NOT NULL and model_id is NOT NULL
+        and intro is NOT NULL and grade_id is NOT NULL and avatar_id is NOT NULL
+        ORDER BY RAND() LIMIT 1
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.ignore
+        # 自定义的缓存名称
+        name: get_course_details_id
+
+
+get_course_details_null:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-details
+    method: GET
+    detail: 不存在的课程id获取课程详情
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore: "23423435435345345345"
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+#        message: "errorCode 断言为 0"
+      name:
+        jsonpath: $.message
+        type: ==
+        value: "课程详情不存在"
+        AssertType:
+    sql:

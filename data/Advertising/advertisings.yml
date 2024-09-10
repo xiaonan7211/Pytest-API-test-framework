@@ -1,0 +1,90 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 广告服务
+  allureStory: 获取广告列表接口
+  mark: Advertising
+
+get_advertising:
+    host: ${{host()}}
+    url: /s/v1/fitness/advertising/advertisings
+    method: GET
+    detail: 正常获取广告列表
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里cookie的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 获取广告列表成功
+        AssertType:
+        message: "message 断言"
+
+      ids:
+        jsonpath: $.value[*].id
+        type: ==
+        value: $.sql_data[*].a_id
+        AssertType: SQL
+        message: "ids 断言"
+
+      link:
+        jsonpath: $.value[*].link
+        type: ==
+        value: $.sql_data[*].a_link
+        AssertType: SQL
+        message: "link 断言"
+
+      img_id:
+        jsonpath: $.value[*].advertisingImages[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "img_id 断言"
+
+      advertId:
+        jsonpath: $.value[*].advertisingImages[*].advertId
+        type: ==
+        value: $.sql_data[*].advert_id
+        AssertType: SQL
+        message: "advertId 断言"
+
+      pixelId:
+        jsonpath: $.value[*].advertisingImages[*].pixelId
+        type: ==
+        value: $.sql_data[*].pixel_id
+        AssertType: SQL
+        message: "pixelId 断言"
+
+      imageId:
+        jsonpath: $.value[*].advertisingImages[*].imageId
+        type: ==
+        value: $.sql_data[*].image_id
+        AssertType: SQL
+        message: "imageId 断言"
+
+    sql:
+      - SELECT  ai.* FROM t_advertising as a, t_advertising_image as ai
+        WHERE a.id=ai.advert_id;
+
+      - SELECT a.id as a_id, a.link as a_link FROM t_advertising as a;

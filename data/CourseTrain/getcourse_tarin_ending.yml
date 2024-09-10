@@ -1,0 +1,199 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 课程训练服务
+  allureStory: 获取课程训练结束数据接口
+  mark: CourseTrain
+
+get_course_train_ending:
+    host: ${{host()}}
+    url: /s/v1/fitness/course-train/ending-data
+    method: GET
+    detail: 正常的训练ID获取
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      id:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.id
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 获取课程训练数据成功
+        AssertType:
+        message: "message 断言"
+
+      value:
+        jsonpath: $.value
+        type: not_eq
+        value: []
+        AssertType:
+        message: "value 断言"
+    sql:
+      - select id from t_course_train where gymer_id="$cache{gymera}"
+        and start_time is not  null and end_time is not null order by end_time desc LIMIT 1;
+
+    setup_sql:
+      - SELECT id FROM t_course_train WHERE gymer_id="$cache{gymera}" and start_time is not NULL
+        and end_time is not NULL ORDER BY RAND() LIMIT 1
+
+
+get_course_train_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/course-train/ending-data
+    method: GET
+    detail: 错误的训练ID获取
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      id: 3343423423534435
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+        message: "value 断言"
+    sql:
+
+    message:
+      jsonpath: $.message
+      type: ==
+      value: 此课程训练记录不存在
+      AssertType:
+      message: "message 断言"
+
+
+get_course_train_not_null:
+    host: ${{host()}}
+    url: /s/v1/fitness/course-train/ending-data
+    method: GET
+    detail: 不登陆获取训练数据
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+      id: 3343423423534435
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: []
+        AssertType:
+        message: "value 断言"
+    sql:
+
+
+get_course_train_not_user:
+    host: ${{host()}}
+    url: /s/v1/fitness/course-train/ending-data
+    method: GET
+    detail: 获取不是自己的训练数据
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+      id:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.id
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+#      message:
+#        jsonpath: $.message
+#        type: ==
+#        value: 获取成功
+#        AssertType:
+#        message: "message 断言"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: []
+        AssertType:
+        message: "value 断言"
+    sql:
+    setup_sql:
+      - SELECT id FROM t_course_train WHERE gymer_id != "$cache{gymera}" and start_time is not NULL
+          and end_time is not NULL ORDER BY RAND() LIMIT 1

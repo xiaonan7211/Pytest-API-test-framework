@@ -1,0 +1,97 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 计划模板服务
+  allureStory: 获取推荐计划接口
+  mark: PlanTemplate
+
+get_recommend:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/recommend
+    method: POST
+    detail: 正常登录获取推荐计划
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 成功
+        AssertType:
+        message: "message 断言"
+
+      value:
+        jsonpath: $.value
+        type: not_eq
+        value: []
+        AssertType:
+        message: "ids 断言"
+
+    sql:
+
+
+get_recommend_not_login:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/recommend
+    method: POST
+    detail: 不登录获取推荐计划
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: null
+        AssertType:
+        message: "message 断言"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+        message: "ids 断言"
+
+    sql:

@@ -1,0 +1,288 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 动作服务
+  allureStory: 健身栏目ID获取动作接口
+  mark: Action
+
+get_action_by_catalog:
+    host: ${{host()}}
+    url: /s/v1/fitness/action/action-by-catalog
+    method: GET
+    detail: 根据健身栏目获取动作
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      catalogId: "/01/01"
+
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data: &dependence_case_data
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.catalogId
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "code 断言为 0"
+
+      actionID:
+        jsonpath: $.value[*].id
+        type: ==
+        value: $.sql_data[*].action_id
+        AssertType: SQL
+        message: "actionID 断言"
+
+      names:
+        jsonpath: $.value[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      avatarIds:
+        jsonpath: $.value[*].avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatarId 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 根据健身栏目获取动作成功
+        AssertType:
+        message: "message 断言"
+    sql:
+      - SELECT fca.action_id, a.name, a.avatar_id from t_fitness_catalog_action as fca, t_action as a
+        WHERE fca.action_id=a.id
+        and a.`status`="1" and fca.fitness_catalog_id="$cache{get_action_by_catalog_id}"
+    setup_sql:
+      - SELECT id from t_fitness_catalog as fc, t_fitness_catalog_action as fca
+        WHERE fc.id=fca.fitness_catalog_id and fc.pid != "0" and fc.`status`="1"
+        and fca.action_id is not NULL
+        ORDER BY RAND() LIMIT 1
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.catalogId
+        # 自定义的缓存名称
+        name: get_action_by_catalog_id
+
+
+
+get_action_by_catalog_error:
+      host: ${{host()}}
+      url: /s/v1/fitness/action/action-by-catalog
+      method: GET
+      detail: 错误的健身栏目ID
+      headers:
+        Content-Type: application/json
+        #      Cache-Control: no-cache
+        #      Content-Length:
+        # 这里token的值，写的是存入缓存的名称
+      #      Authorization: $cache{login_cookie}
+      # 请求的数据，是 params 还是 json、或者file、data
+      requestType: params
+      # 是否执行，空或者 true 都会执行
+      is_run:
+      data:
+        catalogId: "/01/0222221"
+
+      dependence_case: false
+      # 依赖的数据
+      dependence_case_data:
+      assert:
+        # 断言接口状态码
+        errorCode:
+          jsonpath: $.code
+          type: ==
+          value: 0
+          AssertType:
+          message: "code 断言为 0"
+        values:
+          jsonpath: $.value
+          type: ==
+          value: []
+          AssertType:
+          message: "code 断言为 0"
+      sql:
+
+get_action_by_catalog_bodypart:
+      host: ${{host()}}
+      url: /s/v1/fitness/action/action-by-catalog
+      method: GET
+      detail: 健身栏目id + 部位id 获取动作
+      headers:
+        Content-Type: application/json
+        #      Cache-Control: no-cache
+        #      Content-Length:
+        # 这里token的值，写的是存入缓存的名称
+      #      Authorization: $cache{login_cookie}
+      # 请求的数据，是 params 还是 json、或者file、data
+      requestType: params
+      # 是否执行，空或者 true 都会执行
+      is_run:
+      data:
+        catalogId: "/01/01"
+        bodyPartId:
+
+      dependence_case: true
+      # 依赖的数据从数据库提取
+      dependence_case_data:
+        - case_id: self
+          dependent_data:
+            - dependent_type: sqlData
+              jsonpath: $.body_part_id
+              replace_key: $.data.bodyPartId
+
+            - dependent_type: sqlData
+              jsonpath: $.fitness_catalog_id
+              replace_key: $.data.catalogId
+      assert:
+        # 断言接口状态码
+        errorCode:
+          jsonpath: $.code
+          type: ==
+          value: 0
+          AssertType:
+          message: "code 断言为 0"
+
+        action_id:
+          jsonpath: $.value[*].id
+          type: ==
+          value: $.sql_data[*].id
+          AssertType: SQL
+          message: "action_id 断言为 0"
+
+        names:
+          jsonpath: $.value[*].name
+          type: ==
+          value: $.sql_data[*].name
+          AssertType: SQL
+          message: "name 断言为 0"
+
+        avatar_id:
+          jsonpath: $.value[*].avatarId
+          type: ==
+          value: $.sql_data[*].avatar_id
+          AssertType: SQL
+          message: "avatar_id 断言为 0"
+
+      sql:
+        - SELECT a.id, a.name, a.avatar_id from t_fitness_catalog_body_part as c1, t_action_body_part as p1,
+          t_fitness_catalog_action as c2, t_action as a
+          WHERE c1.body_part_id=p1.body_part_id and p1.action_id=c2.action_id
+          and c2.action_id=a.id
+          and p1.body_part_id="$cache{get_action_by_catalog_bodypart_bodyparID}"
+          and c1.fitness_catalog_id="$cache{get_action_by_catalog_bodypart_catalogID}"
+      # 前置SQL，请求参数从SQL中取值
+      setup_sql:
+        - SELECT p1.body_part_id, c1.fitness_catalog_id from t_fitness_catalog_body_part as c1, t_action_body_part as p1,
+          t_fitness_catalog_action as c2
+          WHERE c1.body_part_id=p1.body_part_id and p1.action_id=c2.action_id
+          ORDER BY RAND() LIMIT 1
+      current_request_set_cache:
+        # 1、response 从响应中提取内容  2、request从请求中提取内容
+        - type: request
+          jsonpath: $.data.catalogId
+          # 自定义的缓存名称
+          name: get_action_by_catalog_bodypart_catalogID
+
+        - type: request
+          jsonpath: $.data.bodyPartId
+          # 自定义的缓存名称
+          name: get_action_by_catalog_bodypart_bodyparID
+
+
+get_action_by_catalog_bodypart_null:
+      host: ${{host()}}
+      url: /s/v1/fitness/action/action-by-catalog
+      method: GET
+      detail: 健身栏目id + 错误的部位id 获取动作
+      headers:
+        Content-Type: application/json
+        #      Cache-Control: no-cache
+        #      Content-Length:
+        # 这里token的值，写的是存入缓存的名称
+      #      Authorization: $cache{login_cookie}
+      # 请求的数据，是 params 还是 json、或者file、data
+      requestType: params
+      # 是否执行，空或者 true 都会执行
+      is_run:
+      data:
+        catalogId: "/01/01"
+        bodyPartId: "2321324"
+
+      dependence_case: false
+      # 依赖的数据从数据库提取
+      dependence_case_data:
+      assert:
+        # 断言接口状态码
+        errorCode:
+          jsonpath: $.code
+          type: ==
+          value: 0
+          AssertType:
+          message: "code 断言为 0"
+        values_action_id:
+          jsonpath: $.value
+          type: ==
+          value: []
+          AssertType:
+      # 预期结果从SQL查询中取值
+      sql:
+
+
+get_action_by_catalog_bodypart_error:
+      host: ${{host()}}
+      url: /s/v1/fitness/action/action-by-catalog
+      method: GET
+      detail: 错误的健身栏目id + 正确的部位id 获取动作
+      headers:
+        Content-Type: application/json
+        #      Cache-Control: no-cache
+        #      Content-Length:
+        # 这里token的值，写的是存入缓存的名称
+      #      Authorization: $cache{login_cookie}
+      # 请求的数据，是 params 还是 json、或者file、data
+      requestType: params
+      # 是否执行，空或者 true 都会执行
+      is_run:
+      data:
+        catalogId: "222222"
+        bodyPartId: "/01/01"
+
+      dependence_case: false
+      # 依赖的数据从数据库提取
+      dependence_case_data:
+      assert:
+        # 断言接口状态码
+        errorCode:
+          jsonpath: $.code
+          type: ==
+          value: 0
+          AssertType:
+          message: "code 断言为 0"
+        values_action_id:
+          jsonpath: $.value
+          type: ==
+          value: []
+          AssertType:
+      # 预期结果从SQL查询中取值
+      sql:

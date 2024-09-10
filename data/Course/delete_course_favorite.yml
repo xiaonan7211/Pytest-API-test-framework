@@ -1,0 +1,170 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 课程服务
+  allureStory: 删除课程收藏
+  mark: Course
+
+delete_course_collect_notin:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-favorite
+    method: DELETE
+    detail: 删除不存在的课程收藏
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore_list: "adawdwdwadwdawdwadawdaw"
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      message:
+        jsonpath: $.message
+        type: ==
+        value: "删除课程收藏失败"
+        AssertType:
+    sql:
+
+
+delete_course_collect_not_login:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-favorite
+    method: DELETE
+    detail: 未登录状态下删除收藏课程
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore_list:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.ignore_list
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+      message:
+        jsonpath: $.message
+        type: ==
+        value: "删除课程收藏失败"
+        AssertType:
+    sql:
+    setup_sql:
+      - SELECT business_id as id FROM t_gymer_favorites_data WHERE business_type="course.favorite"
+        and gymer_id="$cache{gymera}" ORDER BY RAND() LIMIT 1
+
+
+delete_course_collect_false:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-favorite
+    method: DELETE
+    detail: 新增收藏成功后删除默认不执行
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+      ignore_list: $cache{get_course_collect_id}
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+    sql:
+
+
+delete_course_collect:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-favorite
+    method: DELETE
+    detail: 删除收藏课程
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore_list: "$cache{get_course_collect_01_id}"
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: get_course_collect_01
+        dependent_data:
+          - dependent_type: request
+            jsonpath: false
+            replace_key: false
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: "删除课程收藏成功"
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      not_jsonpath:
+        jsonpath: 0
+        type: ==
+        value: $.sql_data[*].cou
+        AssertType: SQL
+        message: "删除后的数量 断言为 0"
+
+    sql:
+      - SELECT count(*) as cou FROM t_gymer_favorites_data WHERE gymer_id="$cache{gymera}"
+        and business_type="course.favorite" and business_id="$cache{get_course_collect_01_id}"

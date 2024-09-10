@@ -1,0 +1,201 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 动作服务
+  allureStory: 获取全部动作
+  mark: Action
+
+get_all_actions_01:
+    host: ${{host()}}
+    url: /s/v1/fitness/action/all-actions
+    method: GET
+    detail: 关键词为空获取全部动作
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert: &assert
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      ids:
+        jsonpath: $.value[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "ids 断言"
+
+      names:
+        jsonpath: $.value[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "names 断言"
+
+      avatar_id:
+        jsonpath: $.value[*].avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatar_id 断言"
+
+    sql:
+      - SELECT id, name, avatar_id FROM t_action WHERE `status`="1";
+
+
+get_all_actions_null_02:
+    host: ${{host()}}
+    url: /s/v1/fitness/action/all-actions
+    method: GET
+    detail: 不存在的关键词获取空列表
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      keyword: 可垃圾啊开了房间饿啊立刻解放了咖啡
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert: &assert_error
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: []
+        AssertType:
+        message: "value 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 获取所有动作列表成功
+        AssertType:
+        message: "message 断言"
+    sql:
+
+get_all_actions_keyword_03:
+    host: ${{host()}}
+    url: /s/v1/fitness/action/all-actions
+    method: GET
+    detail: 输入关键词获取动作列表
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      keyword:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data: &case_data
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.name
+            replace_key: $.data.keyword
+    assert:
+      *assert
+
+    sql:
+      - select * from t_action where name="$cache{get_all_actions_keyword_03KeyWord}" group by name
+    setup_sql:
+      - SELECT name FROM t_action WHERE `status`="1" ORDER BY RAND() LIMIT 1
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.keyword
+        # 自定义的缓存名称
+        name: get_all_actions_keyword_03KeyWord
+
+
+get_all_actions_keyword_04:
+    host: ${{host()}}
+    url: /s/v1/fitness/action/all-actions
+    method: GET
+    detail: 输入关键词获取动作列表_接口测试创建动作
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+      keyword: 接口测试创建动作
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+    sql:
+
+
+get_all_actions_keyword_delName:
+    host: ${{host()}}
+    url: /s/v1/fitness/action/all-actions
+    method: GET
+    detail: 关键词为已删除的动作名称查询
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      keyword:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      *case_data
+    assert:
+      *assert_error
+    sql:
+    setup_sql:
+      - SELECT name FROM t_action WHERE `status` != "1" ORDER BY RAND() LIMIT 1

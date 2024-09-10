@@ -1,0 +1,140 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 计划模板服务
+  allureStory: 查询计划模板饮食接口
+  mark: PlanTemplate
+
+get_plantemplate_diet:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/diet
+    method: GET
+    detail: 正常的计划模板id查询饮食
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      id:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.id
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 成功
+        AssertType:
+        message: "message 断言"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: $.sql_data[*].diet
+        AssertType: SQL
+        message: "message 断言"
+
+
+    sql:
+      - SELECT * from t_plan_temp_diet WHERE plan_temp_id="$cache{get_plantemplate_diet_id}"
+    setup_sql:
+      - select id from t_plan_temp where status="1" LIMIT 1
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: get_plantemplate_diet_id
+
+
+get_plantemplate_diet_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/diet
+    method: GET
+    detail: 错误的计划ID查询饮食
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      id:  ad23423423234
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 计划模板不存在
+        AssertType:
+        message: "message 断言"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+        message: "value 断言"
+
+    sql:
+
+
+get_plantemplate_diet_null_field:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/diet
+    method: GET
+    detail: 缺少id字段查询饮食
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      status_code: 400
+
+    sql:

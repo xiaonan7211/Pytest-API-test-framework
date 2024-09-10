@@ -1,0 +1,394 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 用户数据服务
+  allureStory: 设置健康数据接口
+  mark: GymerFitnessData
+
+put_health_data_01:
+    host: ${{host()}}
+    url: /s/v1/fitness/gymer-fitness-data/health-data
+    method: PUT
+    detail: 正常参数设置健康数据
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data: &data
+      height: ${{random_int(150, 200)}}
+      weight: ${{random_int(50000, 70000)}}
+      bust: ${{random_int(60, 90)}}
+      hipline: ${{random_int(70, 90)}}
+      thighGirth: ${{random_int(40, 60)}}
+      calfGirth: ${{random_int(20, 40)}}
+
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 成功
+        AssertType:
+        message: "message 断言"
+
+      not_jsonpath:
+        jsonpath: $cache{put_health_data_01_height}
+        type: ==
+        value: $.sql_data[*].height
+        AssertType: SQL
+        message: "height 断言"
+
+      not_jsonpath1:
+        jsonpath: $cache{put_health_data_01_hipline}
+        type: ==
+        value: $.sql_data[*].hipline
+        AssertType: SQL
+        message: "hipline 断言"
+
+      not_jsonpath2:
+        jsonpath: $cache{put_health_data_01_weight}
+        type: ==
+        value: $.sql_data[*].weight
+        AssertType: SQL
+        message: "weight 断言"
+
+      not_jsonpath3:
+        jsonpath: $cache{put_health_data_01_bust}
+        type: ==
+        value: $.sql_data[*].bust
+        AssertType: SQL
+        message: "bust 断言"
+
+      not_jsonpath4:
+        jsonpath: $cache{put_health_data_01_calfGirth}
+        type: ==
+        value: $.sql_data[*].calfGirth
+        AssertType: SQL
+        message: "calfGirth 断言"
+
+      not_jsonpath5:
+        jsonpath: $cache{put_health_data_01_thighGirth}
+        type: ==
+        value: $.sql_data[*].thighGirth
+        AssertType: SQL
+        message: "thighGirth 断言"
+
+    sql: &sql
+      - SELECT fd.metric_value as hipline FROM t_gymer_fitness_data as fd,
+        (SELECT id FROM t_gymer_fitness_data WHERE gymer_id="$cache{gymera}" ORDER BY create_time DESC LIMIT 5)
+        as f WHERE fd.id=f.id and fd.metric_id="body.hipline"
+
+      - SELECT fd.metric_value as height FROM t_gymer_fitness_data as fd,
+        (SELECT id FROM t_gymer_fitness_data WHERE gymer_id="$cache{gymera}" ORDER BY create_time DESC LIMIT 6)
+        as f WHERE fd.id=f.id and fd.metric_id="body.height"
+
+      - SELECT fd.metric_value as weight FROM t_gymer_fitness_data as fd,
+        (SELECT id FROM t_gymer_fitness_data WHERE gymer_id="$cache{gymera}" ORDER BY create_time DESC LIMIT 6)
+        as f WHERE fd.id=f.id and fd.metric_id="body.weight"
+
+      - SELECT fd.metric_value as bust FROM t_gymer_fitness_data as fd,
+        (SELECT id FROM t_gymer_fitness_data WHERE gymer_id="$cache{gymera}" ORDER BY create_time DESC LIMIT 6)
+        as f WHERE fd.id=f.id and fd.metric_id="body.bust"
+
+      - SELECT fd.metric_value as calfGirth FROM t_gymer_fitness_data as fd,
+        (SELECT id FROM t_gymer_fitness_data WHERE gymer_id="$cache{gymera}" ORDER BY create_time DESC LIMIT 6)
+        as f WHERE fd.id=f.id and fd.metric_id="body.calfGirth"
+
+      - SELECT fd.metric_value as thighGirth FROM t_gymer_fitness_data as fd,
+        (SELECT id FROM t_gymer_fitness_data WHERE gymer_id="$cache{gymera}" ORDER BY create_time DESC LIMIT 6)
+        as f WHERE fd.id=f.id and fd.metric_id="fitness-content.thighGirth"
+
+    current_request_set_cache: &setcache
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.height
+        # 自定义的缓存名称
+        name: put_health_data_01_height
+
+      - type: request
+        jsonpath: $.data.weight
+        # 自定义的缓存名称
+        name: put_health_data_01_weight
+
+      - type: request
+        jsonpath: $.data.bust
+        # 自定义的缓存名称
+        name: put_health_data_01_bust
+
+      - type: request
+        jsonpath: $.data.hipline
+        # 自定义的缓存名称
+        name: put_health_data_01_hipline
+
+      - type: request
+        jsonpath: $.data.thighGirth
+        # 自定义的缓存名称
+        name: put_health_data_01_thighGirth
+
+      - type: request
+        jsonpath: $.data.calfGirth
+        # 自定义的缓存名称
+        name: put_health_data_01_calfGirth
+
+
+put_health_data_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/gymer-fitness-data/health-data
+    method: PUT
+    detail: 带小数点的参数设置健康数据--期望处理
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+      height: &variable 33.3334234234234234234324234
+      weight: *variable
+      bust: *variable
+      hipline: *variable
+      thighGirth: *variable
+      calfGirth: *variable
+
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 成功
+        AssertType:
+        message: "message 断言"
+
+      not_jsonpath:
+        jsonpath: *variable
+        type: not_eq
+        value: $.sql_data[*].height
+        AssertType: SQL
+        message: "height 断言"
+
+      not_jsonpath1:
+        jsonpath: *variable
+        type: not_eq
+        value: $.sql_data[*].hipline
+        AssertType: SQL
+        message: "hipline 断言"
+
+      not_jsonpath2:
+        jsonpath: *variable
+        type: not_eq
+        value: $.sql_data[*].weight
+        AssertType: SQL
+        message: "weight 断言"
+
+      not_jsonpath3:
+        jsonpath: *variable
+        type: not_eq
+        value: $.sql_data[*].bust
+        AssertType: SQL
+        message: "bust 断言"
+
+      not_jsonpath4:
+        jsonpath: *variable
+        type: not_eq
+        value: $.sql_data[*].calfGirth
+        AssertType: SQL
+        message: "calfGirth 断言"
+
+      not_jsonpath5:
+        jsonpath: *variable
+        type: not_eq
+        value: $.sql_data[*].thighGirth
+        AssertType: SQL
+        message: "thighGirth 断言"
+
+    sql:
+      *sql
+
+
+put_health_data_01_null_params:
+    host: ${{host()}}
+    url: /s/v1/fitness/gymer-fitness-data/health-data
+    method: PUT
+    detail: 参数为空提交数据
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      height:
+      weight:
+      bust:
+      hipline:
+      thighGirth:
+      calfGirth:
+
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 根据时区时间获取训练统计信息失败
+        AssertType:
+        message: "message 断言"
+
+      not_jsonpath:
+        jsonpath:
+        type: not_eq
+        value: $.sql_data[*].height
+        AssertType: SQL
+        message: "height 断言"
+
+      not_jsonpath1:
+        jsonpath:
+        type: not_eq
+        value: $.sql_data[*].hipline
+        AssertType: SQL
+        message: "hipline 断言"
+
+      not_jsonpath2:
+        jsonpath:
+        type: not_eq
+        value: $.sql_data[*].weight
+        AssertType: SQL
+        message: "weight 断言"
+
+      not_jsonpath3:
+        jsonpath:
+        type: not_eq
+        value: $.sql_data[*].bust
+        AssertType: SQL
+        message: "bust 断言"
+
+      not_jsonpath4:
+        jsonpath:
+        type: not_eq
+        value: $.sql_data[*].calfGirth
+        AssertType: SQL
+        message: "calfGirth 断言"
+
+      not_jsonpath5:
+        jsonpath:
+        type: not_eq
+        value: $.sql_data[*].thighGirth
+        AssertType: SQL
+        message: "thighGirth 断言"
+
+    sql:
+      *sql
+
+
+put_health_data_not_login:
+    host: ${{host()}}
+    url: /s/v1/fitness/gymer-fitness-data/health-data
+    method: PUT
+    detail: 未登录情况下正常参数设置健康数据
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      <<: *data
+
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 数据为空
+        AssertType:
+        message: "message 断言"
+
+    sql:
+
+
+put_health_data_null_params:
+    host: ${{host()}}
+    url: /s/v1/fitness/gymer-fitness-data/health-data
+    method: PUT
+    detail: 缺少参数提交设置健康数据
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      status_code: 400
+
+    sql:

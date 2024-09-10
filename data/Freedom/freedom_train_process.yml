@@ -1,0 +1,251 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 自由训练服务
+  allureStory: 自由训练过程接口
+  mark: FreeDom
+
+process_freedomTrain:
+    host: ${{host()}}
+    url: /s/v1/fitness/freedom-train/freedom-train-process
+    method: POST
+    detail: 正确的参数提交自由训练过程
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "id": "$cache{start_freedomTrain_id}",
+        "seq": 15,
+        "leftForceMode": "${{random_int(1, 3)}}",
+        "rightForceMode": "${{random_int(1, 3)}}",
+        "leftForce": "${{random_int(15, 30)}}",
+        "rightForce": "${{random_int(15, 30)}}",
+        "leftLength": "${{random_int(10, 20)}}",
+        "rightLength": "${{random_int(10, 20)}}",
+      }
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: start_freedomTrain
+        dependent_data:
+          - dependent_type: request
+            jsonpath: false
+            replace_key: false
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 写入自由训练过程数据成功
+        AssertType:
+        message: "message 断言"
+
+      not_jsonpath:
+        jsonpath: "freedom-train.process"
+        type: ==
+        value: $.sql_data[*].business_type
+        AssertType: SQL
+        message: "business_type 断言"
+
+      not_jsonpath1:
+        jsonpath: $cache{process_freedomTrain_seq}
+        type: ==
+        value: $.sql_data[*].seq
+        AssertType: SQL
+        message: "seq 断言"
+
+      not_jsonpath2:
+        jsonpath: $cache{process_freedomTrain_leftForceMode}
+        type: ==
+        value: $.sql_data[*].left_force_mode
+        AssertType: SQL
+        message: "left_force_mode 断言"
+
+      not_jsonpath3:
+        jsonpath: $cache{process_freedomTrain_rightForceMode}
+        type: ==
+        value: $.sql_data[*].right_force_mode
+        AssertType: SQL
+        message: "right_force_mode 断言"
+
+      not_jsonpath4:
+        jsonpath: $cache{process_freedomTrain_leftForce}
+        type: ==
+        value: $.sql_data[*].left_force
+        AssertType: SQL
+        message: "left_force 断言"
+
+      not_jsonpath5:
+        jsonpath: $cache{process_freedomTrain_rightForce}
+        type: ==
+        value: $.sql_data[*].right_force
+        AssertType: SQL
+        message: "right_force 断言"
+
+      not_jsonpath6:
+        jsonpath: $cache{process_freedomTrain_leftLength}
+        type: ==
+        value: $.sql_data[*].left_length
+        AssertType: SQL
+        message: "left_length 断言"
+
+      not_jsonpath7:
+        jsonpath: $cache{process_freedomTrain_rightLength}
+        type: ==
+        value: $.sql_data[*].right_length
+        AssertType: SQL
+        message: "right_length 断言"
+
+      not_jsonpath10:
+        jsonpath: $cache{gymera}
+        type: ==
+        value: $.sql_data[*].gymer_id
+        AssertType: SQL
+        message: "gymer_id 断言"
+
+    sql: # 最后一次训练完，  按照时间倒序取到最后一次训练数据进行断言
+      - select metric_value as seq, business_type from t_gymer_fitness_data where business_id="$cache{start_freedomTrain_id}"
+        and metric_id="train.seq" order by create_time desc limit 1
+
+      - select metric_value as left_force, gymer_id from t_gymer_fitness_data where business_id="$cache{start_freedomTrain_id}"
+        and metric_id="left.force" order by create_time desc limit 1
+
+      - select metric_value as right_force from t_gymer_fitness_data where business_id="$cache{start_freedomTrain_id}"
+        and metric_id="right.force" order by create_time desc limit 1
+
+      - select metric_value as left_length from t_gymer_fitness_data where business_id="$cache{start_freedomTrain_id}"
+        and metric_id="left.length" order by create_time desc limit 1
+
+      - select metric_value as right_length from t_gymer_fitness_data where business_id="$cache{start_freedomTrain_id}"
+        and metric_id="right.length" order by create_time desc limit 1
+
+      - select metric_value as left_force_mode from t_gymer_fitness_data where business_id="$cache{start_freedomTrain_id}"
+        and metric_id="left.force.mode" order by create_time desc limit 1
+
+      - select metric_value as right_force_mode from t_gymer_fitness_data where business_id="$cache{start_freedomTrain_id}"
+        and metric_id="right.force.mode" order by create_time desc limit 1
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.seq
+        # 自定义的缓存名称
+        name: process_freedomTrain_seq
+
+      - type: request
+        jsonpath: $.data.leftForceMode
+        # 自定义的缓存名称
+        name: process_freedomTrain_leftForceMode
+
+      - type: request
+        jsonpath: $.data.rightForceMode
+        # 自定义的缓存名称
+        name: process_freedomTrain_rightForceMode
+
+      - type: request
+        jsonpath: $.data.leftForce
+        # 自定义的缓存名称
+        name: process_freedomTrain_leftForce
+
+      - type: request
+        jsonpath: $.data.rightForce
+        # 自定义的缓存名称
+        name: process_freedomTrain_rightForce
+
+      - type: request
+        jsonpath: $.data.leftLength
+        # 自定义的缓存名称
+        name: process_freedomTrain_leftLength
+
+      - type: request
+        jsonpath: $.data.rightLength
+        # 自定义的缓存名称
+        name: process_freedomTrain_rightLength
+
+
+process_freedomTrain_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/freedom-train/freedom-train-process
+    method: POST
+    detail: 正确的参数提交自由训练过程
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "id": "2323432424555",
+        "seq": 15,
+        "leftForceMode": "${{random_int(1, 3)}}",
+        "rightForceMode": "${{random_int(1, 3)}}",
+        "leftForce": "${{random_int(15, 30)}}",
+        "rightForce": "${{random_int(15, 30)}}",
+        "leftLength": "${{random_int(10, 20)}}",
+        "rightLength": "${{random_int(10, 20)}}",
+      }
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 此自由训练记录不存在
+        AssertType:
+        message: "message 断言"
+
+    sql:
+
+
+process_freedomTrain_field:
+    host: ${{host()}}
+    url: /s/v1/fitness/freedom-train/freedom-train-process
+    method: POST
+    detail: 缺少字段提交
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      status_code: 400
+    sql:

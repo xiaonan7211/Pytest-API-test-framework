@@ -1,0 +1,65 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 健身栏目服务
+  allureStory: 根据健身栏目获取是否使用器械接口
+  mark: Catalog
+
+get_use_machine:
+    host: ${{host()}}
+    url: /s/v1/fitness/fitness-catalog/use-machine
+    method: GET
+    detail: 正确的健身栏目ID
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      id:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.id
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      # 布尔值断言
+      message:
+        jsonpath: $.value
+        type: bool_eq
+        value: $.sql_data[*].use_machine
+        AssertType: SQL
+#      count_nums:
+#        jsonpath: $.value[*].id
+#        type: len_eq
+#        value: $.sql_data[*].count_catalog
+#        AssertType: SQL
+    sql:
+      - SELECT c.* FROM t_fitness_catalog_course as cc, t_course as c
+        WHERE cc.course_id=c.id
+        and cc.fitness_catalog_id="$cache{get_use_machine_id}"
+    setup_sql:
+      - SELECT id FROM t_fitness_catalog as c, t_fitness_catalog_course as cc
+        WHERE c.id=cc.fitness_catalog_id  order by rand() LIMIT 1
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: get_use_machine_id

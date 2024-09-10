@@ -1,0 +1,105 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 搜索服务
+  allureStory: 获取热门搜索接口
+  mark: SearchHistory
+
+put_search_history:
+    host: ${{host()}}
+    url: /s/v1/fitness/search-history/search-history
+    method: POST
+    detail: 正常写入搜索历史
+    headers:
+      Content-Type: application/json
+      Cache-Control: no-cache
+      Content-Length:
+      # 这里cookie的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore:  "${{get_name_time()}}"
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 新增搜索历史成功
+        AssertType:
+        message: " message 断言"
+
+      not_jsonpath:
+        jsonpath: $cache{gymera}
+        type: ==
+        value: $.sql_data[*].gymer_id
+        AssertType: SQL
+        message: "gymerId 断言"
+
+      not_jsonpath1:
+        jsonpath: $cache{put_search_history_name}
+        type: ==
+        value: $.sql_data[*].content
+        AssertType: SQL
+        message: "content 断言"
+
+    sql:
+      - SELECT * FROM t_search_history where content="$cache{put_search_history_name}"
+
+
+put_search_history_not_login:
+    host: ${{host()}}
+    url: /s/v1/fitness/search-history/search-history
+    method: POST
+    detail: 正常写入搜索历史_不登录情况
+    headers:
+      Content-Type: application/json
+      Cache-Control: no-cache
+      Content-Length:
+      # 这里cookie的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore:  "${{get_name_time()}}"
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 用户不存在
+        AssertType:
+        message: " message 断言"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+        message: "value 断言"
+
+    sql:

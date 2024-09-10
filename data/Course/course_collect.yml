@@ -1,0 +1,249 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 课程服务
+  allureStory: 收藏课程接口
+  mark: Course
+
+get_course_collect:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-favorite
+    method: POST
+    detail: 正常收藏课程
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore:
+    dependence_case:  true
+    # 依赖的数据
+    dependence_case_data: &dependence_case_data
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.ignore
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: "写入课程收藏成功"
+        AssertType:
+        message: "message 断言"
+
+#      not_jsonpath:
+#        jsonpath: 1
+#        type: ==
+#        value: $.sql_data[*].cou
+#        AssertType: SQL
+#        message: "收藏成功后，判断收藏的数量是否为1 断言"
+
+    sql:
+      - SELECT count(*) as cou FROM t_gymer_favorites_data WHERE gymer_id="$cache{gymera}"
+        and business_type="course.favorite" and business_id="$cache{get_course_collect_id}"
+
+    setup_sql: &setup_sql
+      - SELECT id from t_course as c WHERE c.id not in
+        (SELECT business_id FROM t_gymer_favorites_data WHERE business_type="course.favorite")
+        and c.`status`="1" ORDER BY RAND() LIMIT 1;
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.ignore
+        # 自定义的缓存名称
+        name: get_course_collect_id
+    teardown:
+#      # 先查询出新增数据的id
+#      - case_id: get_gymer_course_favorites
+#        # 先发送请求，再拿结果, 定义 param_prepare
+#        param_prepare:
+#          # 因为是获取自己的响应内容，我们dependent_type需要写成 self_response
+#          - dependent_type: self_response
+#            jsonpath: $.value[0].id
+#            # 把数据存入缓存
+#            set_cache: favorites_course_id
+      # 再删除
+      - case_id: delete_course_collect_false
+        # 删除时不需要响应结果，所以直接删除, 定义send_request
+        send_request:
+          # 我们上方已经拿到了ID，并且将ID存入缓存中，因此这里依赖数据的类型为cache，直接从缓存中提取
+          - dependent_type: send
+            cache_data: false
+            # 替换 delete_action_01 用例中的入参参数
+            replace_key: false
+
+
+get_course_collect_not_login:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-favorite
+    method: POST
+    detail: 未登录状态下收藏课程
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      *dependence_case_data
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+#        message: "errorCode 断言为 0"
+      message:
+        jsonpath: $.message
+        type: ==
+        value: "用户不存在"
+        AssertType:
+    sql:
+    setup_sql:
+      *setup_sql
+
+
+get_course_collect_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-favorite
+    method: POST
+    detail: 收藏不存在的课程
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore: "CRS22061015265500231232130010011E80097"
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert: &assert
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: "数据为空"
+        AssertType:
+        message: "message 断言"
+    sql:
+
+
+get_course_collect_01:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-favorite
+    method: POST
+    detail: 正常收藏课程-----删除收藏前执行
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+      ignore:
+    dependence_case:  true
+    # 依赖的数据
+    dependence_case_data:
+      *dependence_case_data
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+    sql:
+    setup_sql:
+      *setup_sql
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.ignore
+        # 自定义的缓存名称
+        name: get_course_collect_01_id
+
+
+get_course_collect_02:
+    host: ${{host()}}
+    url: /s/v1/fitness/course/course-favorite
+    method: POST
+    detail: 收藏已经存在的课程
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      ignore:
+    dependence_case:  true
+    # 依赖的数据
+    dependence_case_data:
+      *dependence_case_data
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: "写入课程收藏失败,重复收藏"
+        AssertType:
+        message: "message 断言"
+    sql:
+    setup_sql:
+      - SELECT business_id as id FROM t_gymer_favorites_data WHERE business_type="course.favorite"
+        and gymer_id="$cache{gymera}" ORDER BY RAND() LIMIT 1

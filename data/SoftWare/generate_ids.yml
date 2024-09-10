@@ -1,0 +1,107 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 软件版本服务
+  allureStory: 生成id接口
+  mark: SoftWare
+
+get_generate_ids:
+    host: ${{host()}}
+    url: /s/v1/fitness/software/generate-ids
+    method: GET
+    detail: 正常的key生成id
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里cookie的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      key: 232323
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      value:
+        jsonpath: $.value
+        type: not_eq
+        value: []
+        AssertType:
+        message: "value 断言"
+    sql:
+
+
+get_generate_ids_null_key:
+    host: ${{host()}}
+    url: /s/v1/fitness/software/generate-ids
+    method: GET
+    detail: key为空生成id
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里cookie的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      key:
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: []
+        AssertType:
+        message: "value 断言"
+    sql:
+
+
+get_generate_ids_null_field:
+    host: ${{host()}}
+    url: /s/v1/fitness/software/generate-ids
+    method: GET
+    detail: 缺少字段生成ids
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里cookie的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      status_code: 400
+
+    sql:

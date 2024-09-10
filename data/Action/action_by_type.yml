@@ -1,0 +1,250 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 动作服务
+  allureStory: 根据动作类型获取动作
+  mark: Action
+
+get_action_by_type:
+    host: ${{host()}}
+    url: /s/v1/fitness/action/action-by-type
+    method: GET
+    detail: 正确的的动作类型获取动作
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      actionTypeId:
+
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data: &dependence_case_data
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.actionTypeId
+    assert: &assert
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "code 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 根据动作类型获取动作成功
+        AssertType:
+        message: "message 断言"
+
+      action_id:
+        jsonpath: $.value[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "action_id 断言"
+
+      name:
+        jsonpath: $.value[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      avatar_id:
+        jsonpath: $.value[*].avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatar_id 断言"
+
+      bodyPart_id:
+        jsonpath: $.value[*].bodyPart.id
+        type: ==
+        value: $.sql_data[*].bp1_id
+        AssertType: SQL
+        message: "bodyPart_id 断言"
+
+      bodyPart_pid:
+        jsonpath: $.value[*].bodyPart.pid
+        type: ==
+        value: $.sql_data[*].bp1_pid
+        AssertType: SQL
+        message: "bodyPart_pid 断言"
+
+      bodyPart_name:
+        jsonpath: $.value[*].bodyPart.name
+        type: ==
+        value: $.sql_data[*].bp1_name
+        AssertType: SQL
+        message: "bodyPart_name 断言"
+
+      muscle_id:
+        jsonpath: $.value[*].muscle.id
+        type: ==
+        value: $.sql_data[*].p_id
+        AssertType: SQL
+        message: "muscle_id 断言"
+
+      muscle_pid:
+        jsonpath: $.value[*].muscle.pid
+        type: ==
+        value: $.sql_data[*].pid
+        AssertType: SQL
+        message: "muscle_pid 断言"
+
+      muscle_name:
+        jsonpath: $.value[*].muscle.name
+        type: ==
+        value: $.sql_data[*].p_name
+        AssertType: SQL
+        message: "muscle_name 断言"
+
+    sql:
+      # 动作id, 名称, 部位id, 名称
+      - SELECT
+        a.id,
+        a.name,
+        a.avatar_id,
+        p2.id AS p_id,
+        p2.`name` AS p_name,
+        p2.pid
+        FROM
+        t_action AS a
+        LEFT JOIN t_action_body_part AS p1
+        ON a.id = p1.action_id
+        LEFT JOIN t_body_part AS p2 ON p1.body_part_id = p2.id
+        WHERE
+        a.action_type="$cache{get_action_by_type_id}";
+
+      # 部位父id， 部位父id父id， 部位名称
+      - SELECT bp1.id as bp1_id, bp1.pid as bp1_pid, bp1.name as bp1_name FROM
+        (SELECT tbp.pid as bp_pid FROM
+        (SELECT
+        p2.id
+        FROM
+        t_action AS a
+        LEFT JOIN t_action_body_part AS p1
+        ON a.id = p1.action_id
+        LEFT JOIN t_body_part AS p2 ON p1.body_part_id = p2.id
+        WHERE
+        a.action_type="$cache{get_action_by_type_id}") as b_pid LEFT JOIN t_body_part as tbp
+        ON b_pid.id=tbp.id WHERE tbp.pid is not NULL) as bp LEFT JOIN t_body_part as bp1
+        ON bp.bp_pid=bp1.id
+
+    setup_sql:
+      - SELECT at.id FROM t_action_type as at, t_action as a
+        WHERE at.id=a.action_type and a.id is not NULL
+        and a.`status`="1"
+        ORDER BY RAND() LIMIT 1
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.actionTypeId
+        # 自定义的缓存名称
+        name: get_action_by_type_id
+
+
+get_action_by_type_error:
+      host: ${{host()}}
+      url: /s/v1/fitness/action/action-by-type
+      method: GET
+      detail: 不存在的动作类型
+      headers:
+        Content-Type: application/json
+        #      Cache-Control: no-cache
+        #      Content-Length:
+        # 这里token的值，写的是存入缓存的名称
+      #      Authorization: $cache{login_cookie}
+      # 请求的数据，是 params 还是 json、或者file、data
+      requestType: params
+      # 是否执行，空或者 true 都会执行
+      is_run:
+      data:
+        actionTypeId: "32345"
+
+      dependence_case: false
+      # 依赖的数据
+      dependence_case_data:
+      assert:
+        # 断言接口状态码
+        errorCode:
+          jsonpath: $.code
+          type: ==
+          value: 0
+          AssertType:
+          message: "code 断言为 0"
+        # 断言接口返回的数量与数据库查询的数量
+        values:
+          jsonpath: $.value
+          type: ==
+          value: []
+          AssertType:
+      #        message: "code 断言为 0"
+      sql:
+
+
+get_action_by_type_all:
+      host: ${{host()}}
+      url: /s/v1/fitness/action/action-by-type
+      method: GET
+      detail: 动作类型为空获取全部
+      headers:
+        Content-Type: application/json
+        #      Cache-Control: no-cache
+        #      Content-Length:
+        # 这里token的值，写的是存入缓存的名称
+      #      Authorization: $cache{login_cookie}
+      # 请求的数据，是 params 还是 json、或者file、data
+      requestType: params
+      # 是否执行，空或者 true 都会执行
+      is_run:
+      data:
+        actionTypeId:
+
+      dependence_case: false
+      # 依赖的数据
+      dependence_case_data:
+      assert:
+        *assert
+
+      sql:
+        - SELECT
+          a.id,
+          a.name,
+          a.avatar_id,
+          p2.id AS p_id,
+          p2.`name` AS p_name,
+          p2.pid
+          FROM
+          t_action AS a
+          LEFT JOIN t_action_body_part AS p1
+          ON a.id = p1.action_id
+          LEFT JOIN t_body_part AS p2 ON p1.body_part_id = p2.id
+          WHERE
+          a.`status` = "1";
+
+        - SELECT bp1.id as bp1_id, bp1.pid as bp1_pid, bp1.name as bp1_name FROM
+          (SELECT tbp.pid as bp_pid FROM
+          (SELECT
+          p2.id
+          FROM
+          t_action AS a
+          LEFT JOIN t_action_body_part AS p1
+          ON a.id = p1.action_id
+          LEFT JOIN t_body_part AS p2 ON p1.body_part_id = p2.id
+          WHERE
+          a.`status` = "1") as b_pid LEFT JOIN t_body_part as tbp
+          ON b_pid.id=tbp.id WHERE tbp.pid is not NULL) as bp LEFT JOIN t_body_part as bp1
+          ON bp.bp_pid=bp1.id

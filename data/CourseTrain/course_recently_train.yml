@@ -1,0 +1,137 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 课程训练服务
+  allureStory: 获取最近联系课程列表接口
+  mark: CourseTrain
+
+get_course_recently:
+    host: ${{host()}}
+    url: /s/v1/fitness/course-train/recently-train-courses
+    method: GET
+    detail: 登录后获取最近联系课程列表
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      ids:
+        jsonpath: $.value[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "ids 断言"
+
+      grade_id:
+        jsonpath: $.value[*].gradeId
+        type: ==
+        value: $.sql_data[*].grade_id
+        AssertType: SQL
+        message: "grade_id 断言"
+
+      avatar_id:
+        jsonpath: $.value[*].avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatar_id 断言"
+
+      name:
+        jsonpath: $.value[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      participation_people_number:
+        jsonpath: $.value[*].participationPeopleNumber
+        type: ==
+        value: $.sql_data[*].participation_people_number
+        AssertType: SQL
+        message: "participation_people_number 断言"
+
+      count_n:
+        jsonpath: $.value[*].id
+        type: len_eq
+        value: $.sql_data[*].count_n
+        AssertType: SQL
+        message: "count_n 断言"
+
+    sql: &sql
+      - select  ct.id, c.grade_id, c.avatar_id, c.`name`, cs.participation_people_number from
+        t_course_train as ct LEFT JOIN t_course as c
+        ON ct.course_id=c.id left join t_course_statistics cs on c.id=cs.course_id
+        where ct.gymer_id="$cache{gymera}" GROUP BY ct.course_id
+
+
+get_course_recently_not_login:
+    host: ${{host()}}
+    url: /s/v1/fitness/course-train/recently-train-courses
+    method: GET
+    detail: 未登录后获取最近联系课程列表
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+#      ids:
+#        jsonpath: $.value[*].id
+#        type: ==
+#        value: $.sql_data[*].course_id
+#        AssertType: SQL
+#        message: "ids 断言"
+#
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 获取用户最近训练课程列表成功
+        AssertType:
+        message: "message 断言"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: []
+        AssertType:
+        message: "value 断言"
+
+    sql:
+      *sql

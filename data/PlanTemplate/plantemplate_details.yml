@@ -1,0 +1,386 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 计划模板服务
+  allureStory: 查询推荐计划详情接口
+  mark: PlanTemplate
+
+get_plantemplate_details:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/details
+    method: GET
+    detail: 正常ID查询推荐计划详情
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      id:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.id
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      tempID:
+        jsonpath: $.value.plan.id
+        type: ==
+        value: $.sql_data[*].p_id
+        AssertType: SQL
+        message: "tempID 断言"
+
+      Tname:
+        jsonpath: $.value.plan.name
+        type: ==
+        value: $.sql_data[*].p_name
+        AssertType: SQL
+        message: "name 断言"
+
+      catalog_id:
+        jsonpath: $.value.plan.catalogId
+        type: ==
+        value: $.sql_data[*].p_catalogID
+        AssertType: SQL
+        message: "catalogId 断言"
+
+      grade_id:
+        jsonpath: $.value.plan.gradeId
+        type: ==
+        value: $.sql_data[*].p_gradeID
+        AssertType: SQL
+        message: "grade_id 断言"
+
+      createBy:
+        jsonpath: $.value.plan.createBy
+        type: ==
+        value: $.sql_data[*].p_createBy
+        AssertType: SQL
+        message: "createBy 断言"
+
+      avatar_id:
+        jsonpath: $.value.plan.avatarId
+        type: ==
+        value: $.sql_data[*].p_avatarID
+        AssertType: SQL
+        message: "avatarId 断言"
+
+      lessons:
+        jsonpath: $.value.plan.lessons
+        type: ==
+        value: $.sql_data[*].p_lessons
+        AssertType: SQL
+        message: "lessons 断言"
+
+      groups:
+        jsonpath: $.value.plan.groups
+        type: ==
+        value: $.sql_data[*].p_group
+        AssertType: SQL
+        message: "groups 断言"
+
+      bgm:
+        jsonpath: $.value.plan.bgm
+        type: ==
+        value: $.sql_data[*].p_bgm
+        AssertType: SQL
+        message: "bgm 断言"
+
+      title:
+        jsonpath: $.value.plan.title
+        type: ==
+        value: $.sql_data[*].p_title
+        AssertType: SQL
+        message: "title 断言"
+
+      description:
+        jsonpath: $.value.plan.description
+        type: ==
+        value: $.sql_data[*].p_description
+        AssertType: SQL
+        message: "description 断言"
+
+      status:
+        jsonpath: $.value.plan.status
+        type: ==
+        value: 1
+        AssertType:
+        message: "status 断言"
+
+      groupID:
+        jsonpath: $.value.groups[*].group.id
+        type: ==
+        value: $.sql_data[*].g_id
+        AssertType: SQL
+        message: " groupID 断言"
+
+      groupLessons:
+        jsonpath: $.value.groups[*].group.lessons
+        type: ==
+        value: $.sql_data[*].g_lession
+        AssertType: SQL
+        message: "groupLessons 断言"
+
+      groupTotalDuration:
+        jsonpath: $.value.groups[*].group.totalDuration
+        type: ==
+        value: $.sql_data[*].g_total
+        AssertType: SQL
+        message: "groupTotalDuration 断言"
+
+      groupSeq:
+        jsonpath: $.value.groups[*].group.seq
+        type: ==
+        value: $.sql_data[*].g_seq
+        AssertType: SQL
+        message: "groupSeq 断言"
+
+      actions_id:
+        jsonpath: $.value.groups[*].actions[*].action.id
+        type: ==
+        value: $.sql_data[*].a_id
+        AssertType: SQL
+        message: "actions_id 断言"
+
+      actionId:
+        jsonpath: $.value.groups[*].actions[*].action.actionId
+        type: ==
+        value: $.sql_data[*].a_actionID
+        AssertType: SQL
+        message: "actionId 断言"
+
+      action_type:
+        jsonpath: $.value.groups[*].actions[*].action.type
+        type: ==
+        value: $.sql_data[*].a_type
+        AssertType: SQL
+        message: "action_type 断言"
+
+      action_power:
+        jsonpath: $.value.groups[*].actions[*].action.power
+        type: ==
+        value: $.sql_data[*].a_power
+        AssertType: SQL
+        message: "power 断言"
+
+      action_times:
+        jsonpath: $.value.groups[*].actions[*].action.times
+        type: ==
+        value: $.sql_data[*].a_times
+        AssertType: SQL
+        message: "times 断言"
+
+    sql:
+      # plan_temp数据断言
+      - SELECT id as p_id, name as p_name, status as p_status, catalog_id as p_catalogID, grade_id as p_gradeID, 
+        avatar_id as p_avatarID, lessons as p_lessons, groups as p_group, create_by as p_createBy, bgm as p_bgm ,
+        title as p_title, description as p_description FROM t_plan_temp WHERE id="$cache{get_plantemplate_detailsID}"
+
+      # 计划模板分组断言
+      - SELECT id as g_id, plan_temp_id as g_tid, lessons as g_lession, seq as g_seq, total_duration as g_total FROM 
+        t_plan_temp_group WHERE plan_temp_id="$cache{get_plantemplate_detailsID}"
+
+      # 计划模板动作断言
+      - SELECT id as a_id, action_id as a_actionID, type as a_type, power as a_power, times as a_times
+        FROM t_plan_temp_actions WHERE plan_temp_id="$cache{get_plantemplate_detailsID}"
+
+    setup_sql:
+      - SELECT id FROM t_plan_temp WHERE `status`=1 having RAND() LIMIT 1;
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: get_plantemplate_detailsID
+
+
+get_plantemplate_details_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/details
+    method: GET
+    detail: 错误的ID查询推荐计划详情
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      id: 976346546985
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 计划模板ID不存在
+        AssertType:
+        message: "message 断言"
+
+    sql:
+
+
+get_plantemplate_details_not_login:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/details
+    method: GET
+    detail: 不登录情况正常ID查询推荐计划详情
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      id:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.id
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 数据为空
+        AssertType:
+        message: "message 断言"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+        message: "value 断言"
+
+    sql:
+    setup_sql:
+      - SELECT id FROM t_plan_temp WHERE `status`=1 having RAND() LIMIT 1;
+
+
+get_plantemplate_details_isdel:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/details
+    method: GET
+    detail: 查询删除的计划模板
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+      id:
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.id
+            replace_key: $.data.id
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 失败
+        AssertType:
+        message: "message 断言"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+        message: "value 断言"
+
+    sql:
+    setup_sql:
+      - SELECT id FROM t_plan_temp WHERE `status`="-2"  LIMIT 1;
+
+
+get_plantemplate_details_null_field:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/details
+    method: GET
+    detail: 缺少ID字段查询
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      status_code: 400
+
+    sql:
+

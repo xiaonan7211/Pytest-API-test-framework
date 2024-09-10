@@ -1,0 +1,1772 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 计划模板服务
+  allureStory: 查询计划模板列表
+  mark: PlanTemplate
+
+get_plantemplate_all:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/all
+    method: POST
+    detail: 所有条件为空，正常查询计划模板列表
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+#      {
+#        "size": 10,
+#        "current": 2,
+#        "status": 1,
+#        "name": "减去啤酒肚",
+#        "gradeId": "03",
+#        "catalogId": "/01/02"
+#      }
+        {
+          "size": 10,
+          "current": ,
+          "status": ,
+          "name": "",
+          "gradeId": "",
+          "catalogId": ""
+        }
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      counts:
+        jsonpath: $.value.total
+        type: ==
+        value: $.sql_data[*].nums
+        AssertType: SQL
+        message: "counts 断言为 0"
+
+      size:
+        jsonpath: $.value.size
+        type: ==
+        value: $cache{get_plantemplate_all_size}
+        AssertType:
+        message: "size 断言"
+
+      current:
+        jsonpath: $.value.current
+        type: ==
+        value: 0
+        AssertType:
+        message: "size 断言"
+
+      # 分页断言
+      pages:
+        jsonpath: $.value.pages
+        type: paging_eq
+        value: $cache{get_plantemplate_all_total}/$cache{get_plantemplate_all_size}
+        AssertType:
+        message: "pages 断言"
+
+      ids:
+        jsonpath: $.value.records[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "ids 断言"
+
+      names:
+        jsonpath: $.value.records[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      catalogId:
+        jsonpath: $.value.records[*].catalogId
+        type: ==
+        value: $.sql_data[*].catalog_id
+        AssertType: SQL
+        message: "catalogId 断言"
+
+      gradeId:
+        jsonpath: $.value.records[*].gradeId
+        type: ==
+        value: $.sql_data[*].grade_id
+        AssertType: SQL
+        message: "gradeId 断言"
+
+      createBy:
+        jsonpath: $.value.records[*].createBy
+        type: ==
+        value: $.sql_data[*].create_by
+        AssertType: SQL
+        message: "createBy 断言"
+
+      avatarId:
+        jsonpath: $.value.records[*].avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatarId 断言"
+
+      useMachine:
+        jsonpath: $.value.records[*].useMachine
+        type: bool_eq
+        value: $.sql_data[*].use_machine
+        AssertType: SQL
+        message: "useMachine 断言"
+
+      bgm:
+        jsonpath: $.value.records[*].bgm
+        type: ==
+        value: $.sql_data[*].bgm
+        AssertType: SQL
+        message: "bgm 断言"
+
+      lessons:
+        jsonpath: $.value.records[*].lessons
+        type: ==
+        value: $.sql_data[*].lessons
+        AssertType: SQL
+        message: "lessons 断言"
+
+      groups:
+        jsonpath: $.value.records[*].groups
+        type: ==
+        value: $.sql_data[*].groups
+        AssertType: SQL
+        message: "groups 断言"
+
+      title:
+        jsonpath: $.value.records[*].title
+        type: ==
+        value: $.sql_data[*].title
+        AssertType: SQL
+        message: "title 断言"
+
+      description:
+        jsonpath: $.value.records[*].description
+        type: ==
+        value: $.sql_data[*].description
+        AssertType: SQL
+        message: "description 断言"
+
+      status:
+        jsonpath: $.value.records[*].status
+        type: ==
+        value: $.sql_data[*].status
+        AssertType: SQL
+        message: "status 断言"
+
+    sql:
+      - SELECT count(*) as nums FROM t_plan_temp;
+      - select * from t_plan_temp;
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.size
+        # 自定义的缓存名称
+        name: get_plantemplate_all_size
+
+      - type: response
+        jsonpath: $.value.total
+        # 自定义的缓存名称
+        name: get_plantemplate_all_total
+
+
+get_plantemplate_all_status:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/all
+    method: POST
+    detail: 查询状态为正常 1 的计划模板
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+#      {
+#        "size": 10,
+#        "current": 2,
+#        "status": 1,
+#        "name": "减去啤酒肚",
+#        "gradeId": "03",
+#        "catalogId": "/01/02"
+#      }
+        {
+          "size": 10,
+          "current": ,
+          "status": "1",
+          "name": "",
+          "gradeId": "",
+          "catalogId": ""
+        }
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      counts:
+        jsonpath: $.value.total
+        type: ==
+        value: $.sql_data[*].nums
+        AssertType: SQL
+        message: "counts 断言为 0"
+
+      size:
+        jsonpath: $.value.size
+        type: ==
+        value: $cache{get_plantemplate_all_size}
+        AssertType:
+        message: "size 断言"
+
+      current:
+        jsonpath: $.value.current
+        type: ==
+        value: 0
+        AssertType:
+        message: "size 断言"
+
+      # 分页断言
+      pages:
+        jsonpath: $.value.pages
+        type: paging_eq
+        value: $cache{get_plantemplate_all_total}/$cache{get_plantemplate_all_size}
+        AssertType:
+        message: "pages 断言"
+
+      ids:
+        jsonpath: $.value.records[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "ids 断言"
+
+      names:
+        jsonpath: $.value.records[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      catalogId:
+        jsonpath: $.value.records[*].catalogId
+        type: ==
+        value: $.sql_data[*].catalog_id
+        AssertType: SQL
+        message: "catalogId 断言"
+
+      gradeId:
+        jsonpath: $.value.records[*].gradeId
+        type: ==
+        value: $.sql_data[*].grade_id
+        AssertType: SQL
+        message: "gradeId 断言"
+
+      createBy:
+        jsonpath: $.value.records[*].createBy
+        type: ==
+        value: $.sql_data[*].create_by
+        AssertType: SQL
+        message: "createBy 断言"
+
+      avatarId:
+        jsonpath: $.value.records[*].avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatarId 断言"
+
+      useMachine:
+        jsonpath: $.value.records[*].useMachine
+        type: bool_eq
+        value: $.sql_data[*].use_machine
+        AssertType: SQL
+        message: "useMachine 断言"
+
+      bgm:
+        jsonpath: $.value.records[*].bgm
+        type: ==
+        value: $.sql_data[*].bgm
+        AssertType: SQL
+        message: "bgm 断言"
+
+      lessons:
+        jsonpath: $.value.records[*].lessons
+        type: ==
+        value: $.sql_data[*].lessons
+        AssertType: SQL
+        message: "lessons 断言"
+
+      groups:
+        jsonpath: $.value.records[*].groups
+        type: ==
+        value: $.sql_data[*].groups
+        AssertType: SQL
+        message: "groups 断言"
+
+      title:
+        jsonpath: $.value.records[*].title
+        type: ==
+        value: $.sql_data[*].title
+        AssertType: SQL
+        message: "title 断言"
+
+      description:
+        jsonpath: $.value.records[*].description
+        type: ==
+        value: $.sql_data[*].description
+        AssertType: SQL
+        message: "description 断言"
+
+      status:
+        jsonpath: $.value.records[*].status
+        type: ==
+        value: $.sql_data[*].status
+        AssertType: SQL
+        message: "status 断言"
+
+    sql:
+      - SELECT count(*) as nums FROM t_plan_temp where status="1";
+      - select * from t_plan_temp where status="1";
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.size
+        # 自定义的缓存名称
+        name: get_plantemplate_all_size
+
+      - type: response
+        jsonpath: $.value.total
+        # 自定义的缓存名称
+        name: get_plantemplate_all_total
+
+
+get_plantemplate_all_status_2:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/all
+    method: POST
+    detail: 查询状态为正常 -2 的计划模板
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+#      {
+#        "size": 10,
+#        "current": 2,
+#        "status": 1,
+#        "name": "减去啤酒肚",
+#        "gradeId": "03",
+#        "catalogId": "/01/02"
+#      }
+        {
+          "size": 10,
+          "current": ,
+          "status": "-2",
+          "name": "",
+          "gradeId": "",
+          "catalogId": ""
+        }
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      counts:
+        jsonpath: $.value.total
+        type: ==
+        value: $.sql_data[*].nums
+        AssertType: SQL
+        message: "counts 断言为 0"
+
+      size:
+        jsonpath: $.value.size
+        type: ==
+        value: $cache{get_plantemplate_all_size}
+        AssertType:
+        message: "size 断言"
+
+      current:
+        jsonpath: $.value.current
+        type: ==
+        value: 0
+        AssertType:
+        message: "size 断言"
+
+      # 分页断言
+      pages:
+        jsonpath: $.value.pages
+        type: paging_eq
+        value: $cache{get_plantemplate_all_total}/$cache{get_plantemplate_all_size}
+        AssertType:
+        message: "pages 断言"
+
+      ids:
+        jsonpath: $.value.records[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "ids 断言"
+
+      names:
+        jsonpath: $.value.records[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      catalogId:
+        jsonpath: $.value.records[*].catalogId
+        type: ==
+        value: $.sql_data[*].catalog_id
+        AssertType: SQL
+        message: "catalogId 断言"
+
+      gradeId:
+        jsonpath: $.value.records[*].gradeId
+        type: ==
+        value: $.sql_data[*].grade_id
+        AssertType: SQL
+        message: "gradeId 断言"
+
+      createBy:
+        jsonpath: $.value.records[*].createBy
+        type: ==
+        value: $.sql_data[*].create_by
+        AssertType: SQL
+        message: "createBy 断言"
+
+      avatarId:
+        jsonpath: $.value.records[*].avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatarId 断言"
+
+      useMachine:
+        jsonpath: $.value.records[*].useMachine
+        type: bool_eq
+        value: $.sql_data[*].use_machine
+        AssertType: SQL
+        message: "useMachine 断言"
+
+      bgm:
+        jsonpath: $.value.records[*].bgm
+        type: ==
+        value: $.sql_data[*].bgm
+        AssertType: SQL
+        message: "bgm 断言"
+
+      lessons:
+        jsonpath: $.value.records[*].lessons
+        type: ==
+        value: $.sql_data[*].lessons
+        AssertType: SQL
+        message: "lessons 断言"
+
+      groups:
+        jsonpath: $.value.records[*].groups
+        type: ==
+        value: $.sql_data[*].groups
+        AssertType: SQL
+        message: "groups 断言"
+
+      title:
+        jsonpath: $.value.records[*].title
+        type: ==
+        value: $.sql_data[*].title
+        AssertType: SQL
+        message: "title 断言"
+
+      description:
+        jsonpath: $.value.records[*].description
+        type: ==
+        value: $.sql_data[*].description
+        AssertType: SQL
+        message: "description 断言"
+
+      status:
+        jsonpath: $.value.records[*].status
+        type: ==
+        value: $.sql_data[*].status
+        AssertType: SQL
+        message: "status 断言"
+
+    sql:
+      - SELECT count(*) as nums FROM t_plan_temp where status="-2";
+      - select * from t_plan_temp where status="-2";
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.size
+        # 自定义的缓存名称
+        name: get_plantemplate_all_size
+
+      - type: response
+        jsonpath: $.value.total
+        # 自定义的缓存名称
+        name: get_plantemplate_all_total
+
+
+get_plantemplate_all_size3:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/all
+    method: POST
+    detail: 查询分页 size 3大小 的计划模板
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+#      {
+#        "size": 10,
+#        "current": 2,
+#        "status": 1,
+#        "name": "减去啤酒肚",
+#        "gradeId": "03",
+#        "catalogId": "/01/02"
+#      }
+        {
+          "size": 3,
+          "current": ,
+          "status": "1",
+          "name": "",
+          "gradeId": "",
+          "catalogId": ""
+        }
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      counts:
+        jsonpath: $.value.total
+        type: ==
+        value: $.sql_data[*].nums
+        AssertType: SQL
+        message: "counts 断言为 0"
+
+      size:
+        jsonpath: $.value.size
+        type: ==
+        value: $cache{get_plantemplate_all_size}
+        AssertType:
+        message: "size 断言"
+
+      current:
+        jsonpath: $.value.current
+        type: ==
+        value: 0
+        AssertType:
+        message: "size 断言"
+
+      # 分页断言
+      pages:
+        jsonpath: $.value.pages
+        type: paging_eq
+        value: $cache{get_plantemplate_all_total}/$cache{get_plantemplate_all_size}
+        AssertType:
+        message: "pages 断言"
+
+      ids:
+        jsonpath: $.value.records[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "ids 断言"
+
+      names:
+        jsonpath: $.value.records[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      catalogId:
+        jsonpath: $.value.records[*].catalogId
+        type: ==
+        value: $.sql_data[*].catalog_id
+        AssertType: SQL
+        message: "catalogId 断言"
+
+      gradeId:
+        jsonpath: $.value.records[*].gradeId
+        type: ==
+        value: $.sql_data[*].grade_id
+        AssertType: SQL
+        message: "gradeId 断言"
+
+      createBy:
+        jsonpath: $.value.records[*].createBy
+        type: ==
+        value: $.sql_data[*].create_by
+        AssertType: SQL
+        message: "createBy 断言"
+
+      avatarId:
+        jsonpath: $.value.records[*].avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatarId 断言"
+
+      useMachine:
+        jsonpath: $.value.records[*].useMachine
+        type: bool_eq
+        value: $.sql_data[*].use_machine
+        AssertType: SQL
+        message: "useMachine 断言"
+
+      bgm:
+        jsonpath: $.value.records[*].bgm
+        type: ==
+        value: $.sql_data[*].bgm
+        AssertType: SQL
+        message: "bgm 断言"
+
+      lessons:
+        jsonpath: $.value.records[*].lessons
+        type: ==
+        value: $.sql_data[*].lessons
+        AssertType: SQL
+        message: "lessons 断言"
+
+      groups:
+        jsonpath: $.value.records[*].groups
+        type: ==
+        value: $.sql_data[*].groups
+        AssertType: SQL
+        message: "groups 断言"
+
+      title:
+        jsonpath: $.value.records[*].title
+        type: ==
+        value: $.sql_data[*].title
+        AssertType: SQL
+        message: "title 断言"
+
+      description:
+        jsonpath: $.value.records[*].description
+        type: ==
+        value: $.sql_data[*].description
+        AssertType: SQL
+        message: "description 断言"
+
+      status:
+        jsonpath: $.value.records[*].status
+        type: ==
+        value: $.sql_data[*].status
+        AssertType: SQL
+        message: "status 断言"
+
+    sql:
+      - SELECT count(*) as nums FROM t_plan_temp where status="1";
+      - SELECT * FROM t_plan_temp WHERE `status`="1" ORDER BY create_time asc LIMIT $cache{get_plantemplate_all_size};
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.size
+        # 自定义的缓存名称
+        name: get_plantemplate_all_size
+
+      - type: response
+        jsonpath: $.value.total
+        # 自定义的缓存名称
+        name: get_plantemplate_all_total
+
+
+get_plantemplate_all_gradeId:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/all
+    method: POST
+    detail: 查询 gradeId为 01的计划模板
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+#      {
+#        "size": 10,
+#        "current": 2,
+#        "status": 1,
+#        "name": "减去啤酒肚",
+#        "gradeId": "03",
+#        "catalogId": "/01/02"
+#      }
+        {
+          "size": 10,
+          "current": ,
+          "status": "",
+          "name": "",
+          "gradeId": "01",
+          "catalogId": ""
+        }
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      counts:
+        jsonpath: $.value.total
+        type: ==
+        value: $.sql_data[*].nums
+        AssertType: SQL
+        message: "counts 断言为 0"
+
+      size:
+        jsonpath: $.value.size
+        type: ==
+        value: $cache{get_plantemplate_all_size}
+        AssertType:
+        message: "size 断言"
+
+      current:
+        jsonpath: $.value.current
+        type: ==
+        value: 0
+        AssertType:
+        message: "size 断言"
+
+      # 分页断言
+      pages:
+        jsonpath: $.value.pages
+        type: paging_eq
+        value: $cache{get_plantemplate_all_total}/$cache{get_plantemplate_all_size}
+        AssertType:
+        message: "pages 断言"
+
+      ids:
+        jsonpath: $.value.records[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "ids 断言"
+
+      names:
+        jsonpath: $.value.records[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      catalogId:
+        jsonpath: $.value.records[*].catalogId
+        type: ==
+        value: $.sql_data[*].catalog_id
+        AssertType: SQL
+        message: "catalogId 断言"
+
+      gradeId:
+        jsonpath: $.value.records[*].gradeId
+        type: ==
+        value: $.sql_data[*].grade_id
+        AssertType: SQL
+        message: "gradeId 断言"
+
+      createBy:
+        jsonpath: $.value.records[*].createBy
+        type: ==
+        value: $.sql_data[*].create_by
+        AssertType: SQL
+        message: "createBy 断言"
+
+      avatarId:
+        jsonpath: $.value.records[*].avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatarId 断言"
+
+      useMachine:
+        jsonpath: $.value.records[*].useMachine
+        type: bool_eq
+        value: $.sql_data[*].use_machine
+        AssertType: SQL
+        message: "useMachine 断言"
+
+      bgm:
+        jsonpath: $.value.records[*].bgm
+        type: ==
+        value: $.sql_data[*].bgm
+        AssertType: SQL
+        message: "bgm 断言"
+
+      lessons:
+        jsonpath: $.value.records[*].lessons
+        type: ==
+        value: $.sql_data[*].lessons
+        AssertType: SQL
+        message: "lessons 断言"
+
+      groups:
+        jsonpath: $.value.records[*].groups
+        type: ==
+        value: $.sql_data[*].groups
+        AssertType: SQL
+        message: "groups 断言"
+
+      title:
+        jsonpath: $.value.records[*].title
+        type: ==
+        value: $.sql_data[*].title
+        AssertType: SQL
+        message: "title 断言"
+
+      description:
+        jsonpath: $.value.records[*].description
+        type: ==
+        value: $.sql_data[*].description
+        AssertType: SQL
+        message: "description 断言"
+
+      status:
+        jsonpath: $.value.records[*].status
+        type: ==
+        value: $.sql_data[*].status
+        AssertType: SQL
+        message: "status 断言"
+
+    sql:
+      - SELECT count(*) as nums FROM t_plan_temp WHERE `grade_id`="$cache{get_plantemplate_all_gradeId}";
+      -  SELECT * FROM t_plan_temp WHERE `grade_id`="$cache{get_plantemplate_all_gradeId}";
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.size
+        # 自定义的缓存名称
+        name: get_plantemplate_all_size
+
+      - type: response
+        jsonpath: $.value.total
+        # 自定义的缓存名称
+        name: get_plantemplate_all_total
+
+      - type: request
+        jsonpath: $.data.gradeId
+        # 自定义的缓存名称
+        name: get_plantemplate_all_gradeId
+
+
+get_plantemplate_all_catalogId:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/all
+    method: POST
+    detail: 查询 catalogId 计划模板
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+#      {
+#        "size": 10,
+#        "current": 2,
+#        "status": 1,
+#        "name": "减去啤酒肚",
+#        "gradeId": "03",
+#        "catalogId": "/01/02"
+#      }
+        {
+          "size": 10,
+          "current": ,
+          "status": "",
+          "name": "",
+          "gradeId": "",
+          "catalogId": ""
+        }
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.catalog_id
+            replace_key: $.data.catalogId
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      counts:
+        jsonpath: $.value.total
+        type: ==
+        value: $.sql_data[*].nums
+        AssertType: SQL
+        message: "counts 断言为 0"
+
+      size:
+        jsonpath: $.value.size
+        type: ==
+        value: $cache{get_plantemplate_all_size}
+        AssertType:
+        message: "size 断言"
+
+      current:
+        jsonpath: $.value.current
+        type: ==
+        value: 0
+        AssertType:
+        message: "size 断言"
+
+      # 分页断言
+      pages:
+        jsonpath: $.value.pages
+        type: paging_eq
+        value: $cache{get_plantemplate_all_total}/$cache{get_plantemplate_all_size}
+        AssertType:
+        message: "pages 断言"
+
+      ids:
+        jsonpath: $.value.records[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "ids 断言"
+
+      names:
+        jsonpath: $.value.records[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      catalogId:
+        jsonpath: $.value.records[*].catalogId
+        type: ==
+        value: $.sql_data[*].catalog_id
+        AssertType: SQL
+        message: "catalogId 断言"
+
+      gradeId:
+        jsonpath: $.value.records[*].gradeId
+        type: ==
+        value: $.sql_data[*].grade_id
+        AssertType: SQL
+        message: "gradeId 断言"
+
+      createBy:
+        jsonpath: $.value.records[*].createBy
+        type: ==
+        value: $.sql_data[*].create_by
+        AssertType: SQL
+        message: "createBy 断言"
+
+      avatarId:
+        jsonpath: $.value.records[*].avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatarId 断言"
+
+      useMachine:
+        jsonpath: $.value.records[*].useMachine
+        type: bool_eq
+        value: $.sql_data[*].use_machine
+        AssertType: SQL
+        message: "useMachine 断言"
+
+      bgm:
+        jsonpath: $.value.records[*].bgm
+        type: ==
+        value: $.sql_data[*].bgm
+        AssertType: SQL
+        message: "bgm 断言"
+
+      lessons:
+        jsonpath: $.value.records[*].lessons
+        type: ==
+        value: $.sql_data[*].lessons
+        AssertType: SQL
+        message: "lessons 断言"
+
+      groups:
+        jsonpath: $.value.records[*].groups
+        type: ==
+        value: $.sql_data[*].groups
+        AssertType: SQL
+        message: "groups 断言"
+
+      title:
+        jsonpath: $.value.records[*].title
+        type: ==
+        value: $.sql_data[*].title
+        AssertType: SQL
+        message: "title 断言"
+
+      description:
+        jsonpath: $.value.records[*].description
+        type: ==
+        value: $.sql_data[*].description
+        AssertType: SQL
+        message: "description 断言"
+
+      status:
+        jsonpath: $.value.records[*].status
+        type: ==
+        value: $.sql_data[*].status
+        AssertType: SQL
+        message: "status 断言"
+
+    sql:
+      - SELECT count(*) as nums FROM t_plan_temp WHERE catalog_id="$cache{get_plantemplate_all_catalogId}";
+      - SELECT * FROM t_plan_temp WHERE catalog_id="$cache{get_plantemplate_all_catalogId}";
+    setup_sql:
+      - SELECT count(*) as count_num, catalog_id  FROM t_plan_temp GROUP BY catalog_id ORDER BY count_num desc LIMIT 1
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.size
+        # 自定义的缓存名称
+        name: get_plantemplate_all_size
+
+      - type: response
+        jsonpath: $.value.total
+        # 自定义的缓存名称
+        name: get_plantemplate_all_total
+
+      - type: request
+        jsonpath: $.data.gradeId
+        # 自定义的缓存名称
+        name: get_plantemplate_all_gradeId
+
+      - type: request
+        jsonpath: $.data.catalogId
+        # 自定义的缓存名称
+        name: get_plantemplate_all_catalogId
+
+
+get_plantemplate_all_name:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/all
+    method: POST
+    detail: 根据name查询 计划模板
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+#      {
+#        "size": 10,
+#        "current": 2,
+#        "status": 1,
+#        "name": "减去啤酒肚",
+#        "gradeId": "03",
+#        "catalogId": "/01/02"
+#      }
+        {
+          "size": 10,
+          "current": ,
+          "status": "",
+          "name": "",
+          "gradeId": "",
+          "catalogId": ""
+        }
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.name
+            replace_key: $.data.name
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      counts:
+        jsonpath: $.value.total
+        type: ==
+        value: $.sql_data[*].nums
+        AssertType: SQL
+        message: "counts 断言为 0"
+
+      size:
+        jsonpath: $.value.size
+        type: ==
+        value: $cache{get_plantemplate_all_size}
+        AssertType:
+        message: "size 断言"
+
+      current:
+        jsonpath: $.value.current
+        type: ==
+        value: 0
+        AssertType:
+        message: "size 断言"
+
+      # 分页断言
+      pages:
+        jsonpath: $.value.pages
+        type: paging_eq
+        value: $cache{get_plantemplate_all_total}/$cache{get_plantemplate_all_size}
+        AssertType:
+        message: "pages 断言"
+
+      ids:
+        jsonpath: $.value.records[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "ids 断言"
+
+      names:
+        jsonpath: $.value.records[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      catalogId:
+        jsonpath: $.value.records[*].catalogId
+        type: ==
+        value: $.sql_data[*].catalog_id
+        AssertType: SQL
+        message: "catalogId 断言"
+
+      gradeId:
+        jsonpath: $.value.records[*].gradeId
+        type: ==
+        value: $.sql_data[*].grade_id
+        AssertType: SQL
+        message: "gradeId 断言"
+
+      createBy:
+        jsonpath: $.value.records[*].createBy
+        type: ==
+        value: $.sql_data[*].create_by
+        AssertType: SQL
+        message: "createBy 断言"
+
+      avatarId:
+        jsonpath: $.value.records[*].avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatarId 断言"
+
+      useMachine:
+        jsonpath: $.value.records[*].useMachine
+        type: bool_eq
+        value: $.sql_data[*].use_machine
+        AssertType: SQL
+        message: "useMachine 断言"
+
+      bgm:
+        jsonpath: $.value.records[*].bgm
+        type: ==
+        value: $.sql_data[*].bgm
+        AssertType: SQL
+        message: "bgm 断言"
+
+      lessons:
+        jsonpath: $.value.records[*].lessons
+        type: ==
+        value: $.sql_data[*].lessons
+        AssertType: SQL
+        message: "lessons 断言"
+
+      groups:
+        jsonpath: $.value.records[*].groups
+        type: ==
+        value: $.sql_data[*].groups
+        AssertType: SQL
+        message: "groups 断言"
+
+      title:
+        jsonpath: $.value.records[*].title
+        type: ==
+        value: $.sql_data[*].title
+        AssertType: SQL
+        message: "title 断言"
+
+      description:
+        jsonpath: $.value.records[*].description
+        type: ==
+        value: $.sql_data[*].description
+        AssertType: SQL
+        message: "description 断言"
+
+      status:
+        jsonpath: $.value.records[*].status
+        type: ==
+        value: $.sql_data[*].status
+        AssertType: SQL
+        message: "status 断言"
+
+    sql:
+      - SELECT count(*) as nums FROM t_plan_temp WHERE name="$cache{get_plantemplate_all_name}";
+      - SELECT * FROM t_plan_temp WHERE name="$cache{get_plantemplate_all_name}";
+    setup_sql:
+      - SELECT name FROM t_plan_temp ORDER BY create_time desc LIMIT 1
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.size
+        # 自定义的缓存名称
+        name: get_plantemplate_all_size
+
+      - type: response
+        jsonpath: $.value.total
+        # 自定义的缓存名称
+        name: get_plantemplate_all_total
+
+      - type: request
+        jsonpath: $.data.gradeId
+        # 自定义的缓存名称
+        name: get_plantemplate_all_gradeId
+
+      - type: request
+        jsonpath: $.data.catalogId
+        # 自定义的缓存名称
+        name: get_plantemplate_all_catalogId
+
+      - type: request
+        jsonpath: $.data.name
+        # 自定义的缓存名称
+        name: get_plantemplate_all_name
+
+
+get_plantemplate_all_combination:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/all
+    method: POST
+    detail: 组合查询计划模板
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+        {
+          "size": 10,
+          "current": ,
+          "status": "",
+          "name": "",
+          "gradeId": "",
+          "catalogId": ""
+        }
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.name
+            replace_key: $.data.name
+
+          - dependent_type: sqlData
+            jsonpath: $.catalog_id
+            replace_key: $.data.catalogId
+
+          - dependent_type: sqlData
+            jsonpath: $.grade_id
+            replace_key: $.data.gradeId
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      counts:
+        jsonpath: $.value.total
+        type: ==
+        value: $.sql_data[*].nums
+        AssertType: SQL
+        message: "counts 断言为 0"
+
+      size:
+        jsonpath: $.value.size
+        type: ==
+        value: $cache{get_plantemplate_all_size}
+        AssertType:
+        message: "size 断言"
+
+      current:
+        jsonpath: $.value.current
+        type: ==
+        value: 0
+        AssertType:
+        message: "size 断言"
+
+      # 分页断言
+      pages:
+        jsonpath: $.value.pages
+        type: paging_eq
+        value: $cache{get_plantemplate_all_total}/$cache{get_plantemplate_all_size}
+        AssertType:
+        message: "pages 断言"
+
+      ids:
+        jsonpath: $.value.records[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "ids 断言"
+
+      names:
+        jsonpath: $.value.records[*].name
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      catalogId:
+        jsonpath: $.value.records[*].catalogId
+        type: ==
+        value: $.sql_data[*].catalog_id
+        AssertType: SQL
+        message: "catalogId 断言"
+
+      gradeId:
+        jsonpath: $.value.records[*].gradeId
+        type: ==
+        value: $.sql_data[*].grade_id
+        AssertType: SQL
+        message: "gradeId 断言"
+
+      createBy:
+        jsonpath: $.value.records[*].createBy
+        type: ==
+        value: $.sql_data[*].create_by
+        AssertType: SQL
+        message: "createBy 断言"
+
+      avatarId:
+        jsonpath: $.value.records[*].avatarId
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatarId 断言"
+
+      useMachine:
+        jsonpath: $.value.records[*].useMachine
+        type: bool_eq
+        value: $.sql_data[*].use_machine
+        AssertType: SQL
+        message: "useMachine 断言"
+
+      bgm:
+        jsonpath: $.value.records[*].bgm
+        type: ==
+        value: $.sql_data[*].bgm
+        AssertType: SQL
+        message: "bgm 断言"
+
+      lessons:
+        jsonpath: $.value.records[*].lessons
+        type: ==
+        value: $.sql_data[*].lessons
+        AssertType: SQL
+        message: "lessons 断言"
+
+      groups:
+        jsonpath: $.value.records[*].groups
+        type: ==
+        value: $.sql_data[*].groups
+        AssertType: SQL
+        message: "groups 断言"
+
+      title:
+        jsonpath: $.value.records[*].title
+        type: ==
+        value: $.sql_data[*].title
+        AssertType: SQL
+        message: "title 断言"
+
+      description:
+        jsonpath: $.value.records[*].description
+        type: ==
+        value: $.sql_data[*].description
+        AssertType: SQL
+        message: "description 断言"
+
+      status:
+        jsonpath: $.value.records[*].status
+        type: ==
+        value: $.sql_data[*].status
+        AssertType: SQL
+        message: "status 断言"
+
+    sql:
+      - SELECT count(*) as nums FROM t_plan_temp WHERE name="$cache{get_plantemplate_all_name}"
+        and catalog_id="$cache{get_plantemplate_all_catalogId}"
+        and grade_id="$cache{get_plantemplate_all_gradeId}";
+
+      - SELECT * FROM t_plan_temp WHERE name="$cache{get_plantemplate_all_name}"
+        and catalog_id="$cache{get_plantemplate_all_catalogId}"
+        and grade_id="$cache{get_plantemplate_all_gradeId}";
+    setup_sql:
+      - SELECT name, catalog_id, grade_id FROM t_plan_temp ORDER BY create_time desc LIMIT 1
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.size
+        # 自定义的缓存名称
+        name: get_plantemplate_all_size
+
+      - type: response
+        jsonpath: $.value.total
+        # 自定义的缓存名称
+        name: get_plantemplate_all_total
+
+      - type: request
+        jsonpath: $.data.gradeId
+        # 自定义的缓存名称
+        name: get_plantemplate_all_gradeId
+
+      - type: request
+        jsonpath: $.data.catalogId
+        # 自定义的缓存名称
+        name: get_plantemplate_all_catalogId
+
+      - type: request
+        jsonpath: $.data.name
+        # 自定义的缓存名称
+        name: get_plantemplate_all_name
+
+
+get_plantemplate_all_error_catalogId:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/all
+    method: POST
+    detail: 参数错误查询计划模板--catalogId
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+        {
+          "size": 10,
+          "current": ,
+          "status": "",
+          "name": "",
+          "gradeId": "",
+          "catalogId": "121321"
+        }
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      records:
+        jsonpath: $.value.records
+        type: ==
+        value: []
+        AssertType:
+        message: "records 断言"
+
+      total:
+        jsonpath: $.value.total
+        type: ==
+        value: 0
+        AssertType:
+        message: "total 断言"
+
+      pages:
+        jsonpath: $.value.pages
+        type: ==
+        value: 0
+        AssertType:
+        message: "pages 断言"
+
+    sql:
+
+
+get_plantemplate_all_error_status:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/all
+    method: POST
+    detail: 参数错误查询计划模板--status
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+        {
+          "size": 10,
+          "current": ,
+          "status": "334343",
+          "name": "",
+          "gradeId": "",
+          "catalogId": ""
+        }
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      records:
+        jsonpath: $.value.records
+        type: ==
+        value: []
+        AssertType:
+        message: "records 断言"
+
+      total:
+        jsonpath: $.value.total
+        type: ==
+        value: 0
+        AssertType:
+        message: "total 断言"
+
+      pages:
+        jsonpath: $.value.pages
+        type: ==
+        value: 0
+        AssertType:
+        message: "pages 断言"
+
+    sql:
+
+
+get_plantemplate_all_error_name:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/all
+    method: POST
+    detail: 参数错误查询计划模板--name
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+        {
+          "size": 10,
+          "current": ,
+          "status": "",
+          "name": "afsefrdsf",
+          "gradeId": "",
+          "catalogId": ""
+        }
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      records:
+        jsonpath: $.value.records
+        type: ==
+        value: []
+        AssertType:
+        message: "records 断言"
+
+      total:
+        jsonpath: $.value.total
+        type: ==
+        value: 0
+        AssertType:
+        message: "total 断言"
+
+      pages:
+        jsonpath: $.value.pages
+        type: ==
+        value: 0
+        AssertType:
+        message: "pages 断言"
+
+    sql:
+
+
+get_plantemplate_all_error_gradeId:
+    host: ${{host()}}
+    url: /s/v1/fitness/plantemplate/all
+    method: POST
+    detail: 参数错误查询计划模板--gradeId
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+        {
+          "size": 10,
+          "current": ,
+          "status": "",
+          "name": "",
+          "gradeId": "55464554",
+          "catalogId": ""
+        }
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      records:
+        jsonpath: $.value.records
+        type: ==
+        value: []
+        AssertType:
+        message: "records 断言"
+
+      total:
+        jsonpath: $.value.total
+        type: ==
+        value: 0
+        AssertType:
+        message: "total 断言"
+
+      pages:
+        jsonpath: $.value.pages
+        type: ==
+        value: 0
+        AssertType:
+        message: "pages 断言"
+
+    sql:
+

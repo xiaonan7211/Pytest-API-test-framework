@@ -1,0 +1,61 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 自由训练服务
+  allureStory: 结束自由训练接口
+  mark: FreeDom
+
+end_freedomTrain:
+    host: ${{host()}}
+    url: /s/v1/fitness/freedom-train/freedom-train-ending
+    method: POST
+    detail: 正常的参数结束自由训练
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "id": "$cache{start_freedomTrain_id}",
+        "trainTime": "${{random_int(1000, 2000)}}"
+      }
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: process_freedomTrain
+        dependent_data:
+          - dependent_type: request
+            jsonpath: false
+            replace_key: false
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 结束自由训练成功
+        AssertType:
+        message: "message 断言"
+
+    sql:
+      - SELECT metric_value as sum_force FROM t_gymer_fitness_data WHERE business_id="$cache{train_stating_id}" 
+        and metric_id="sum.force"
+
+      - SELECT metric_value as sum_volumn FROM t_gymer_fitness_data WHERE business_id="$cache{train_stating_id}"
+        and metric_id="sum.volumn"
+
+      - SELECT business_type FROM t_gymer_fitness_data WHERE business_id="$cache{train_stating_id}"
+        and business_type="action-train.end"

@@ -1,0 +1,488 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 动作服务
+  allureStory: 写入动作接口
+  mark: Action
+
+insert_action_01:
+    host: ${{host()}}
+    url: /s/v1/fitness/action/insert
+    method: POST
+    detail: 正常写入动作
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data: &data
+      {
+        "name": "${{get_name_time()}}",  # 动态参数, 确保sql查询时  name是唯一值
+        "intro": "",
+        "actionType": "",
+        "avatarId": "",
+        "description": "",
+        "batch": "${{random_int(5, 10)}}",
+        "span": "${{random_int(5, 10)}}",
+        "times": "${{random_int(5, 10)}}",
+        "leftForce": "${{random_int(5, 10)}}",
+        "rightForce": "${{random_int(5, 10)}}",
+        "leftForceMode": "${{random_int(1, 3)}}",
+        "rightForceMode": "${{random_int(1, 3)}}",
+        "bodyPartId": "",
+        "useMachine": "${{random_int(1, 2)}}",
+        "videoAddReqs": [
+              {
+                "formatId": "",
+                "classifyId": "",
+                "modelId": "",
+                "viewId": "",
+                "videoId": ""
+              }
+        ]
+      }
+    dependence_case: true
+    # 依赖同一个接口多个数据
+    dependence_case_data: &case_data
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.intro
+            replace_key: $.data.intro
+
+          - dependent_type: sqlData
+            jsonpath: $.action_type
+            replace_key: $.data.actionType
+
+          - dependent_type: sqlData
+            jsonpath: $.description
+            replace_key: $.data.description
+
+          - dependent_type: sqlData
+            jsonpath: $.avatar_id
+            replace_key: $.data.avatarId
+
+          - dependent_type: sqlData
+            jsonpath: $.format_id
+            replace_key: $.data.videoAddReqs[0].formatId
+
+          - dependent_type: sqlData
+            jsonpath: $.classify_id
+            replace_key: $.data.videoAddReqs[0].classifyId
+
+          - dependent_type: sqlData
+            jsonpath: $.model_id
+            replace_key: $.data.videoAddReqs[0].modelId
+
+          - dependent_type: sqlData
+            jsonpath: $.video_id
+            replace_key: $.data.videoAddReqs[0].videoId
+
+          - dependent_type: sqlData
+            jsonpath: $.par_id
+            replace_key: $.data.bodyPartId
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      value:
+        jsonpath: $.value
+        type: ==
+        value: null
+        AssertType:
+        message: "value 断言"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 新增动作成功
+        AssertType:
+        message: "message 断言"
+
+      not_jsonpath1:
+        jsonpath: $cache{insert_action_01_name}
+        type: ==
+        value: $.sql_data[*].name
+        AssertType: SQL
+        message: "name 断言"
+
+      not_jsonpath2:
+        jsonpath: $cache{get_action_by_intro}
+        type: ==
+        value: $.sql_data[*].intro
+        AssertType: SQL
+        message: "intro 断言"
+
+      not_jsonpath3:
+        jsonpath: $cache{get_action_by_actionType}
+        type: ==
+        value: $.sql_data[*].action_type
+        AssertType: SQL
+        message: "action_type 断言"
+
+#      not_jsonpath4:
+#        jsonpath: "$cache{get_action_by_description}"
+#        type: ==
+#        value: $.sql_data[*].description
+#        AssertType: SQL
+#        message: "description 断言"
+
+      not_jsonpath5:
+        jsonpath: $cache{get_action_by_avatarId}
+        type: ==
+        value: $.sql_data[*].avatar_id
+        AssertType: SQL
+        message: "avatarId 断言"
+
+      not_jsonpath6:
+        jsonpath: $cache{get_action_by_formatId}
+        type: ==
+        value: $.sql_data[*].format_id
+        AssertType: SQL
+        message: "formatId 断言"
+
+      not_jsonpath7:
+        jsonpath: $cache{get_action_by_classifyId}
+        type: ==
+        value: $.sql_data[*].classify_id
+        AssertType: SQL
+        message: "classifyId 断言"
+
+      not_jsonpath8:
+        jsonpath: $cache{get_action_by_modelId}
+        type: ==
+        value: $.sql_data[*].model_id
+        AssertType: SQL
+        message: "modelId 断言"
+
+      not_jsonpath9:
+        jsonpath: $cache{get_action_by_videoId}
+        type: ==
+        value: $.sql_data[*].video_id
+        AssertType: SQL
+        message: "videoId 断言"
+
+      not_jsonpath10:
+        jsonpath: $cache{get_action_by_bodyPartId}
+        type: ==
+        value: $.sql_data[*].body_part_id
+        AssertType: SQL
+        message: "bodyPartId 断言"
+
+      not_jsonpath11:
+        jsonpath: $cache{get_action_by_batch}
+        type: ==
+        value: $.sql_data[*].batch
+        AssertType: SQL
+        message: "batch 断言"
+
+      not_jsonpath12:
+        jsonpath: $cache{get_action_by_span}
+        type: ==
+        value: $.sql_data[*].span
+        AssertType: SQL
+        message: "span 断言"
+
+      not_jsonpath13:
+        jsonpath: $cache{get_action_by_times}
+        type: ==
+        value: $.sql_data[*].times
+        AssertType: SQL
+        message: "times 断言"
+
+      not_jsonpath14:
+        jsonpath: $cache{get_action_by_leftForce}
+        type: ==
+        value: $.sql_data[*].left_force
+        AssertType: SQL
+        message: "left_force 断言"
+
+      not_jsonpath15:
+        jsonpath: $cache{get_action_by_rightForce}
+        type: ==
+        value: $.sql_data[*].right_force
+        AssertType: SQL
+        message: "right_force 断言"
+
+      not_jsonpath16:
+        jsonpath: $cache{get_action_by_leftForceMode}
+        type: ==
+        value: $.sql_data[*].left_force_mode
+        AssertType: SQL
+        message: "left_force_mode 断言"
+
+      not_jsonpath17:
+        jsonpath: $cache{get_action_by_rightForceMode}
+        type: ==
+        value: $.sql_data[*].right_force_mode
+        AssertType: SQL
+        message: "right_force_mode 断言"
+
+      # 根据新增的动态name，直接查询数据库，断言是否新增成功
+      not_jsonpath18:
+        jsonpath: 1
+        type: ==
+        value: $.sql_data[*].status
+        AssertType: SQL
+
+    sql:
+      - SELECT * FROM t_action as a, t_action_body_part as p1
+        WHERE a.id=p1.action_id and a.name="$cache{insert_action_01_name}";
+
+      - SELECT av.format_id, av.classify_id, av.model_id, av.video_id, av.view_id FROM
+        t_action as a, t_action_video as av WHERE
+        a.id=av.action_id and a.name="$cache{insert_action_01_name}"
+
+      - SELECT metric_value as span FROM t_action_recommend_data WHERE action_id=
+        (SELECT id FROM t_action WHERE `name`="$cache{insert_action_01_name}")
+        and metric_id="action.span";
+
+      - SELECT metric_value as times FROM t_action_recommend_data WHERE action_id=
+        (SELECT id FROM t_action WHERE `name`="$cache{insert_action_01_name}")
+        and metric_id="action.times";
+
+      - SELECT metric_value as left_force FROM t_action_recommend_data WHERE action_id=
+        (SELECT id FROM t_action WHERE `name`="$cache{insert_action_01_name}")
+        and metric_id="action.left.force";
+
+      - SELECT metric_value as right_force FROM t_action_recommend_data WHERE action_id=
+        (SELECT id FROM t_action WHERE `name`="$cache{insert_action_01_name}")
+        and metric_id="action.right.force";
+
+      - SELECT metric_value as left_force_mode FROM t_action_recommend_data WHERE action_id=
+        (SELECT id FROM t_action WHERE `name`="$cache{insert_action_01_name}")
+        and metric_id="action.left.force.mode";
+
+      - SELECT metric_value as right_force_mode FROM t_action_recommend_data WHERE action_id=
+        (SELECT id FROM t_action WHERE `name`="$cache{insert_action_01_name}")
+        and metric_id="action.right.force.mode";
+
+      - SELECT metric_value as batch FROM t_action_recommend_data WHERE action_id=
+        (SELECT id FROM t_action WHERE `name`="$cache{insert_action_01_name}")
+        and metric_id="action.batch";
+
+    setup_sql: &setupSql
+      - SELECT * FROM t_action as a, t_action_video as av WHERE a.`status`="1"
+        and a.id=av.action_id and a.name not in ("接口测试")
+        ORDER BY RAND() LIMIT 1;
+
+      - SELECT id as par_id from t_body_part HAVING LENGTH(id) = 6 ORDER BY RAND() LIMIT 1;
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: request
+        jsonpath: $.data.intro
+        # 自定义的缓存名称
+        name: get_action_by_intro
+
+      - type: request
+        jsonpath: $.data.actionType
+        # 自定义的缓存名称
+        name: get_action_by_actionType
+
+      - type: request
+        jsonpath: $.data.description
+        # 自定义的缓存名称
+        name: get_action_by_description
+
+      - type: request
+        jsonpath: $.data.avatarId
+        # 自定义的缓存名称
+        name: get_action_by_avatarId
+
+      - type: request
+        jsonpath: $.data.videoAddReqs[0].formatId
+        # 自定义的缓存名称
+        name: get_action_by_formatId
+
+      - type: request
+        jsonpath: $.data.videoAddReqs[0].classifyId
+        # 自定义的缓存名称
+        name: get_action_by_classifyId
+
+      - type: request
+        jsonpath: $.data.videoAddReqs[0].modelId
+        # 自定义的缓存名称
+        name: get_action_by_modelId
+
+      - type: request
+        jsonpath: $.data.videoAddReqs[0].videoId
+        # 自定义的缓存名称
+        name: get_action_by_videoId
+
+      - type: request
+        jsonpath: $.data.bodyPartId
+        # 自定义的缓存名称
+        name: get_action_by_bodyPartId
+
+      - type: request
+        jsonpath: $.data.batch
+        # 自定义的缓存名称
+        name: get_action_by_batch
+
+      - type: request
+        jsonpath: $.data.span
+        # 自定义的缓存名称
+        name: get_action_by_span
+
+      - type: request
+        jsonpath: $.data.times
+        # 自定义的缓存名称
+        name: get_action_by_times
+
+      - type: request
+        jsonpath: $.data.leftForce
+        # 自定义的缓存名称
+        name: get_action_by_leftForce
+
+      - type: request
+        jsonpath: $.data.rightForce
+        # 自定义的缓存名称
+        name: get_action_by_rightForce
+
+      - type: request
+        jsonpath: $.data.leftForceMode
+        # 自定义的缓存名称
+        name: get_action_by_leftForceMode
+
+      - type: request
+        jsonpath: $.data.rightForceMode
+        # 自定义的缓存名称
+        name: get_action_by_rightForceMode
+
+    # 后置处理，用于清理新增的数据
+    teardown:
+      # 再删除
+      - case_id: delete_action_02
+        # 删除时不需要响应结果，所以直接删除, 定义send_request
+        send_request:
+          # 我们上方已经拿到了ID，并且将ID存入缓存中，因此这里依赖数据的类型为cache，直接从缓存中提取
+          - dependent_type: send
+            cache_data: false
+            # 替换 delete_action_01 用例中的入参参数
+            replace_key: false
+
+
+insert_action_error:
+    host: ${{host()}}
+    url: /s/v1/fitness/action/insert
+    method: POST
+    detail: 参数错误写入动作，期望写入失败
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      {
+        "name": "${{get_name_time()}}",  # 动态参数, 确保sql查询时  name是唯一值
+        "intro": awadwad,
+        "actionType": 1adwafgwaf,
+        "avatarId": "",
+        "description": ,
+        "batch": ,
+        "span": ,
+        "times": ,
+        "leftForce": ,
+        "rightForce": ,
+        "leftForceMode": ,
+        "rightForceMode": ,
+        "bodyPartId": "",
+        "useMachine": ,
+        "videoAddReqs": [
+              {
+                "formatId": "",
+                "classifyId": "",
+                "modelId": "",
+                "viewId": "",
+                "videoId": ""
+              }
+        ]
+      }
+    dependence_case: false
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: -1
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 新增动作失败
+        AssertType:
+        message: "message 断言为 0"
+
+      # 根据新增的动态name，直接查询数据库，断言是否新增成功
+      not_jsonpath:
+        jsonpath: 0
+        type: ==
+        value: $.sql_data[*].count_t
+        AssertType: SQL
+    sql:
+      - SELECT count(*) as count_t from t_action WHERE name="$cache{insert_action_error_name}"
+    teardown:
+      # 再删除
+      - case_id: delete_action_04
+        # 删除时不需要响应结果，所以直接删除, 定义send_request
+        send_request:
+          # 我们上方已经拿到了ID，并且将ID存入缓存中，因此这里依赖数据的类型为cache，直接从缓存中提取
+          - dependent_type: send
+            cache_data: false
+            # 替换 delete_action_01 用例中的入参参数
+            replace_key: false
+
+
+insert_action_delete:
+    host: ${{host()}}
+    url: /s/v1/fitness/action/insert
+    method: POST
+    detail: 正常删除动作需要依赖该用例新增一个动作---默认不执行
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+      Content-Length:
+      # 这里token的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run: false
+    data:
+      <<: *data
+    dependence_case: true
+    # 依赖同一个接口多个数据
+    dependence_case_data:
+      *case_data
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+#        message: "errorCode 断言为 0"
+    sql:
+    setup_sql:
+      *setupSql

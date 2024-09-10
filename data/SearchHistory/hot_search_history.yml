@@ -1,0 +1,80 @@
+# 公共参数
+case_common:
+  allureEpic: Gymery
+  allureFeature: 搜索服务
+  allureStory: 获取热门搜索接口
+  mark: SearchHistory
+
+get_hot_search_history:
+    host: ${{host()}}
+    url: /s/v1/fitness/search-history/hot-search-history
+    method: GET
+    detail: 正常获取热门搜索数据
+    headers:
+      Content-Type: application/json
+#      Cache-Control: no-cache
+#      Content-Length:
+      # 这里cookie的值，写的是存入缓存的名称
+#      Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "errorCode 断言为 0"
+
+      message:
+        jsonpath: $.message
+        type: ==
+        value: 获取热门搜索历史成功
+        AssertType:
+        message: " message 断言"
+
+      ids:
+        jsonpath: $.value[*].id
+        type: ==
+        value: $.sql_data[*].id
+        AssertType: SQL
+        message: "ids 断言"
+
+      gymerId:
+        jsonpath: $.value[*].gymerId
+        type: ==
+        value: $.sql_data[*].gymer_id
+        AssertType: SQL
+        message: "gymerId 断言"
+
+      content:
+        jsonpath: $.value[*].content
+        type: ==
+        value: $.sql_data[*].content
+        AssertType: SQL
+        message: "content 断言"
+
+      sorts:
+        jsonpath: $.value[0].content
+        type: ==
+        value: $.sql_data[0].content
+        AssertType: SQL
+        message: "content 断言"
+
+      sorts_1:
+        jsonpath: $.value[1].content
+        type: ==
+        value: $.sql_data[1].content
+        AssertType: SQL
+        message: "content 断言"
+
+    sql:
+      - SELECT * FROM t_search_history GROUP BY content ORDER BY count(*) desc;
