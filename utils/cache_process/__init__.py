@@ -1,0 +1,12 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
+
+# data = {'url': '${{host()}}/s/v1/fitness/action/insert', 'method': 'POST', 'detail': '正常写入动作', 'assert_data': {'errorCode': {'jsonpath': '$.code', 'type': '==', 'value': 0, 'AssertType': None}}, 'headers': {'Content-Type': 'application/json', 'Content-Length': None}, 'requestType': 'JSON', 'is_run': None, 'data': {'name': '${{get_name_time()}}', 'intro': '我是又长又臭的简介', 'actionType': '动作类型(力量训练、减脂训练、拉伸训练)', 'avatarId': '', 'description': '<p>面向高位滑轮站立，屈膝，使躯干微微前倾，同时收缩腹部以保持稳定。双手掌心朝下握住握杆，并将其稳定在头部前方，握距与肩同宽。双臂伸直并使各个关节保持稳定。背部发力，将握杆向下拉至腹部或大腿前方，再向上回到起始位置。</p>', 'batch': 3, 'span': 10, 'times': 10, 'leftForce': 5, 'rightForce': 5, 'leftForceMode': 1, 'rightForceMode': 1, 'bodyPartId': '', 'useMachine': 1, 'videoAddReqs': [{'formatId': '', 'classifyId': '', 'modelId': '', 'viewId': '', 'videoId': ''}]}, 'dependence_case': True, 'dependence_case_data': [{'case_id': 'get_action_details_01', 'dependent_data': [{'dependent_type': 'response', 'jsonpath': '$.value.bodyPart.id', 'set_cache': None, 'replace_key': '$.data.bodyPartId'}, {'dependent_type': 'response', 'jsonpath': '$.value.avatarId', 'set_cache': None, 'replace_key': '$.data.avatarId'}, {'dependent_type': 'response', 'jsonpath': '$.value.actionVideos[0].formatId', 'set_cache': None, 'replace_key': '$.data.videoAddReqs[0].formatId'}, {'dependent_type': 'response', 'jsonpath': '$.value.actionVideos[0].classifyId', 'set_cache': None, 'replace_key': '$.data.videoAddReqs[0].classifyId'}, {'dependent_type': 'response', 'jsonpath': '$.value.actionVideos[0].modelId', 'set_cache': None, 'replace_key': '$.data.videoAddReqs[0].modelId'}, {'dependent_type': 'response', 'jsonpath': '$.value.actionVideos[0].videoId', 'set_cache': None, 'replace_key': '$.data.videoAddReqs[0].videoId'}]}], 'sql': None, 'setup_sql': None, 'status_code': None, 'teardown_sql': None, 'teardown': [{'case_id': 'get_all_actions_keyword_04', 'param_prepare': [{'dependent_type': 'self_response', 'jsonpath': '$.value[0].id', 'set_cache': 'delete_action_id'}], 'send_request': None}, {'case_id': 'delete_action_01', 'param_prepare': None, 'send_request': [{'dependent_type': 'cache', 'jsonpath': None, 'cache_data': 'delete_action_id', 'set_cache': None, 'replace_key': '$.data.ignore'}]}], 'current_request_set_cache': None, 'sleep': None}
+#
+#
+# import re
+#
+# s = re.findall("get_name_time" ,str(data))
+# print(s)
